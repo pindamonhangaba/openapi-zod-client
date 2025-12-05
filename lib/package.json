@@ -10,7 +10,7 @@
     "module": "dist/franklin-ai-openapi-zod-client.esm.js",
     "homepage": "https://github.com/astahmer/openapi-zod-client",
     "bin": {
-        "@franklin-ai/openapi-zod-client": "./bin.js"
+      "openapi-zod-client": "dist/cli.js"
     },
     "scripts": {
         "test": "vitest",
