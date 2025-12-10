@@ -34,5 +34,7 @@ yarn-error.log*
 .turbo
 
 dist
+!lib/dist
+!lib/cli/dist
 .eslintcache
 /.idea/

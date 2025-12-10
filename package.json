@@ -11,6 +11,9 @@
             "lib"
         ]
     },
+    "bin": {
+        "openapi-zod-client": "lib/bin.js"
+    },
     "author": "Alexandre Stahmer <alexandre.stahmer@gmail.com>",
     "engines": {
         "node": ">=18.16.0"
