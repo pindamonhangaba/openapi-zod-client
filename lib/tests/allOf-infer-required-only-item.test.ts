@@ -1,9 +1,10 @@
 import type { OpenAPIObject } from "openapi3-ts";
-import { expect, test } from "vitest";
-import { generateZodClientFromOpenAPI } from "../src";
+import { test } from "jsr:@std/testing/bdd";
+import { assertSnapshot } from "jsr:@std/testing/snapshot";
+import { generateZodClientFromOpenAPI } from "../src/index.ts";
 
 // https://github.com/astahmer/openapi-zod-client/issues/49
-test("allOf-infer-required-only-item", async () => {
+test("allOf-infer-required-only-item", async (t) => {
     const openApiDoc: OpenAPIObject = {
         openapi: "3.0.3",
         info: {
@@ -69,46 +70,5 @@ test("allOf-infer-required-only-item", async () => {
             withImplicitRequiredProps: true,
         },
     });
-    expect(output).toMatchInlineSnapshot(`
-    "import { makeApi, Zodios, type ZodiosOptions } from "@franklin-ai/zodios";
-    import { z } from "zod";
-
-    type userResponse = Partial<{
-      user: user & {
-        name: string;
-      };
-    }>;
-    type user = Partial<{
-      name: string;
-      email: string;
-    }>;
-
-    const user: z.ZodType<user> = z
-      .object({ name: z.string(), email: z.string() })
-      .passthrough();
-    const userResponse: z.ZodType<userResponse> = z
-      .object({ user: user.and(z.object({ name: z.string() }).passthrough()) })
-      .passthrough();
-
-    export const schemas = {
-      user,
-      userResponse,
-    };
-
-    const endpoints = makeApi([
-      {
-        method: "get",
-        path: "/user",
-        requestFormat: "json",
-        response: userResponse,
-      },
-    ]);
-
-    export const api = new Zodios(endpoints);
-
-    export function createApiClient(baseUrl: string, options?: ZodiosOptions) {
-      return new Zodios(baseUrl, endpoints, options);
-    }
-    "
-    `);
+    await assertSnapshot(t, output);
 });

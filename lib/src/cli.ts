@@ -7,8 +7,8 @@ import type { OpenAPIObject } from "openapi3-ts";
 import { safeJSONParse } from "pastable/server";
 import { resolveConfig } from "prettier";
 
-import { toBoolean } from "./utils";
-import { generateZodClientFromOpenAPI } from "./generateZodClientFromOpenAPI";
+import { toBoolean } from "./utils.ts";
+import { generateZodClientFromOpenAPI } from "./generateZodClientFromOpenAPI.ts";
 
 const cli = cac("openapi-zod-client");
 const packageJson = safeJSONParse(readFileSync(resolve(__dirname, "../../package.json"), "utf8"));

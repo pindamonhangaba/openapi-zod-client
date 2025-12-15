@@ -1,0 +1,840 @@
+export const snapshot = {};
+
+snapshot[`group-strategy 1`] = `
+{
+  Default: {
+    endpoints: [
+      {
+        description: undefined,
+        errors: [],
+        method: "get",
+        parameters: [],
+        path: "/no-tags",
+        requestFormat: "json",
+        response: "z.string()",
+      },
+      {
+        description: undefined,
+        errors: [],
+        method: "put",
+        parameters: [],
+        path: "/no-tags",
+        requestFormat: "json",
+        response: "z.string()",
+      },
+    ],
+    schemas: {},
+    types: {},
+  },
+  pet: {
+    endpoints: [
+      {
+        description: undefined,
+        errors: [],
+        method: "get",
+        parameters: [],
+        path: "/pet",
+        requestFormat: "json",
+        response: "z.string()",
+      },
+      {
+        description: undefined,
+        errors: [],
+        method: "put",
+        parameters: [],
+        path: "/pet",
+        requestFormat: "json",
+        response: "z.string()",
+      },
+      {
+        description: undefined,
+        errors: [],
+        method: "get",
+        parameters: [],
+        path: "/pet/all",
+        requestFormat: "json",
+        response: "z.string()",
+      },
+      {
+        description: undefined,
+        errors: [],
+        method: "put",
+        parameters: [],
+        path: "/pet/all",
+        requestFormat: "json",
+        response: "z.string()",
+      },
+    ],
+    schemas: {},
+    types: {},
+  },
+  store: {
+    endpoints: [
+      {
+        description: undefined,
+        errors: [],
+        method: "get",
+        parameters: [],
+        path: "/store",
+        requestFormat: "json",
+        response: "z.string()",
+      },
+      {
+        description: undefined,
+        errors: [],
+        method: "put",
+        parameters: [],
+        path: "/store",
+        requestFormat: "json",
+        response: "z.string()",
+      },
+    ],
+    schemas: {},
+    types: {},
+  },
+  user: {
+    endpoints: [
+      {
+        description: undefined,
+        errors: [],
+        method: "get",
+        parameters: [],
+        path: "/user",
+        requestFormat: "json",
+        response: "z.string()",
+      },
+      {
+        description: undefined,
+        errors: [],
+        method: "put",
+        parameters: [],
+        path: "/user",
+        requestFormat: "json",
+        response: "z.string()",
+      },
+      {
+        description: undefined,
+        errors: [],
+        method: "get",
+        parameters: [],
+        path: "/user/pets",
+        requestFormat: "json",
+        response: "z.string()",
+      },
+      {
+        description: undefined,
+        errors: [],
+        method: "put",
+        parameters: [],
+        path: "/user/pets",
+        requestFormat: "json",
+        response: "z.string()",
+      },
+    ],
+    schemas: {},
+    types: {},
+  },
+}
+`;
+
+snapshot[`group-strategy 2`] = `
+'import { makeApi, Zodios } from "@franklin-ai/zodios";
+import { z } from "zod";
+
+const petEndpoints = makeApi([
+  {
+    method: "get",
+    path: "/pet",
+    requestFormat: "json",
+    response: z.string(),
+  },
+  {
+    method: "put",
+    path: "/pet",
+    requestFormat: "json",
+    response: z.string(),
+  },
+  {
+    method: "get",
+    path: "/pet/all",
+    requestFormat: "json",
+    response: z.string(),
+  },
+  {
+    method: "put",
+    path: "/pet/all",
+    requestFormat: "json",
+    response: z.string(),
+  },
+]);
+
+export const petApi = new Zodios(petEndpoints);
+
+const storeEndpoints = makeApi([
+  {
+    method: "get",
+    path: "/store",
+    requestFormat: "json",
+    response: z.string(),
+  },
+  {
+    method: "put",
+    path: "/store",
+    requestFormat: "json",
+    response: z.string(),
+  },
+]);
+
+export const storeApi = new Zodios(storeEndpoints);
+
+const userEndpoints = makeApi([
+  {
+    method: "get",
+    path: "/user",
+    requestFormat: "json",
+    response: z.string(),
+  },
+  {
+    method: "put",
+    path: "/user",
+    requestFormat: "json",
+    response: z.string(),
+  },
+  {
+    method: "get",
+    path: "/user/pets",
+    requestFormat: "json",
+    response: z.string(),
+  },
+  {
+    method: "put",
+    path: "/user/pets",
+    requestFormat: "json",
+    response: z.string(),
+  },
+]);
+
+export const userApi = new Zodios(userEndpoints);
+
+const DefaultEndpoints = makeApi([
+  {
+    method: "get",
+    path: "/no-tags",
+    requestFormat: "json",
+    response: z.string(),
+  },
+  {
+    method: "put",
+    path: "/no-tags",
+    requestFormat: "json",
+    response: z.string(),
+  },
+]);
+
+export const DefaultApi = new Zodios(DefaultEndpoints);
+
+export function createApiClient(baseUrl: string, options?: ZodiosOptions) {
+  return new Zodios(baseUrl, endpoints, options);
+}
+'
+`;
+
+snapshot[`group-strategy 3`] = `
+{
+  get: {
+    endpoints: [
+      {
+        description: undefined,
+        errors: [],
+        method: "get",
+        parameters: [],
+        path: "/pet",
+        requestFormat: "json",
+        response: "z.string()",
+      },
+      {
+        description: undefined,
+        errors: [],
+        method: "get",
+        parameters: [],
+        path: "/pet/all",
+        requestFormat: "json",
+        response: "z.string()",
+      },
+      {
+        description: undefined,
+        errors: [],
+        method: "get",
+        parameters: [],
+        path: "/store",
+        requestFormat: "json",
+        response: "z.string()",
+      },
+      {
+        description: undefined,
+        errors: [],
+        method: "get",
+        parameters: [],
+        path: "/user",
+        requestFormat: "json",
+        response: "z.string()",
+      },
+      {
+        description: undefined,
+        errors: [],
+        method: "get",
+        parameters: [],
+        path: "/user/pets",
+        requestFormat: "json",
+        response: "z.string()",
+      },
+      {
+        description: undefined,
+        errors: [],
+        method: "get",
+        parameters: [],
+        path: "/no-tags",
+        requestFormat: "json",
+        response: "z.string()",
+      },
+    ],
+    schemas: {},
+    types: {},
+  },
+  put: {
+    endpoints: [
+      {
+        description: undefined,
+        errors: [],
+        method: "put",
+        parameters: [],
+        path: "/pet",
+        requestFormat: "json",
+        response: "z.string()",
+      },
+      {
+        description: undefined,
+        errors: [],
+        method: "put",
+        parameters: [],
+        path: "/pet/all",
+        requestFormat: "json",
+        response: "z.string()",
+      },
+      {
+        description: undefined,
+        errors: [],
+        method: "put",
+        parameters: [],
+        path: "/store",
+        requestFormat: "json",
+        response: "z.string()",
+      },
+      {
+        description: undefined,
+        errors: [],
+        method: "put",
+        parameters: [],
+        path: "/user",
+        requestFormat: "json",
+        response: "z.string()",
+      },
+      {
+        description: undefined,
+        errors: [],
+        method: "put",
+        parameters: [],
+        path: "/user/pets",
+        requestFormat: "json",
+        response: "z.string()",
+      },
+      {
+        description: undefined,
+        errors: [],
+        method: "put",
+        parameters: [],
+        path: "/no-tags",
+        requestFormat: "json",
+        response: "z.string()",
+      },
+    ],
+    schemas: {},
+    types: {},
+  },
+}
+`;
+
+snapshot[`group-strategy 4`] = `
+'import { makeApi, Zodios } from "@franklin-ai/zodios";
+import { z } from "zod";
+
+const getEndpoints = makeApi([
+  {
+    method: "get",
+    path: "/pet",
+    requestFormat: "json",
+    response: z.string(),
+  },
+  {
+    method: "get",
+    path: "/pet/all",
+    requestFormat: "json",
+    response: z.string(),
+  },
+  {
+    method: "get",
+    path: "/store",
+    requestFormat: "json",
+    response: z.string(),
+  },
+  {
+    method: "get",
+    path: "/user",
+    requestFormat: "json",
+    response: z.string(),
+  },
+  {
+    method: "get",
+    path: "/user/pets",
+    requestFormat: "json",
+    response: z.string(),
+  },
+  {
+    method: "get",
+    path: "/no-tags",
+    requestFormat: "json",
+    response: z.string(),
+  },
+]);
+
+export const getApi = new Zodios(getEndpoints);
+
+const putEndpoints = makeApi([
+  {
+    method: "put",
+    path: "/pet",
+    requestFormat: "json",
+    response: z.string(),
+  },
+  {
+    method: "put",
+    path: "/pet/all",
+    requestFormat: "json",
+    response: z.string(),
+  },
+  {
+    method: "put",
+    path: "/store",
+    requestFormat: "json",
+    response: z.string(),
+  },
+  {
+    method: "put",
+    path: "/user",
+    requestFormat: "json",
+    response: z.string(),
+  },
+  {
+    method: "put",
+    path: "/user/pets",
+    requestFormat: "json",
+    response: z.string(),
+  },
+  {
+    method: "put",
+    path: "/no-tags",
+    requestFormat: "json",
+    response: z.string(),
+  },
+]);
+
+export const putApi = new Zodios(putEndpoints);
+
+export function createApiClient(baseUrl: string, options?: ZodiosOptions) {
+  return new Zodios(baseUrl, endpoints, options);
+}
+'
+`;
+
+snapshot[`group-strategy: tag-file with modified petstore schema 1`] = `
+{
+  __index: 'export { PetsApi } from "./pets";
+',
+  pets: 'import { makeApi, Zodios, type ZodiosOptions } from "@franklin-ai/zodios";
+import { z } from "zod";
+
+const Pet = z
+  .object({
+    id: z.number().int(),
+    name: z.string(),
+    tag: z.string().optional(),
+  })
+  .passthrough();
+
+export const schemas = {
+  Pet,
+};
+
+const endpoints = makeApi([
+  {
+    method: "get",
+    path: "/pets",
+    requestFormat: "json",
+    parameters: [
+      {
+        name: "limit",
+        type: "Query",
+        schema: z.number().int().optional(),
+      },
+    ],
+    response: z.array(Pet),
+  },
+  {
+    method: "post",
+    path: "/pets",
+    requestFormat: "json",
+    response: z.void(),
+  },
+  {
+    method: "get",
+    path: "/pets/:petId",
+    requestFormat: "json",
+    parameters: [
+      {
+        name: "petId",
+        type: "Path",
+        schema: z.string(),
+      },
+    ],
+    response: Pet,
+  },
+]);
+
+export const PetsApi = new Zodios(endpoints);
+
+export function createApiClient(baseUrl: string, options?: ZodiosOptions) {
+  return new Zodios(baseUrl, endpoints, options);
+}
+',
+}
+`;
+
+snapshot[`group-strategy with complex schemas + split files 1`] = `
+{
+  Default: {
+    endpoints: [
+      {
+        description: undefined,
+        errors: [],
+        method: "get",
+        parameters: [],
+        path: "/countries",
+        requestFormat: "json",
+        response: "Country",
+      },
+    ],
+    imports: {
+      Country: "common",
+      Store: "common",
+      User: "common",
+    },
+    schemas: {},
+    types: {},
+  },
+  pet: {
+    endpoints: [
+      {
+        description: undefined,
+        errors: [],
+        method: "get",
+        parameters: [],
+        path: "/pet",
+        requestFormat: "json",
+        response: "Pet",
+      },
+      {
+        description: undefined,
+        errors: [],
+        method: "put",
+        parameters: [],
+        path: "/pet",
+        requestFormat: "json",
+        response: "Pet",
+      },
+      {
+        description: undefined,
+        errors: [],
+        method: "get",
+        parameters: [],
+        path: "/pet/all",
+        requestFormat: "json",
+        response: "z.array(Pet)",
+      },
+      {
+        description: undefined,
+        errors: [],
+        method: "post",
+        parameters: [],
+        path: "/pet/all",
+        requestFormat: "json",
+        response: "Pet",
+      },
+    ],
+    imports: {
+      User: "common",
+    },
+    schemas: {
+      Pet: "z.object({ id: z.number().int(), nickname: z.string(), owner: User }).partial().passthrough()",
+    },
+    types: {},
+  },
+  store: {
+    endpoints: [
+      {
+        description: undefined,
+        errors: [],
+        method: "get",
+        parameters: [],
+        path: "/store",
+        requestFormat: "json",
+        response: "Store",
+      },
+      {
+        description: undefined,
+        errors: [],
+        method: "put",
+        parameters: [],
+        path: "/store",
+        requestFormat: "json",
+        response: "Store",
+      },
+    ],
+    imports: {
+      Country: "common",
+      Store: "common",
+      User: "common",
+    },
+    schemas: {},
+    types: {},
+  },
+  user: {
+    endpoints: [
+      {
+        description: undefined,
+        errors: [],
+        method: "get",
+        parameters: [],
+        path: "/user",
+        requestFormat: "json",
+        response: "User",
+      },
+      {
+        description: undefined,
+        errors: [],
+        method: "put",
+        parameters: [],
+        path: "/user",
+        requestFormat: "json",
+        response: "User",
+      },
+    ],
+    imports: {
+      User: "common",
+    },
+    schemas: {},
+    types: {},
+  },
+}
+`;
+
+snapshot[`group-strategy with complex schemas + split files 2`] = `
+{
+  Default: 'import { makeApi, Zodios, type ZodiosOptions } from "@franklin-ai/zodios";
+import { z } from "zod";
+
+import { Country } from "./common";
+import { Store } from "./common";
+import { User } from "./common";
+
+const endpoints = makeApi([
+  {
+    method: "get",
+    path: "/countries",
+    requestFormat: "json",
+    response: Country,
+  },
+]);
+
+export const DefaultApi = new Zodios(endpoints);
+
+export function createApiClient(baseUrl: string, options?: ZodiosOptions) {
+  return new Zodios(baseUrl, endpoints, options);
+}
+',
+  __common: 'import { z } from "zod";
+
+export type User = Partial<{
+  id: number;
+  firstname: string;
+  lastname: string;
+  email: string;
+  friends: Array<User>;
+}>;
+export type Store = Partial<{
+  id: number;
+  name: string;
+  address: string;
+  country: Country;
+  owner: User;
+}>;
+export type Country = Partial<{
+  id: number;
+  name: string;
+  code: string;
+  store_list: Array<Store>;
+}>;
+
+export const User = z.lazy(() =>
+  z
+    .object({
+      id: z.number().int(),
+      firstname: z.string(),
+      lastname: z.string(),
+      email: z.string(),
+      friends: z.array(User),
+    })
+    .partial()
+    .passthrough()
+);
+export const Country = z.lazy(() =>
+  z
+    .object({
+      id: z.number().int(),
+      name: z.string(),
+      code: z.string(),
+      store_list: z.array(Store),
+    })
+    .partial()
+    .passthrough()
+);
+export const Store = z.lazy(() =>
+  z
+    .object({
+      id: z.number().int(),
+      name: z.string(),
+      address: z.string(),
+      country: Country,
+      owner: User,
+    })
+    .partial()
+    .passthrough()
+);
+',
+  __index: 'export { PetApi } from "./pet";
+export { UserApi } from "./user";
+export { StoreApi } from "./store";
+export { DefaultApi } from "./Default";
+',
+  pet: 'import { makeApi, Zodios, type ZodiosOptions } from "@franklin-ai/zodios";
+import { z } from "zod";
+
+import { User } from "./common";
+
+const Pet = z
+  .object({ id: z.number().int(), nickname: z.string(), owner: User })
+  .partial()
+  .passthrough();
+
+export const schemas = {
+  Pet,
+};
+
+const endpoints = makeApi([
+  {
+    method: "get",
+    path: "/pet",
+    requestFormat: "json",
+    response: Pet,
+  },
+  {
+    method: "put",
+    path: "/pet",
+    requestFormat: "json",
+    response: Pet,
+  },
+  {
+    method: "get",
+    path: "/pet/all",
+    requestFormat: "json",
+    response: z.array(Pet),
+  },
+  {
+    method: "post",
+    path: "/pet/all",
+    requestFormat: "json",
+    response: Pet,
+  },
+]);
+
+export const PetApi = new Zodios(endpoints);
+
+export function createApiClient(baseUrl: string, options?: ZodiosOptions) {
+  return new Zodios(baseUrl, endpoints, options);
+}
+',
+  store: 'import { makeApi, Zodios, type ZodiosOptions } from "@franklin-ai/zodios";
+import { z } from "zod";
+
+import { Store } from "./common";
+import { Country } from "./common";
+import { User } from "./common";
+
+const endpoints = makeApi([
+  {
+    method: "get",
+    path: "/store",
+    requestFormat: "json",
+    response: Store,
+  },
+  {
+    method: "put",
+    path: "/store",
+    requestFormat: "json",
+    response: Store,
+  },
+]);
+
+export const StoreApi = new Zodios(endpoints);
+
+export function createApiClient(baseUrl: string, options?: ZodiosOptions) {
+  return new Zodios(baseUrl, endpoints, options);
+}
+',
+  user: 'import { makeApi, Zodios, type ZodiosOptions } from "@franklin-ai/zodios";
+import { z } from "zod";
+
+import { User } from "./common";
+
+const endpoints = makeApi([
+  {
+    method: "get",
+    path: "/user",
+    requestFormat: "json",
+    response: User,
+  },
+  {
+    method: "put",
+    path: "/user",
+    requestFormat: "json",
+    response: User,
+  },
+]);
+
+export const UserApi = new Zodios(endpoints);
+
+export function createApiClient(baseUrl: string, options?: ZodiosOptions) {
+  return new Zodios(baseUrl, endpoints, options);
+}
+',
+}
+`;

@@ -1,6 +1,7 @@
 import { ReferenceObject, SchemaObject, SchemasObject } from "openapi3-ts";
-import { expect, test } from "vitest";
-import { getOpenApiDependencyGraph } from "../src";
+import { test } from "jsr:@std/testing/bdd";
+import { assertSnapshot } from "jsr:@std/testing/snapshot";
+import { getOpenApiDependencyGraph } from "../src/index.ts";
 
 const makeOpenApiDoc = (schemas: SchemasObject, responseSchema: SchemaObject | ReferenceObject) => ({
     openapi: "3.0.3",
@@ -18,7 +19,7 @@ const makeOpenApiDoc = (schemas: SchemasObject, responseSchema: SchemaObject | R
     components: { schemas },
 });
 
-test("deps-graph-with-additionalProperties", async () => {
+test("deps-graph-with-additionalProperties", async (t) => {
     const schemas = {
         ResponseItem: {
             type: "object",
@@ -44,21 +45,5 @@ test("deps-graph-with-additionalProperties", async () => {
     } as SchemasObject;
     const openApiDoc = makeOpenApiDoc(schemas, { $ref: "ResponsesMap" });
     const getSchemaByRef = (ref: string) => schemas[ref];
-    expect(getOpenApiDependencyGraph(Object.keys(openApiDoc.components.schemas), getSchemaByRef))
-        .toMatchInlineSnapshot(`
-          {
-              "deepDependencyGraph": {
-                  "ResponsesMap": Set {
-                      "Something",
-                      "ResponseItem",
-                  },
-              },
-              "refsDependencyGraph": {
-                  "ResponsesMap": Set {
-                      "Something",
-                      "ResponseItem",
-                  },
-              },
-          }
-        `);
+    await assertSnapshot(t, getOpenApiDependencyGraph(Object.keys(openApiDoc.components.schemas), getSchemaByRef));
 });

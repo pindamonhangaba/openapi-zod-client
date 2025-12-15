@@ -1,0 +1,22 @@
+export const snapshot = {};
+
+snapshot[`determines which one is-main-response 1`] = `
+'import { makeApi, Zodios, type ZodiosOptions } from "@franklin-ai/zodios";
+import { z } from "zod";
+
+const endpoints = makeApi([
+  {
+    method: "get",
+    path: "/example",
+    requestFormat: "json",
+    response: z.number(),
+  },
+]);
+
+export const api = new Zodios(endpoints);
+
+export function createApiClient(baseUrl: string, options?: ZodiosOptions) {
+  return new Zodios(baseUrl, endpoints, options);
+}
+'
+`;

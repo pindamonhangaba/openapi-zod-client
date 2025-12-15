@@ -1,9 +1,10 @@
 import type { OpenAPIObject } from "openapi3-ts";
-import { expect, test } from "vitest";
-import { generateZodClientFromOpenAPI } from "../src";
+import { test } from "jsr:@std/testing/bdd";
+import { assertSnapshot } from "jsr:@std/testing/snapshot";
+import { generateZodClientFromOpenAPI } from "../src/index.ts";
 
 // https://github.com/astahmer/openapi-zod-client/issues/78
-test("common-parameters", async () => {
+test("common-parameters", async (t) => {
     const openApiDoc: OpenAPIObject = {
         openapi: "3.0.3",
         info: { title: "Swagger Petstore - OpenAPI 3.0", version: "1.0.11" },
@@ -43,59 +44,5 @@ test("common-parameters", async () => {
     };
 
     const output = await generateZodClientFromOpenAPI({ disableWriteToFile: true, openApiDoc });
-    expect(output).toMatchInlineSnapshot(`
-      "import { makeApi, Zodios, type ZodiosOptions } from "@franklin-ai/zodios";
-      import { z } from "zod";
-
-      const endpoints = makeApi([
-        {
-          method: "put",
-          path: "/pet",
-          requestFormat: "json",
-          parameters: [
-            {
-              name: "petId",
-              type: "Query",
-              schema: z.number(),
-            },
-            {
-              name: "otherParam",
-              type: "Query",
-              schema: z.number().optional(),
-            },
-            {
-              name: "personId",
-              type: "Query",
-              schema: z.number(),
-            },
-          ],
-          response: z.string(),
-        },
-        {
-          method: "post",
-          path: "/pet",
-          requestFormat: "json",
-          parameters: [
-            {
-              name: "petId",
-              type: "Query",
-              schema: z.string(),
-            },
-            {
-              name: "otherParam",
-              type: "Query",
-              schema: z.number().optional(),
-            },
-          ],
-          response: z.boolean(),
-        },
-      ]);
-
-      export const api = new Zodios(endpoints);
-
-      export function createApiClient(baseUrl: string, options?: ZodiosOptions) {
-        return new Zodios(baseUrl, endpoints, options);
-      }
-      "
-    `);
+    await assertSnapshot(t, output);
 });

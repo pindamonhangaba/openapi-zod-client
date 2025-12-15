@@ -1,0 +1,53 @@
+export const snapshot = {};
+
+snapshot[`defaut-status-behavior 1`] = `
+[
+  {
+    description: undefined,
+    errors: [],
+    method: "get",
+    parameters: [],
+    path: "/with-default-error",
+    requestFormat: "json",
+    response: "z.number()",
+  },
+  {
+    description: undefined,
+    errors: [],
+    method: "get",
+    parameters: [],
+    path: "/with-default-response",
+    requestFormat: "json",
+    response: "z.void()",
+  },
+]
+`;
+
+snapshot[`defaut-status-behavior 2`] = `
+[
+  {
+    description: undefined,
+    errors: [
+      {
+        description: undefined,
+        schema: "z.string()",
+        status: "default",
+      },
+    ],
+    method: "get",
+    parameters: [],
+    path: "/with-default-error",
+    requestFormat: "json",
+    response: "z.number()",
+  },
+  {
+    description: undefined,
+    errors: [],
+    method: "get",
+    parameters: [],
+    path: "/with-default-response",
+    requestFormat: "json",
+    response: "z.string()",
+  },
+]
+`;

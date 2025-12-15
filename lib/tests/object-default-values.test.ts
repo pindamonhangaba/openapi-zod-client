@@ -1,9 +1,11 @@
 import type { OpenAPIObject } from "openapi3-ts";
-import { expect, test } from "vitest";
-import { generateZodClientFromOpenAPI } from "../src";
+import { test } from "jsr:@std/testing/bdd";
+
+import { assertSnapshot } from "jsr:@std/testing/snapshot";
+import { generateZodClientFromOpenAPI } from "../src/index.ts";
 
 // https://github.com/astahmer/openapi-zod-client/issues/61
-test("object-default-values", async () => {
+test("object-default-values", async (t) => {
     const openApiDoc: OpenAPIObject = {
         openapi: "3.0.0",
         info: {
@@ -68,63 +70,5 @@ test("object-default-values", async () => {
     };
 
     const output = await generateZodClientFromOpenAPI({ disableWriteToFile: true, openApiDoc });
-    expect(output).toMatchInlineSnapshot(`
-      "import { makeApi, Zodios, type ZodiosOptions } from "@franklin-ai/zodios";
-      import { z } from "zod";
-
-      const MyComponent = z
-        .object({ id: z.number(), name: z.string() })
-        .partial()
-        .passthrough();
-
-      export const schemas = {
-        MyComponent,
-      };
-
-      const endpoints = makeApi([
-        {
-          method: "get",
-          path: "/sample",
-          requestFormat: "json",
-          parameters: [
-            {
-              name: "empty-object",
-              type: "Query",
-              schema: z
-                .object({ foo: z.string() })
-                .partial()
-                .passthrough()
-                .optional()
-                .default({}),
-            },
-            {
-              name: "default-object",
-              type: "Query",
-              schema: z
-                .object({ foo: z.string() })
-                .partial()
-                .passthrough()
-                .optional()
-                .default({ foo: "bar" }),
-            },
-            {
-              name: "ref-object",
-              type: "Query",
-              schema: z
-                .record(z.string(), MyComponent)
-                .optional()
-                .default({ id: 1, name: "foo" }),
-            },
-          ],
-          response: z.void(),
-        },
-      ]);
-
-      export const api = new Zodios(endpoints);
-
-      export function createApiClient(baseUrl: string, options?: ZodiosOptions) {
-        return new Zodios(baseUrl, endpoints, options);
-      }
-      "
-    `);
+    await assertSnapshot(t, output);
 });

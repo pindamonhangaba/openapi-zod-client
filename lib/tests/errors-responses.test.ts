@@ -1,8 +1,9 @@
 import { SchemasObject } from "openapi3-ts";
-import { expect, it } from "vitest";
-import { generateZodClientFromOpenAPI } from "../src";
+import { test } from "jsr:@std/testing/bdd";
+import { assertSnapshot } from "jsr:@std/testing/snapshot";
+import { generateZodClientFromOpenAPI } from "../src/index.ts";
 
-it("includes errors-responses", async () => {
+test("includes errors-responses", async (t) => {
     const schemas = {
         Main: {
             type: "object",
@@ -52,41 +53,10 @@ it("includes errors-responses", async () => {
 
     const result = await generateZodClientFromOpenAPI({ openApiDoc, disableWriteToFile: true });
 
-    expect(result).toMatchInlineSnapshot(`
-      "import { makeApi, Zodios, type ZodiosOptions } from "@franklin-ai/zodios";
-      import { z } from "zod";
-
-      const endpoints = makeApi([
-        {
-          method: "get",
-          path: "/example",
-          requestFormat: "json",
-          response: z.object({ str: z.string(), nb: z.number() }).passthrough(),
-          errors: [
-            {
-              status: 400,
-              description: \`Bad request\`,
-              schema: z.object({ is400: z.boolean() }).partial().passthrough(),
-            },
-            {
-              status: 500,
-              description: \`Internal server error\`,
-              schema: z.string(),
-            },
-          ],
-        },
-      ]);
-
-      export const api = new Zodios(endpoints);
-
-      export function createApiClient(baseUrl: string, options?: ZodiosOptions) {
-        return new Zodios(baseUrl, endpoints, options);
-      }
-      "
-    `);
+    await assertSnapshot(t, result);
 });
 
-it("determines which status are considered errors-responses", async () => {
+test("determines which status are considered errors-responses", async (t) => {
     const schemas = {
         Main: {
             type: "object",
@@ -166,121 +136,13 @@ it("determines which status are considered errors-responses", async () => {
         openApiDoc,
     });
 
-    expect(result).toMatchInlineSnapshot(`
-      "import { makeApi, Zodios, type ZodiosOptions } from "@franklin-ai/zodios";
-      import { z } from "zod";
+    await assertSnapshot(t, result);
 
-      const VeryDeeplyNested = z.enum(["aaa", "bbb", "ccc"]);
-      const DeeplyNested = z.array(VeryDeeplyNested);
-      const Main = z.object({ str: z.string(), nb: z.number() }).passthrough();
-      const Nested = z
-        .object({
-          nested_prop: z.boolean().optional(),
-          deeplyNested: DeeplyNested.optional(),
-          circularToMain: Main.optional(),
-          requiredProp: z.string(),
-        })
-        .passthrough();
-
-      export const schemas = {
-        VeryDeeplyNested,
-        DeeplyNested,
-        Main,
-        Nested,
-      };
-
-      const endpoints = makeApi([
-        {
-          method: "get",
-          path: "/example",
-          requestFormat: "json",
-          response: z.object({ str: z.string(), nb: z.number() }).passthrough(),
-          errors: [
-            {
-              status: 400,
-              description: \`Bad request\`,
-              schema: z
-                .object({ is400: z.boolean(), nested: Nested })
-                .partial()
-                .passthrough(),
-            },
-            {
-              status: 500,
-              description: \`Internal server error\`,
-              schema: z.string(),
-            },
-          ],
+    await assertSnapshot(t, await generateZodClientFromOpenAPI({
+        disableWriteToFile: true,
+        options: {
+            isErrorStatus: (status) => status === 400 || status === 500,
         },
-      ]);
-
-      export const api = new Zodios(endpoints);
-
-      export function createApiClient(baseUrl: string, options?: ZodiosOptions) {
-        return new Zodios(baseUrl, endpoints, options);
-      }
-      "
-    `);
-
-    expect(
-        await generateZodClientFromOpenAPI({
-            disableWriteToFile: true,
-            options: {
-                isErrorStatus: (status) => status === 400 || status === 500,
-            },
-            openApiDoc,
-        })
-    ).toMatchInlineSnapshot(`
-      "import { makeApi, Zodios, type ZodiosOptions } from "@franklin-ai/zodios";
-      import { z } from "zod";
-
-      const VeryDeeplyNested = z.enum(["aaa", "bbb", "ccc"]);
-      const DeeplyNested = z.array(VeryDeeplyNested);
-      const Main = z.object({ str: z.string(), nb: z.number() }).passthrough();
-      const Nested = z
-        .object({
-          nested_prop: z.boolean().optional(),
-          deeplyNested: DeeplyNested.optional(),
-          circularToMain: Main.optional(),
-          requiredProp: z.string(),
-        })
-        .passthrough();
-
-      export const schemas = {
-        VeryDeeplyNested,
-        DeeplyNested,
-        Main,
-        Nested,
-      };
-
-      const endpoints = makeApi([
-        {
-          method: "get",
-          path: "/example",
-          requestFormat: "json",
-          response: z.object({ str: z.string(), nb: z.number() }).passthrough(),
-          errors: [
-            {
-              status: 400,
-              description: \`Bad request\`,
-              schema: z
-                .object({ is400: z.boolean(), nested: Nested })
-                .partial()
-                .passthrough(),
-            },
-            {
-              status: 500,
-              description: \`Internal server error\`,
-              schema: z.string(),
-            },
-          ],
-        },
-      ]);
-
-      export const api = new Zodios(endpoints);
-
-      export function createApiClient(baseUrl: string, options?: ZodiosOptions) {
-        return new Zodios(baseUrl, endpoints, options);
-      }
-      "
-    `);
+        openApiDoc,
+    }));
 });

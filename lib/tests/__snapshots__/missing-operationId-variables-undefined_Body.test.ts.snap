@@ -1,0 +1,22 @@
+export const snapshot = {};
+
+snapshot[`missing operationId outputs variables['undefined_Body'] 1`] = `
+[
+  {
+    description: undefined,
+    errors: [],
+    method: "put",
+    parameters: [
+      {
+        description: undefined,
+        name: "body",
+        schema: "z.string()",
+        type: "Body",
+      },
+    ],
+    path: "/media-objects/:id",
+    requestFormat: "json",
+    response: "z.string()",
+  },
+]
+`;

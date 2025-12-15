@@ -1,8 +1,9 @@
 import { OpenAPIObject } from "openapi3-ts";
-import { expect, test } from "vitest";
-import { generateZodClientFromOpenAPI, getZodClientTemplateContext } from "../src";
+import { test } from "jsr:@std/testing/bdd";
+import { assertSnapshot } from "jsr:@std/testing/snapshot";
+import { generateZodClientFromOpenAPI, getZodClientTemplateContext } from "../src/index.ts";
 
-test("inline-simple-schemas", async () => {
+test("inline-simple-schemas", async (t) => {
     const openApiDoc: OpenAPIObject = {
         openapi: "3.0.3",
         info: { version: "1", title: "Example API" },
@@ -121,78 +122,5 @@ test("inline-simple-schemas", async () => {
     };
 
     const ctx = await generateZodClientFromOpenAPI({ openApiDoc, disableWriteToFile: true });
-    expect(ctx).toMatchInlineSnapshot(`
-      "import { makeApi, Zodios, type ZodiosOptions } from "@franklin-ai/zodios";
-      import { z } from "zod";
-
-      const BasicString = z.string();
-      const SimpleObject = z.object({ str: z.string() }).partial().passthrough();
-      const ComplexObject = z
-        .object({
-          str: z.string(),
-          strRef: BasicString,
-          num: z.number(),
-          bool: z.boolean(),
-          ref: SimpleObject,
-          refArray: z.array(SimpleObject),
-        })
-        .partial()
-        .passthrough();
-
-      export const schemas = {
-        BasicString,
-        SimpleObject,
-        ComplexObject,
-      };
-
-      const endpoints = makeApi([
-        {
-          method: "get",
-          path: "/inline-simple-schemas",
-          requestFormat: "json",
-          response: z.string(),
-          errors: [
-            {
-              status: 400,
-              schema: z.enum(["xxx", "yyy", "zzz"]),
-            },
-            {
-              status: 401,
-              schema: z.enum(["xxx", "yyy", "zzz"]),
-            },
-            {
-              status: 402,
-              schema: z.array(z.string()),
-            },
-            {
-              status: 403,
-              schema: z.object({ str: z.string() }).partial().passthrough(),
-            },
-            {
-              status: 404,
-              schema: z.object({ str: z.string() }).partial().passthrough(),
-            },
-            {
-              status: 405,
-              schema: z.array(SimpleObject),
-            },
-            {
-              status: 406,
-              schema: z.array(z.object({ str: z.string() }).partial().passthrough()),
-            },
-            {
-              status: 407,
-              schema: z.array(ComplexObject),
-            },
-          ],
-        },
-      ]);
-
-      export const api = new Zodios(endpoints);
-
-      export function createApiClient(baseUrl: string, options?: ZodiosOptions) {
-        return new Zodios(baseUrl, endpoints, options);
-      }
-      "
-    `);
+    await assertSnapshot(t, ctx);
 });

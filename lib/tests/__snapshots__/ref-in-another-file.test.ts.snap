@@ -1,0 +1,30 @@
+export const snapshot = {};
+
+snapshot[`ref-in-another-file 1`] = `
+{
+  deepDependencyGraph: {},
+  endpoints: [
+    {
+      description: "Gets robots.txt",
+      errors: [],
+      method: "get",
+      parameters: [],
+      path: "/robots.txt",
+      requestFormat: "json",
+      response: 'z.object({ name: z.string(), completed: z.boolean(), "0_property_starting_with_number": z.number() }).passthrough()',
+    },
+  ],
+  issues: {
+    ignoredFallbackResponse: [],
+    ignoredGenericError: [],
+  },
+  refsDependencyGraph: {},
+  resolver: {
+    getSchemaByRef: [Function: getSchemaByRef],
+    resolveRef: [Function: resolveRef],
+    resolveSchemaName: [Function: resolveSchemaName],
+  },
+  schemaByName: {},
+  zodSchemaByName: {},
+}
+`;

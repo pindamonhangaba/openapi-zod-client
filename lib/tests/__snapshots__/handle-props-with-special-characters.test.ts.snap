@@ -1,0 +1,78 @@
+export const snapshot = {};
+
+snapshot[`handle-props-with-special-characters 1`] = `
+<ref *1> CodeMeta {
+  children: [
+    CodeMeta {
+      children: [],
+      code: "z.string()",
+      ctx: undefined,
+      meta: {
+        isRequired: true,
+        name: "@id",
+        parent: [Circular *1],
+        referencedBy: [],
+      },
+      ref: undefined,
+      schema: {
+        type: "string",
+      },
+    },
+    CodeMeta {
+      children: [],
+      code: "z.number()",
+      ctx: undefined,
+      meta: {
+        isRequired: true,
+        name: "id",
+        parent: [Circular *1],
+        referencedBy: [],
+      },
+      ref: undefined,
+      schema: {
+        type: "number",
+      },
+    },
+  ],
+  code: 'z.object({ "@id": z.string(), id: z.number() }).partial().passthrough()',
+  ctx: undefined,
+  meta: {
+    referencedBy: [],
+  },
+  ref: undefined,
+  schema: {
+    properties: {
+      "@id": {
+        type: "string",
+      },
+      id: {
+        type: "number",
+      },
+    },
+  },
+}
+`;
+
+snapshot[`handle-props-with-special-characters 2`] = `
+'import { makeApi, Zodios, type ZodiosOptions } from "@franklin-ai/zodios";
+import { z } from "zod";
+
+const endpoints = makeApi([
+  {
+    method: "get",
+    path: "/something",
+    requestFormat: "json",
+    response: z
+      .object({ "@id": z.string(), id: z.number() })
+      .partial()
+      .passthrough(),
+  },
+]);
+
+export const api = new Zodios(endpoints);
+
+export function createApiClient(baseUrl: string, options?: ZodiosOptions) {
+  return new Zodios(baseUrl, endpoints, options);
+}
+'
+`;

@@ -1,9 +1,11 @@
 import type { OpenAPIObject } from "openapi3-ts";
-import { expect, test } from "vitest";
-import { generateZodClientFromOpenAPI } from "../src";
+import { test } from "jsr:@std/testing/bdd";
+import { expect } from "jsr:@std/expect";
+import { assertSnapshot } from "jsr:@std/testing/snapshot";
+import { generateZodClientFromOpenAPI } from "../src/index.ts";
 
 // https://github.com/astahmer/openapi-zod-client/issues/49
-test("missing-zod-chains", async () => {
+test("missing-zod-chains", async (t) => {
     const openApiDoc: OpenAPIObject = {
         openapi: "3.0.0",
         info: { title: "Schema test", version: "1.0.0" },
@@ -55,67 +57,5 @@ test("missing-zod-chains", async () => {
     };
 
     const output = await generateZodClientFromOpenAPI({ disableWriteToFile: true, openApiDoc });
-    expect(output).toMatchInlineSnapshot(`
-      "import { makeApi, Zodios, type ZodiosOptions } from "@franklin-ai/zodios";
-      import { z } from "zod";
-
-      const test1 = z.string();
-      const test2 = z.number();
-      const test3 = z
-        .object({ text: z.string().min(5), num: z.number().int().gte(10) })
-        .passthrough();
-      const nulltype = z.object({}).partial().passthrough();
-      const anyOfType = z.union([
-        z.object({}).partial().passthrough(),
-        z.object({ foo: z.string() }).partial().passthrough(),
-      ]);
-
-      export const schemas = {
-        test1,
-        test2,
-        test3,
-        nulltype,
-        anyOfType,
-      };
-
-      const endpoints = makeApi([
-        {
-          method: "put",
-          path: "/pet",
-          requestFormat: "json",
-          response: z.string().min(5),
-          errors: [
-            {
-              status: 401,
-              description: \`Successful operation\`,
-              schema: z.number().int().gte(10),
-            },
-            {
-              status: 402,
-              description: \`Successful operation\`,
-              schema: z
-                .object({ text: z.string().min(5), num: z.number().int().gte(10) })
-                .passthrough(),
-            },
-            {
-              status: 403,
-              description: \`Successful operation\`,
-              schema: z.object({}).partial().passthrough().nullable(),
-            },
-            {
-              status: 404,
-              description: \`Successful operation\`,
-              schema: anyOfType,
-            },
-          ],
-        },
-      ]);
-
-      export const api = new Zodios(endpoints);
-
-      export function createApiClient(baseUrl: string, options?: ZodiosOptions) {
-        return new Zodios(baseUrl, endpoints, options);
-      }
-      "
-    `);
+    await assertSnapshot(t, output);
 });

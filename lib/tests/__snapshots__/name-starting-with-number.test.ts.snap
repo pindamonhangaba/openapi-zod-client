@@ -1,0 +1,43 @@
+export const snapshot = {};
+
+snapshot[`operationId-starting-with-number 1`] = `
+[
+  {
+    description: undefined,
+    errors: [],
+    method: "get",
+    parameters: [],
+    path: "/operationId-starting-with-number",
+    requestFormat: "json",
+    response: "z.string()",
+  },
+]
+`;
+
+snapshot[`operationId-starting-with-number 2`] = `
+'import { makeApi, Zodios, type ZodiosOptions } from "@franklin-ai/zodios";
+import { z } from "zod";
+
+const Basic = z.string();
+
+export const schemas = {
+  Basic,
+};
+
+const endpoints = makeApi([
+  {
+    method: "get",
+    path: "/operationId-starting-with-number",
+    alias: "123_example",
+    requestFormat: "json",
+    response: z.string(),
+  },
+]);
+
+export const api = new Zodios(endpoints);
+
+export function createApiClient(baseUrl: string, options?: ZodiosOptions) {
+  return new Zodios(baseUrl, endpoints, options);
+}
+'
+`;

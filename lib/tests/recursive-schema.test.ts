@@ -1,16 +1,18 @@
 import type { SchemaObject, SchemasObject } from "openapi3-ts";
-import { describe, expect, test } from "vitest";
+import { describe, test } from "jsr:@std/testing/bdd";
+import { expect } from "jsr:@std/expect";
+import { assertSnapshot } from "jsr:@std/testing/snapshot";
 import {
     getOpenApiDependencyGraph,
     getZodClientTemplateContext,
     getZodiosEndpointDefinitionList,
     getZodSchema,
-} from "../src";
-import { generateZodClientFromOpenAPI } from "../src/generateZodClientFromOpenAPI";
-import { topologicalSort } from "../src/topologicalSort";
-import type { ConversionTypeContext } from "../src/CodeMeta";
-import { makeSchemaResolver } from "../src/makeSchemaResolver";
-import { asComponentSchema } from "../src/utils";
+} from "../src/index.ts";
+import { generateZodClientFromOpenAPI } from "../src/generateZodClientFromOpenAPI.ts";
+import { topologicalSort } from "../src/topologicalSort.ts";
+import type { ConversionTypeContext } from "../src/CodeMeta.ts";
+import { makeSchemaResolver } from "../src/makeSchemaResolver.ts";
+import { asComponentSchema } from "../src/utils.ts";
 
 // TODO recursive inline response/param ?
 
@@ -39,7 +41,7 @@ describe("recursive-schema", () => {
         },
     } as SchemaObject;
 
-    test("indirect single recursive", async () => {
+    test("indirect single recursive", async (t) => {
         const schemas = {
             User: {
                 type: "object",
@@ -70,103 +72,20 @@ describe("recursive-schema", () => {
             resolver: makeSchemaResolver({ components: { schemas } } as any),
         };
         Object.keys(schemas).forEach((key) => ctx.resolver.getSchemaByRef(asComponentSchema(key)));
-        expect(getZodSchema({ schema: schemas.Root, ctx })).toMatchInlineSnapshot(
-            '"z.object({ recursive: User, basic: z.number() }).partial().passthrough()"'
-        );
-        expect(ctx).toMatchInlineSnapshot(`
-          {
-              "resolver": {
-                  "getSchemaByRef": [Function],
-                  "resolveRef": [Function],
-                  "resolveSchemaName": [Function],
-              },
-              "schemaByName": {},
-              "zodSchemaByName": {
-                  "Middle": "z.object({ user: User }).partial().passthrough()",
-                  "User": "z.object({ name: z.string(), middle: Middle }).partial().passthrough()",
-              },
-          }
-        `);
+        await assertSnapshot(t, getZodSchema({ schema: schemas.Root, ctx }));
+        await assertSnapshot(t, ctx);
 
         const openApiDoc = makeOpenApiDoc(schemas, schemas.Root);
         const depsGraph = getOpenApiDependencyGraph(
             Object.keys(ctx.zodSchemaByName).map((name) => asComponentSchema(name)),
             ctx.resolver.getSchemaByRef
         );
-        expect(depsGraph).toMatchInlineSnapshot(`
-          {
-              "deepDependencyGraph": {
-                  "#/components/schemas/Middle": Set {
-                      "#/components/schemas/User",
-                      "#/components/schemas/Middle",
-                  },
-                  "#/components/schemas/User": Set {
-                      "#/components/schemas/Middle",
-                      "#/components/schemas/User",
-                  },
-              },
-              "refsDependencyGraph": {
-                  "#/components/schemas/Middle": Set {
-                      "#/components/schemas/User",
-                  },
-                  "#/components/schemas/User": Set {
-                      "#/components/schemas/Middle",
-                  },
-              },
-          }
-        `);
+        await assertSnapshot(t, depsGraph);
 
-        expect(topologicalSort(depsGraph.refsDependencyGraph)).toMatchInlineSnapshot(`
-          [
-              "#/components/schemas/User",
-              "#/components/schemas/Middle",
-          ]
-        `);
+        await assertSnapshot(t, topologicalSort(depsGraph.refsDependencyGraph));
 
         const prettyOutput = await generateZodClientFromOpenAPI({ openApiDoc, disableWriteToFile: true });
-        expect(prettyOutput).toMatchInlineSnapshot(`
-          "import { makeApi, Zodios, type ZodiosOptions } from "@franklin-ai/zodios";
-          import { z } from "zod";
-
-          type User = Partial<{
-            name: string;
-            middle: Middle;
-          }>;
-          type Middle = Partial<{
-            user: User;
-          }>;
-
-          const Middle: z.ZodType<Middle> = z.lazy(() =>
-            z.object({ user: User }).partial().passthrough()
-          );
-          const User: z.ZodType<User> = z.lazy(() =>
-            z.object({ name: z.string(), middle: Middle }).partial().passthrough()
-          );
-
-          export const schemas = {
-            Middle,
-            User,
-          };
-
-          const endpoints = makeApi([
-            {
-              method: "get",
-              path: "/example",
-              requestFormat: "json",
-              response: z
-                .object({ recursive: User, basic: z.number() })
-                .partial()
-                .passthrough(),
-            },
-          ]);
-
-          export const api = new Zodios(endpoints);
-
-          export function createApiClient(baseUrl: string, options?: ZodiosOptions) {
-            return new Zodios(baseUrl, endpoints, options);
-          }
-          "
-        `);
+        await assertSnapshot(t, prettyOutput);
     });
 
     const ObjectWithRecursiveArray = {
@@ -192,93 +111,28 @@ describe("recursive-schema", () => {
         },
     } as SchemaObject;
 
-    test("recursive array", () => {
+    test("recursive array", async (t) => {
         const ctx: ConversionTypeContext = {
             zodSchemaByName: {},
             schemaByName: {},
             resolver: makeSchemaResolver({ components: { schemas } } as any),
         };
         Object.keys(schemas).forEach((key) => ctx.resolver.getSchemaByRef(asComponentSchema(key)));
-        expect(getZodSchema({ schema: ResponseSchema, ctx })).toMatchInlineSnapshot(
-            '"z.object({ recursiveRef: ObjectWithRecursiveArray, basic: z.number() }).partial().passthrough()"'
-        );
-        expect(ctx).toMatchInlineSnapshot(`
-          {
-              "resolver": {
-                  "getSchemaByRef": [Function],
-                  "resolveRef": [Function],
-                  "resolveSchemaName": [Function],
-              },
-              "schemaByName": {},
-              "zodSchemaByName": {
-                  "ObjectWithRecursiveArray": "z.object({ isInsideObjectWithRecursiveArray: z.boolean(), array: z.array(ObjectWithRecursiveArray) }).partial().passthrough()",
-              },
-          }
-        `);
+        await assertSnapshot(t, getZodSchema({ schema: ResponseSchema, ctx }));
+        await assertSnapshot(t, ctx);
 
-        expect(getZodiosEndpointDefinitionList(makeOpenApiDoc(schemas2, ResponseSchema))).toMatchInlineSnapshot(`
-          {
-              "deepDependencyGraph": {
-                  "#/components/schemas/ObjectWithRecursiveArray": Set {
-                      "#/components/schemas/ObjectWithRecursiveArray",
-                  },
-              },
-              "endpoints": [
-                  {
-                      "description": undefined,
-                      "errors": [],
-                      "method": "get",
-                      "parameters": [],
-                      "path": "/example",
-                      "requestFormat": "json",
-                      "response": "z.object({ recursiveRef: ObjectWithRecursiveArray, basic: z.number() }).partial().passthrough()",
-                  },
-              ],
-              "issues": {
-                  "ignoredFallbackResponse": [],
-                  "ignoredGenericError": [],
-              },
-              "refsDependencyGraph": {
-                  "#/components/schemas/ObjectWithRecursiveArray": Set {
-                      "#/components/schemas/ObjectWithRecursiveArray",
-                  },
-              },
-              "resolver": {
-                  "getSchemaByRef": [Function],
-                  "resolveRef": [Function],
-                  "resolveSchemaName": [Function],
-              },
-              "schemaByName": {},
-              "zodSchemaByName": {
-                  "ObjectWithRecursiveArray": "z.object({ isInsideObjectWithRecursiveArray: z.boolean(), array: z.array(ObjectWithRecursiveArray) }).partial().passthrough()",
-              },
-          }
-        `);
+        await assertSnapshot(t, getZodiosEndpointDefinitionList(makeOpenApiDoc(schemas2, ResponseSchema)));
     });
 
-    test("direct recursive", () => {
+    test("direct recursive", async (t) => {
         const ctx: ConversionTypeContext = {
             zodSchemaByName: {},
             schemaByName: {},
             resolver: makeSchemaResolver({ components: { schemas } } as any),
         };
         Object.keys(schemas).forEach((key) => ctx.resolver.getSchemaByRef(asComponentSchema(key)));
-        expect(getZodSchema({ schema: UserSchema, ctx })).toMatchInlineSnapshot(
-            '"z.object({ name: z.string(), parent: User }).partial().passthrough()"'
-        );
-        expect(ctx).toMatchInlineSnapshot(`
-          {
-              "resolver": {
-                  "getSchemaByRef": [Function],
-                  "resolveRef": [Function],
-                  "resolveSchemaName": [Function],
-              },
-              "schemaByName": {},
-              "zodSchemaByName": {
-                  "User": "z.object({ name: z.string(), parent: User }).partial().passthrough()",
-              },
-          }
-        `);
+        await assertSnapshot(t, getZodSchema({ schema: UserSchema, ctx }));
+        await assertSnapshot(t, ctx);
     });
 
     const UserWithFriends = {
@@ -301,14 +155,14 @@ describe("recursive-schema", () => {
     } as SchemaObject;
     const schemas = { User: UserSchema, UserWithFriends, Friend, ResponseSchema, ObjectWithRecursiveArray };
 
-    test("multiple recursive in one root schema", async () => {
+    test("multiple recursive in one root schema", async (t) => {
         const ctx: ConversionTypeContext = {
             zodSchemaByName: {},
             schemaByName: {},
             resolver: makeSchemaResolver({ components: { schemas } } as any),
         };
         Object.keys(schemas).forEach((key) => ctx.resolver.getSchemaByRef(asComponentSchema(key)));
-        expect(
+        await assertSnapshot(t,
             getZodSchema({
                 schema: {
                     type: "object",
@@ -321,23 +175,8 @@ describe("recursive-schema", () => {
                 },
                 ctx,
             })
-        ).toMatchInlineSnapshot(
-            '"z.object({ recursiveUser: UserWithFriends, basic: z.number() }).partial().passthrough()"'
         );
-        expect(ctx).toMatchInlineSnapshot(`
-          {
-              "resolver": {
-                  "getSchemaByRef": [Function],
-                  "resolveRef": [Function],
-                  "resolveSchemaName": [Function],
-              },
-              "schemaByName": {},
-              "zodSchemaByName": {
-                  "Friend": "z.object({ nickname: z.string(), user: UserWithFriends, circle: z.array(Friend) }).partial().passthrough()",
-                  "UserWithFriends": "z.object({ name: z.string(), parent: UserWithFriends, friends: z.array(Friend), bestFriend: Friend }).partial().passthrough()",
-              },
-          }
-        `);
+        await assertSnapshot(t, ctx);
 
         const openApiDoc = makeOpenApiDoc(schemas, {
             type: "object",
@@ -349,205 +188,16 @@ describe("recursive-schema", () => {
             },
         });
 
-        expect(getZodiosEndpointDefinitionList(openApiDoc)).toMatchInlineSnapshot(`
-          {
-              "deepDependencyGraph": {
-                  "#/components/schemas/Friend": Set {
-                      "#/components/schemas/UserWithFriends",
-                      "#/components/schemas/Friend",
-                  },
-                  "#/components/schemas/ObjectWithRecursiveArray": Set {
-                      "#/components/schemas/ObjectWithRecursiveArray",
-                  },
-                  "#/components/schemas/ResponseSchema": Set {
-                      "#/components/schemas/ObjectWithRecursiveArray",
-                  },
-                  "#/components/schemas/User": Set {
-                      "#/components/schemas/User",
-                  },
-                  "#/components/schemas/UserWithFriends": Set {
-                      "#/components/schemas/UserWithFriends",
-                      "#/components/schemas/Friend",
-                  },
-              },
-              "endpoints": [
-                  {
-                      "description": undefined,
-                      "errors": [],
-                      "method": "get",
-                      "parameters": [],
-                      "path": "/example",
-                      "requestFormat": "json",
-                      "response": "z.object({ someUser: UserWithFriends, someProp: z.boolean() }).partial().passthrough()",
-                  },
-              ],
-              "issues": {
-                  "ignoredFallbackResponse": [],
-                  "ignoredGenericError": [],
-              },
-              "refsDependencyGraph": {
-                  "#/components/schemas/Friend": Set {
-                      "#/components/schemas/UserWithFriends",
-                      "#/components/schemas/Friend",
-                  },
-                  "#/components/schemas/ObjectWithRecursiveArray": Set {
-                      "#/components/schemas/ObjectWithRecursiveArray",
-                  },
-                  "#/components/schemas/ResponseSchema": Set {
-                      "#/components/schemas/ObjectWithRecursiveArray",
-                  },
-                  "#/components/schemas/User": Set {
-                      "#/components/schemas/User",
-                  },
-                  "#/components/schemas/UserWithFriends": Set {
-                      "#/components/schemas/UserWithFriends",
-                      "#/components/schemas/Friend",
-                  },
-              },
-              "resolver": {
-                  "getSchemaByRef": [Function],
-                  "resolveRef": [Function],
-                  "resolveSchemaName": [Function],
-              },
-              "schemaByName": {},
-              "zodSchemaByName": {
-                  "Friend": "z.object({ nickname: z.string(), user: UserWithFriends, circle: z.array(Friend) }).partial().passthrough()",
-                  "UserWithFriends": "z.object({ name: z.string(), parent: UserWithFriends, friends: z.array(Friend), bestFriend: Friend }).partial().passthrough()",
-              },
-          }
-        `);
+        await assertSnapshot(t, getZodiosEndpointDefinitionList(openApiDoc));
 
         const templateCtx = getZodClientTemplateContext(openApiDoc);
-        expect(templateCtx).toMatchInlineSnapshot(`
-          {
-              "circularTypeByName": {
-                  "Friend": true,
-                  "UserWithFriends": true,
-              },
-              "emittedType": {
-                  "Friend": true,
-                  "ObjectWithRecursiveArray": true,
-                  "User": true,
-                  "UserWithFriends": true,
-              },
-              "endpoints": [
-                  {
-                      "description": undefined,
-                      "errors": [],
-                      "method": "get",
-                      "parameters": [],
-                      "path": "/example",
-                      "requestFormat": "json",
-                      "response": "z.object({ someUser: UserWithFriends, someProp: z.boolean() }).partial().passthrough()",
-                  },
-              ],
-              "endpointsGroups": {},
-              "options": {
-                  "baseUrl": "",
-                  "withAlias": false,
-              },
-              "schemas": {
-                  "Friend": "z.lazy(() => z.object({ nickname: z.string(), user: UserWithFriends, circle: z.array(Friend) }).partial().passthrough())",
-                  "UserWithFriends": "z.lazy(() => z.object({ name: z.string(), parent: UserWithFriends, friends: z.array(Friend), bestFriend: Friend }).partial().passthrough())",
-              },
-              "types": {
-                  "Friend": "type Friend = Partial<{
-              nickname: string;
-              user: UserWithFriends;
-              circle: Array<Friend>;
-          }>;",
-                  "ObjectWithRecursiveArray": "type ObjectWithRecursiveArray = Partial<{
-              isInsideObjectWithRecursiveArray: boolean;
-              array: Array<ObjectWithRecursiveArray>;
-          }>;",
-                  "User": "type User = Partial<{
-              name: string;
-              parent: User;
-          }>;",
-                  "UserWithFriends": "type UserWithFriends = Partial<{
-              name: string;
-              parent: UserWithFriends;
-              friends: Array<Friend>;
-              bestFriend: Friend;
-          }>;",
-              },
-          }
-        `);
+        await assertSnapshot(t, templateCtx);
 
         const prettyOutput = await generateZodClientFromOpenAPI({ openApiDoc, disableWriteToFile: true });
-        expect(prettyOutput).toMatchInlineSnapshot(`
-          "import { makeApi, Zodios, type ZodiosOptions } from "@franklin-ai/zodios";
-          import { z } from "zod";
-
-          type User = Partial<{
-            name: string;
-            parent: User;
-          }>;
-          type UserWithFriends = Partial<{
-            name: string;
-            parent: UserWithFriends;
-            friends: Array<Friend>;
-            bestFriend: Friend;
-          }>;
-          type Friend = Partial<{
-            nickname: string;
-            user: UserWithFriends;
-            circle: Array<Friend>;
-          }>;
-          type ObjectWithRecursiveArray = Partial<{
-            isInsideObjectWithRecursiveArray: boolean;
-            array: Array<ObjectWithRecursiveArray>;
-          }>;
-
-          const Friend: z.ZodType<Friend> = z.lazy(() =>
-            z
-              .object({
-                nickname: z.string(),
-                user: UserWithFriends,
-                circle: z.array(Friend),
-              })
-              .partial()
-              .passthrough()
-          );
-          const UserWithFriends: z.ZodType<UserWithFriends> = z.lazy(() =>
-            z
-              .object({
-                name: z.string(),
-                parent: UserWithFriends,
-                friends: z.array(Friend),
-                bestFriend: Friend,
-              })
-              .partial()
-              .passthrough()
-          );
-
-          export const schemas = {
-            Friend,
-            UserWithFriends,
-          };
-
-          const endpoints = makeApi([
-            {
-              method: "get",
-              path: "/example",
-              requestFormat: "json",
-              response: z
-                .object({ someUser: UserWithFriends, someProp: z.boolean() })
-                .partial()
-                .passthrough(),
-            },
-          ]);
-
-          export const api = new Zodios(endpoints);
-
-          export function createApiClient(baseUrl: string, options?: ZodiosOptions) {
-            return new Zodios(baseUrl, endpoints, options);
-          }
-          "
-        `);
+        await assertSnapshot(t, prettyOutput);
     });
 
-    test("recursive schema with $ref to another simple schema should still generate and output that simple schema and its dependencies", async () => {
+    test("recursive schema with $ref to another simple schema should still generate and output that simple schema and its dependencies", async (t) => {
         const Playlist = {
             type: "object",
             properties: {
@@ -596,98 +246,11 @@ describe("recursive-schema", () => {
                 by_author: { $ref: "#/components/schemas/Author" },
             },
         } as SchemaObject;
-        expect(getZodSchema({ schema: RootSchema, ctx })).toMatchInlineSnapshot(
-            '"z.object({ playlist: Playlist, by_author: Author }).partial().passthrough()"'
-        );
-        expect(ctx).toMatchInlineSnapshot(`
-          {
-              "resolver": {
-                  "getSchemaByRef": [Function],
-                  "resolveRef": [Function],
-                  "resolveSchemaName": [Function],
-              },
-              "schemaByName": {},
-              "zodSchemaByName": {
-                  "Author": "z.object({ name: z.string(), mail: z.string(), settings: Settings }).partial().passthrough()",
-                  "Playlist": "z.object({ name: z.string(), author: Author, songs: z.array(Song) }).partial().passthrough()",
-                  "Settings": "z.object({ theme_color: z.string() }).partial().passthrough()",
-                  "Song": "z.object({ name: z.string(), duration: z.number(), in_playlists: z.array(Playlist) }).partial().passthrough()",
-              },
-          }
-        `);
+        await assertSnapshot(t, getZodSchema({ schema: RootSchema, ctx }));
+        await assertSnapshot(t, ctx);
 
         const openApiDoc = makeOpenApiDoc(schemas, RootSchema);
         const prettyOutput = await generateZodClientFromOpenAPI({ openApiDoc, disableWriteToFile: true });
-        expect(prettyOutput).toMatchInlineSnapshot(`
-          "import { makeApi, Zodios, type ZodiosOptions } from "@franklin-ai/zodios";
-          import { z } from "zod";
-
-          type Playlist = Partial<{
-            name: string;
-            author: Author;
-            songs: Array<Song>;
-          }>;
-          type Author = Partial<{
-            name: string;
-            mail: string;
-            settings: Settings;
-          }>;
-          type Settings = Partial<{
-            theme_color: string;
-          }>;
-          type Song = Partial<{
-            name: string;
-            duration: number;
-            in_playlists: Array<Playlist>;
-          }>;
-
-          const Settings = z.object({ theme_color: z.string() }).partial().passthrough();
-          const Author = z
-            .object({ name: z.string(), mail: z.string(), settings: Settings })
-            .partial()
-            .passthrough();
-          const Song: z.ZodType<Song> = z.lazy(() =>
-            z
-              .object({
-                name: z.string(),
-                duration: z.number(),
-                in_playlists: z.array(Playlist),
-              })
-              .partial()
-              .passthrough()
-          );
-          const Playlist: z.ZodType<Playlist> = z.lazy(() =>
-            z
-              .object({ name: z.string(), author: Author, songs: z.array(Song) })
-              .partial()
-              .passthrough()
-          );
-
-          export const schemas = {
-            Settings,
-            Author,
-            Song,
-            Playlist,
-          };
-
-          const endpoints = makeApi([
-            {
-              method: "get",
-              path: "/example",
-              requestFormat: "json",
-              response: z
-                .object({ playlist: Playlist, by_author: Author })
-                .partial()
-                .passthrough(),
-            },
-          ]);
-
-          export const api = new Zodios(endpoints);
-
-          export function createApiClient(baseUrl: string, options?: ZodiosOptions) {
-            return new Zodios(baseUrl, endpoints, options);
-          }
-          "
-        `);
+        await assertSnapshot(t, prettyOutput);
     });
 });

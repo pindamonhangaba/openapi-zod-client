@@ -1,0 +1,60 @@
+export const snapshot = {};
+
+snapshot[`export-schemas-option 1`] = `
+{
+  Basic: "z.string()",
+}
+`;
+
+snapshot[`export-schemas-option 2`] = `
+[
+  {
+    description: undefined,
+    errors: [],
+    method: "get",
+    parameters: [],
+    path: "/export-schemas-option",
+    requestFormat: "json",
+    response: "z.string()",
+  },
+]
+`;
+
+snapshot[`export-schemas-option 3`] = `
+{
+  Basic: "z.string()",
+  UnusedSchemas: "z.object({ nested_prop: z.boolean(), another: z.string() }).partial().passthrough()",
+}
+`;
+
+snapshot[`export-schemas-option 4`] = `
+'import { makeApi, Zodios, type ZodiosOptions } from "@franklin-ai/zodios";
+import { z } from "zod";
+
+const Basic = z.string();
+const UnusedSchemas = z
+  .object({ nested_prop: z.boolean(), another: z.string() })
+  .partial()
+  .passthrough();
+
+export const schemas = {
+  Basic,
+  UnusedSchemas,
+};
+
+const endpoints = makeApi([
+  {
+    method: "get",
+    path: "/export-schemas-option",
+    requestFormat: "json",
+    response: z.string(),
+  },
+]);
+
+export const api = new Zodios(endpoints);
+
+export function createApiClient(baseUrl: string, options?: ZodiosOptions) {
+  return new Zodios(baseUrl, endpoints, options);
+}
+'
+`;

@@ -1,16 +1,17 @@
-import { getZodSchema } from "../src/openApiToZod";
-import { test, expect } from "vitest";
+import { getZodSchema } from "../src/openApiToZod.ts";
+import { test } from "jsr:@std/testing/bdd";
+import { expect } from "jsr:@std/expect";
+import { assertSnapshot } from "jsr:@std/testing/snapshot";
 
-test("kebab-case-in-props", () => {
-    expect(
-        getZodSchema({
-            schema: {
-                type: "object",
-                properties: {
-                    lowercase: { type: "string" },
-                    "kebab-case": { type: "number" },
-                },
+test("kebab-case-in-props", async (t) => {
+    const result = getZodSchema({
+        schema: {
+            type: "object",
+            properties: {
+                lowercase: { type: "string" },
+                "kebab-case": { type: "number" },
             },
-        })
-    ).toMatchInlineSnapshot('"z.object({ lowercase: z.string(), "kebab-case": z.number() }).partial().passthrough()"');
+        },
+    });
+    await assertSnapshot(t, result);
 });

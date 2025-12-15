@@ -1,5 +1,6 @@
-import { describe, test, expect } from "vitest";
-import { toBoolean } from "../src/utils";
+import { describe, test } from "jsr:@std/testing/bdd";
+import { expect } from "jsr:@std/expect";
+import { toBoolean } from "../src/utils.ts";
 
 describe("toBoolean", () => {
   test("returns boolean true, when string value 'true'", () => {

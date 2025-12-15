@@ -1,8 +1,8 @@
 import type { ReferenceObject, SchemaObject } from "openapi3-ts";
 
-import { isReferenceObject } from "./isReferenceObject";
-import type { DocumentResolver } from "./makeSchemaResolver";
-import { getSchemaComplexity } from "./schema-complexity";
+import { isReferenceObject } from "./isReferenceObject.ts";
+import type { DocumentResolver } from "./makeSchemaResolver.ts";
+import { getSchemaComplexity } from "./schema-complexity.ts";
 
 export type ConversionTypeContext = {
     resolver: DocumentResolver;
@@ -57,13 +57,13 @@ export class CodeMeta {
         return getSchemaComplexity({ current: 0, schema: this.schema });
     }
 
-    assign(code: string) {
+    assign(code: string): this {
         this.code = code;
 
         return this;
     }
 
-    inherit(parent?: CodeMeta) {
+    inherit(parent?: CodeMeta): this {
         if (parent) {
             parent.children.push(this);
         }
@@ -71,10 +71,10 @@ export class CodeMeta {
         return this;
     }
 
-    toString() {
+    toString(): string {
         return this.codeString;
     }
-    toJSON() {
+    toJSON(): string {
         return this.codeString;
     }
 }

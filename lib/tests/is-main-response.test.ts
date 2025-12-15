@@ -1,8 +1,9 @@
 import { SchemasObject } from "openapi3-ts";
-import { expect, it } from "vitest";
-import { generateZodClientFromOpenAPI } from "../src";
+import { test } from "jsr:@std/testing/bdd";
+import { assertSnapshot } from "jsr:@std/testing/snapshot";
+import { generateZodClientFromOpenAPI } from "../src/index.ts";
 
-it("determines which one is-main-response", async () => {
+test("determines which one is-main-response", async (t) => {
     const schemas = {
         Main: {
             type: "object",
@@ -41,24 +42,5 @@ it("determines which one is-main-response", async () => {
         options: { isMainResponseStatus: "status === 201" },
     });
 
-    expect(result).toMatchInlineSnapshot(`
-      "import { makeApi, Zodios, type ZodiosOptions } from "@franklin-ai/zodios";
-      import { z } from "zod";
-
-      const endpoints = makeApi([
-        {
-          method: "get",
-          path: "/example",
-          requestFormat: "json",
-          response: z.number(),
-        },
-      ]);
-
-      export const api = new Zodios(endpoints);
-
-      export function createApiClient(baseUrl: string, options?: ZodiosOptions) {
-        return new Zodios(baseUrl, endpoints, options);
-      }
-      "
-    `);
+    await assertSnapshot(t, result);
 });

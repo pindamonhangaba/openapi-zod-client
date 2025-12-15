@@ -1,0 +1,39 @@
+export const snapshot = {};
+
+snapshot[`regex-with-escapes 1`] = `
+<ref *1> CodeMeta {
+  children: [
+    CodeMeta {
+      children: [],
+      code: "z.string()",
+      ctx: undefined,
+      meta: {
+        isRequired: true,
+        name: "str",
+        parent: [Circular *1],
+        referencedBy: [],
+      },
+      ref: undefined,
+      schema: {
+        pattern: "^/\$",
+        type: "string",
+      },
+    },
+  ],
+  code: "z.object({ str: z.string().regex(/^\\\\/\$/) }).partial().passthrough()",
+  ctx: undefined,
+  meta: {
+    referencedBy: [],
+  },
+  ref: undefined,
+  schema: {
+    properties: {
+      str: {
+        pattern: "^/\$",
+        type: "string",
+      },
+    },
+    type: "object",
+  },
+}
+`;

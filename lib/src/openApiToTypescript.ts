@@ -1,13 +1,16 @@
 import type { ReferenceObject, SchemaObject } from "openapi3-ts";
 import { t, ts } from "tanu";
-import type { TypeDefinition, TypeDefinitionObject } from "tanu/dist/type";
 
-import { isReferenceObject } from "./isReferenceObject";
-import type { DocumentResolver } from "./makeSchemaResolver";
-import type { TemplateContext } from "./template-context";
-import { wrapWithQuotesIfNeeded } from "./utils";
-import { inferRequiredSchema } from "./inferRequiredOnly";
-import generateJSDocArray from "./generateJSDocArray";
+// Local type definitions from tanu/dist/type (not properly exported by the package)
+type TypeDefinition = any;
+type TypeDefinitionObject = any;
+
+import { isReferenceObject } from "./isReferenceObject.ts";
+import type { DocumentResolver } from "./makeSchemaResolver.ts";
+import type { TemplateContext } from "./template-context.ts";
+import { wrapWithQuotesIfNeeded } from "./utils.ts";
+import { inferRequiredSchema } from "./inferRequiredOnly.ts";
+import generateJSDocArray from "./generateJSDocArray.ts";
 
 type TsConversionArgs = {
     schema: SchemaObject | ReferenceObject;

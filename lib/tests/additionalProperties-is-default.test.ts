@@ -1,5 +1,8 @@
-import { describe, expect, test } from "vitest";
-import { getZodSchema } from "../src";
+import { describe, test } from "jsr:@std/testing/bdd";
+import { expect } from "jsr:@std/expect";
+// Note: Deno usually requires explicit file extensions. 
+// You might need to change '../src' to '../src/mod.ts' or '../src/index.ts'
+import { getZodSchema } from "../src/index.ts"; 
 
 // see: https://swagger.io/docs/specification/data-models/data-types/#free-form
 describe("additional-properties", () => {
@@ -10,7 +13,7 @@ describe("additional-properties", () => {
             },
         });
 
-        expect(schema).toMatchInlineSnapshot('"z.object({}).partial().passthrough()"');
+        expect(schema.codeString).toBe("z.object({}).partial().passthrough()");
     });
 
     test("additionalProperties is true", () => {
@@ -21,7 +24,7 @@ describe("additional-properties", () => {
             },
         });
 
-        expect(schema).toMatchInlineSnapshot('"z.object({}).partial().passthrough()"');
+        expect(schema.codeString).toBe("z.object({}).partial().passthrough()");
     });
 
     test("additionalProperties is empty object", () => {
@@ -33,7 +36,7 @@ describe("additional-properties", () => {
             },
         });
 
-        expect(schema).toMatchInlineSnapshot('"z.object({}).partial().passthrough()"');
+        expect(schema.codeString).toBe("z.object({}).partial().passthrough()");
     });
 
     test("additional properties opt-out", () => {
@@ -44,7 +47,7 @@ describe("additional-properties", () => {
             },
         });
 
-        expect(additionalPropertiesOptOut).toMatchInlineSnapshot('"z.object({}).partial()"');
+        expect(additionalPropertiesOptOut.codeString).toBe("z.object({}).partial()");
     });
 
     test("object with some properties", () => {
@@ -58,8 +61,8 @@ describe("additional-properties", () => {
             },
         });
 
-        expect(schema).toMatchInlineSnapshot(
-            '"z.object({ foo: z.string(), bar: z.number() }).partial().passthrough()"'
+        expect(schema.codeString).toBe(
+            "z.object({ foo: z.string(), bar: z.number() }).partial().passthrough()"
         );
     });
 });

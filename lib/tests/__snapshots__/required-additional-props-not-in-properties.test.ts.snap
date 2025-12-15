@@ -1,0 +1,59 @@
+export const snapshot = {};
+
+snapshot[`required-additional-props-not-in-properties 1`] = `
+<ref *1> CodeMeta {
+  children: [
+    CodeMeta {
+      children: [],
+      code: "z.string()",
+      ctx: undefined,
+      meta: {
+        isRequired: true,
+        name: "name",
+        parent: [Circular *1],
+        referencedBy: [],
+      },
+      ref: undefined,
+      schema: {
+        type: "string",
+      },
+    },
+    CodeMeta {
+      children: [],
+      code: "z.string()",
+      ctx: undefined,
+      meta: {
+        isRequired: true,
+        name: "email",
+        parent: [Circular *1],
+        referencedBy: [],
+      },
+      ref: undefined,
+      schema: {
+        type: "string",
+      },
+    },
+  ],
+  code: "z.object({ name: z.string(), email: z.string() }).passthrough()",
+  ctx: undefined,
+  meta: {
+    referencedBy: [],
+  },
+  ref: undefined,
+  schema: {
+    properties: {
+      email: {
+        type: "string",
+      },
+      name: {
+        type: "string",
+      },
+    },
+    required: [
+      "name",
+      "email",
+      "phone",
+    ],
+  },
+}
+`;

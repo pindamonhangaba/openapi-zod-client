@@ -29,6 +29,16 @@ If you do have control on your API/back-end, you should probably use a RPC-like 
 
 # Usage
 
+## With Deno
+
+This package is now available as a Deno package on JSR!
+
+-   **Run directly**: `deno run -A jsr:@zod-api/openapi-zod-client "./input/file.json" -o "./output/client.ts"`
+-   **Install**: `deno add @zod-api/openapi-zod-client`
+-   **Or clone and run**: `deno task cli "./input/file.yaml" -o "./output/client.ts"`
+
+## With Node/pnpm
+
 with local install:
 
 -   `pnpm i -D openapi-zod-client`

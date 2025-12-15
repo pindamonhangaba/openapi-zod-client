@@ -1,0 +1,55 @@
+export const snapshot = {};
+
+snapshot[`kebab-case-in-props 1`] = `
+<ref *1> CodeMeta {
+  children: [
+    CodeMeta {
+      children: [],
+      code: "z.string()",
+      ctx: undefined,
+      meta: {
+        isRequired: true,
+        name: "lowercase",
+        parent: [Circular *1],
+        referencedBy: [],
+      },
+      ref: undefined,
+      schema: {
+        type: "string",
+      },
+    },
+    CodeMeta {
+      children: [],
+      code: "z.number()",
+      ctx: undefined,
+      meta: {
+        isRequired: true,
+        name: "kebab-case",
+        parent: [Circular *1],
+        referencedBy: [],
+      },
+      ref: undefined,
+      schema: {
+        type: "number",
+      },
+    },
+  ],
+  code: 'z.object({ lowercase: z.string(), "kebab-case": z.number() }).partial().passthrough()',
+  ctx: undefined,
+  meta: {
+    referencedBy: [],
+  },
+  ref: undefined,
+  schema: {
+    properties: {
+      "kebab-case": {
+        type: "number",
+      },
+      lowercase: {
+        type: "string",
+      },
+    },
+    type: "object",
+  },
+}
+`;

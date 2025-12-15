@@ -1,9 +1,11 @@
 import type { OpenAPIObject } from "openapi3-ts";
-import { expect, test } from "vitest";
-import { generateZodClientFromOpenAPI } from "../src";
+import { test } from "jsr:@std/testing/bdd";
+import { expect } from "jsr:@std/expect";
+import { assertSnapshot } from "jsr:@std/testing/snapshot";
+import { generateZodClientFromOpenAPI } from "../src/index.ts";
 
 // https://github.com/astahmer/openapi-zod-client/issues/49
-test("missing-zod-chains-on-z-object-with-refs-props", async () => {
+test("missing-zod-chains-on-z-object-with-refs-props", async (t) => {
     const openApiDoc: OpenAPIObject = {
         openapi: "3.0.0",
         info: { title: "Schema test", version: "1.0.0" },
@@ -47,86 +49,5 @@ test("missing-zod-chains-on-z-object-with-refs-props", async () => {
     };
 
     const output = await generateZodClientFromOpenAPI({ disableWriteToFile: true, openApiDoc });
-    expect(output).toMatchInlineSnapshot(`
-      "import { makeApi, Zodios, type ZodiosOptions } from "@franklin-ai/zodios";
-      import { z } from "zod";
-
-      const Email = z.string();
-      const Password = z.string();
-      const AddUser = z
-        .object({
-          email: Email.min(6)
-            .max(255)
-            .regex(/(EmailRegex)/),
-          password: Password.min(16)
-            .max(255)
-            .regex(/(PasswordRegex)/),
-        })
-        .passthrough();
-      const PasswordReminder = z
-        .object({
-          email: Email.min(6)
-            .max(255)
-            .regex(/(EmailRegex)/),
-        })
-        .passthrough();
-
-      export const schemas = {
-        Email,
-        Password,
-        AddUser,
-        PasswordReminder,
-      };
-
-      const endpoints = makeApi([
-        {
-          method: "post",
-          path: "/user/add",
-          requestFormat: "json",
-          parameters: [
-            {
-              name: "body",
-              type: "Body",
-              schema: z
-                .object({
-                  email: Email.min(6)
-                    .max(255)
-                    .regex(/(EmailRegex)/),
-                  password: Password.min(16)
-                    .max(255)
-                    .regex(/(PasswordRegex)/),
-                })
-                .passthrough(),
-            },
-          ],
-          response: z.void(),
-        },
-        {
-          method: "post",
-          path: "/user/recover",
-          requestFormat: "json",
-          parameters: [
-            {
-              name: "body",
-              type: "Body",
-              schema: z
-                .object({
-                  email: Email.min(6)
-                    .max(255)
-                    .regex(/(EmailRegex)/),
-                })
-                .passthrough(),
-            },
-          ],
-          response: z.void(),
-        },
-      ]);
-
-      export const api = new Zodios(endpoints);
-
-      export function createApiClient(baseUrl: string, options?: ZodiosOptions) {
-        return new Zodios(baseUrl, endpoints, options);
-      }
-      "
-    `);
+    await assertSnapshot(t, output);
 });

@@ -1,7 +1,9 @@
-import { expect, test } from "vitest";
-import { getZodiosEndpointDefinitionList } from "../src";
+import { test } from "jsr:@std/testing/bdd";
+import { expect } from "jsr:@std/expect";
+import { assertSnapshot } from "jsr:@std/testing/snapshot";
+import { getZodiosEndpointDefinitionList } from "../src/index.ts";
 
-test("missing operationId outputs variables['undefined_Body']", () => {
+test("missing operationId outputs variables['undefined_Body']", async (t) => {
     const result = getZodiosEndpointDefinitionList({
         openapi: "3.0.3",
         info: { version: "1", title: "Example API" },
@@ -26,24 +28,5 @@ test("missing operationId outputs variables['undefined_Body']", () => {
             },
         },
     });
-    expect(result.endpoints).toMatchInlineSnapshot(`
-      [
-          {
-              "description": undefined,
-              "errors": [],
-              "method": "put",
-              "parameters": [
-                  {
-                      "description": undefined,
-                      "name": "body",
-                      "schema": "z.string()",
-                      "type": "Body",
-                  },
-              ],
-              "path": "/media-objects/:id",
-              "requestFormat": "json",
-              "response": "z.string()",
-          },
-      ]
-    `);
+    await assertSnapshot(t, result.endpoints);
 });

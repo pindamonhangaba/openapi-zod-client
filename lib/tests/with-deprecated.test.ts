@@ -1,8 +1,10 @@
-import { getZodiosEndpointDefinitionList } from "../src";
-import { expect, test } from "vitest";
+import { getZodiosEndpointDefinitionList } from "../src/index.ts";
+import { test } from "jsr:@std/testing/bdd";
+import { expect } from "jsr:@std/expect";
+import { assertSnapshot } from "jsr:@std/testing/snapshot";
 import { OpenAPIObject } from "openapi3-ts";
 
-test("with-deprecated", () => {
+test("with-deprecated", async (t) => {
     const doc: OpenAPIObject = {
         openapi: "3.0.3",
         info: { version: "1", title: "Example API" },
@@ -24,43 +26,10 @@ test("with-deprecated", () => {
     };
 
     const defaultResult = getZodiosEndpointDefinitionList(doc);
-    expect(defaultResult.endpoints).toMatchInlineSnapshot(`
-      [
-          {
-              "description": undefined,
-              "errors": [],
-              "method": "get",
-              "parameters": [],
-              "path": "/new-endpoint",
-              "requestFormat": "json",
-              "response": "z.number()",
-          },
-      ]
-    `);
+    await assertSnapshot(t, defaultResult.endpoints);
 
     const withCustomOption = getZodiosEndpointDefinitionList(doc, {
         withDeprecatedEndpoints: true,
     });
-    expect(withCustomOption.endpoints).toMatchInlineSnapshot(`
-      [
-          {
-              "description": undefined,
-              "errors": [],
-              "method": "get",
-              "parameters": [],
-              "path": "/deprecated-endpoint",
-              "requestFormat": "json",
-              "response": "z.string()",
-          },
-          {
-              "description": undefined,
-              "errors": [],
-              "method": "get",
-              "parameters": [],
-              "path": "/new-endpoint",
-              "requestFormat": "json",
-              "response": "z.number()",
-          },
-      ]
-    `);
+    await assertSnapshot(t, withCustomOption.endpoints);
 });

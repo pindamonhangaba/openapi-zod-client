@@ -38,3 +38,4 @@ dist
 !lib/cli/dist
 .eslintcache
 /.idea/
+output

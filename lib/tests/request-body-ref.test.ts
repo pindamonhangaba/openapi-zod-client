@@ -1,9 +1,11 @@
 import type { OpenAPIObject } from "openapi3-ts";
-import { expect, test } from "vitest";
-import { generateZodClientFromOpenAPI } from "../src";
+import { test } from "jsr:@std/testing/bdd";
+import { expect } from "jsr:@std/expect";
+import { assertSnapshot } from "jsr:@std/testing/snapshot";
+import { generateZodClientFromOpenAPI } from "../src/index.ts";
 
 // https://github.com/astahmer/openapi-zod-client/issues/122
-test("request-body-ref", async () => {
+test("request-body-ref", async (t) => {
     const openApiDoc: OpenAPIObject = {
         openapi: "3.0.3",
         info: {
@@ -48,37 +50,5 @@ test("request-body-ref", async () => {
     };
 
     const output = await generateZodClientFromOpenAPI({ disableWriteToFile: true, openApiDoc });
-    expect(output).toMatchInlineSnapshot(`
-      "import { makeApi, Zodios, type ZodiosOptions } from "@franklin-ai/zodios";
-      import { z } from "zod";
-
-      const PostPetsRequest = z.object({ id: z.string() }).partial().passthrough();
-
-      export const schemas = {
-        PostPetsRequest,
-      };
-
-      const endpoints = makeApi([
-        {
-          method: "post",
-          path: "/pets",
-          requestFormat: "json",
-          parameters: [
-            {
-              name: "body",
-              type: "Body",
-              schema: z.object({ id: z.string() }).partial().passthrough(),
-            },
-          ],
-          response: z.void(),
-        },
-      ]);
-
-      export const api = new Zodios(endpoints);
-
-      export function createApiClient(baseUrl: string, options?: ZodiosOptions) {
-        return new Zodios(baseUrl, endpoints, options);
-      }
-      "
-    `);
+    await assertSnapshot(t, output);
 });

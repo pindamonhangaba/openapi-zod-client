@@ -1,0 +1,145 @@
+export const snapshot = {};
+
+snapshot[`additionalPropertiesDefaultValue-option 1`] = `
+<ref *1> CodeMeta {
+  children: [
+    CodeMeta {
+      children: [],
+      code: "z.string()",
+      ctx: undefined,
+      meta: {
+        isRequired: true,
+        name: "str",
+        parent: [Circular *1],
+        referencedBy: [],
+      },
+      ref: undefined,
+      schema: {
+        type: "string",
+      },
+    },
+  ],
+  code: "z.object({ str: z.string() }).partial().passthrough()",
+  ctx: undefined,
+  meta: {
+    referencedBy: [],
+  },
+  ref: undefined,
+  schema: {
+    properties: {
+      str: {
+        type: "string",
+      },
+    },
+    type: "object",
+  },
+}
+`;
+
+snapshot[`additionalPropertiesDefaultValue-option 2`] = `
+<ref *1> CodeMeta {
+  children: [
+    CodeMeta {
+      children: [],
+      code: "z.string()",
+      ctx: undefined,
+      meta: {
+        isRequired: true,
+        name: "str",
+        parent: [Circular *1],
+        referencedBy: [],
+      },
+      ref: undefined,
+      schema: {
+        type: "string",
+      },
+    },
+  ],
+  code: "z.object({ str: z.string() }).partial().passthrough()",
+  ctx: undefined,
+  meta: {
+    referencedBy: [],
+  },
+  ref: undefined,
+  schema: {
+    properties: {
+      str: {
+        type: "string",
+      },
+    },
+    type: "object",
+  },
+}
+`;
+
+snapshot[`additionalPropertiesDefaultValue-option 3`] = `
+<ref *1> CodeMeta {
+  children: [
+    CodeMeta {
+      children: [],
+      code: "z.string()",
+      ctx: undefined,
+      meta: {
+        isRequired: true,
+        name: "str",
+        parent: [Circular *1],
+        referencedBy: [],
+      },
+      ref: undefined,
+      schema: {
+        type: "string",
+      },
+    },
+  ],
+  code: "z.object({ str: z.string() }).partial().passthrough()",
+  ctx: undefined,
+  meta: {
+    referencedBy: [],
+  },
+  ref: undefined,
+  schema: {
+    properties: {
+      str: {
+        type: "string",
+      },
+    },
+    type: "object",
+  },
+}
+`;
+
+snapshot[`additionalPropertiesDefaultValue-option 4`] = `
+<ref *1> CodeMeta {
+  children: [
+    CodeMeta {
+      children: [],
+      code: "z.string()",
+      ctx: undefined,
+      meta: {
+        isRequired: true,
+        name: "str",
+        parent: [Circular *1],
+        referencedBy: [],
+      },
+      ref: undefined,
+      schema: {
+        type: "string",
+      },
+    },
+  ],
+  code: "z.object({ str: z.string() }).partial()",
+  ctx: undefined,
+  meta: {
+    referencedBy: [],
+  },
+  ref: undefined,
+  schema: {
+    properties: {
+      str: {
+        type: "string",
+      },
+    },
+    type: "object",
+  },
+}
+`;

@@ -1,8 +1,10 @@
 import { OpenAPIObject } from "openapi3-ts";
-import { expect, test } from "vitest";
-import { generateZodClientFromOpenAPI, getZodClientTemplateContext } from "../src";
+import { test } from "jsr:@std/testing/bdd";
 
-test("name-with-special-characters", async () => {
+import { assertSnapshot } from "jsr:@std/testing/snapshot";
+import { generateZodClientFromOpenAPI, getZodClientTemplateContext } from "../src/index.ts";
+
+test("name-with-special-characters", async (t) => {
     const openApiDoc: OpenAPIObject = {
         openapi: "3.0.3",
         info: { version: "1", title: "Example API" },
@@ -29,45 +31,8 @@ test("name-with-special-characters", async () => {
         },
     };
     const ctx = getZodClientTemplateContext(openApiDoc);
-    expect(ctx.endpoints).toMatchInlineSnapshot(`
-      [
-          {
-              "description": undefined,
-              "errors": [],
-              "method": "get",
-              "parameters": [],
-              "path": "/name-with-special-characters",
-              "requestFormat": "json",
-              "response": "z.string()",
-          },
-      ]
-    `);
+    await assertSnapshot(t, ctx.endpoints);
 
     const result = await generateZodClientFromOpenAPI({ disableWriteToFile: true, openApiDoc });
-    expect(result).toMatchInlineSnapshot(`
-      "import { makeApi, Zodios, type ZodiosOptions } from "@franklin-ai/zodios";
-      import { z } from "zod";
-
-      const _1Name_With_Special_Characters = z.string();
-
-      export const schemas = {
-        _1Name_With_Special_Characters,
-      };
-
-      const endpoints = makeApi([
-        {
-          method: "get",
-          path: "/name-with-special-characters",
-          requestFormat: "json",
-          response: z.string(),
-        },
-      ]);
-
-      export const api = new Zodios(endpoints);
-
-      export function createApiClient(baseUrl: string, options?: ZodiosOptions) {
-        return new Zodios(baseUrl, endpoints, options);
-      }
-      "
-    `);
+    await assertSnapshot(t, result);
 });

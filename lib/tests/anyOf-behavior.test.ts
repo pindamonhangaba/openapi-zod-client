@@ -1,11 +1,13 @@
-import { describe, test, expect } from "vitest";
+import { describe, test } from "jsr:@std/testing/bdd";
+import { expect } from "jsr:@std/expect";
+import { assertSnapshot } from "jsr:@std/testing/snapshot";
 import { z } from "zod";
-import { makeSchemaResolver } from "../src/makeSchemaResolver.js";
-import { getZodSchema } from "../src/openApiToZod.js";
-import { asComponentSchema } from "../src/utils.js";
-import { CodeMeta } from "../src/CodeMeta.js";
+import { makeSchemaResolver } from "../src/makeSchemaResolver.ts";
+import { getZodSchema } from "../src/openApiToZod.ts";
+import { asComponentSchema } from "../src/utils.ts";
+import { CodeMeta } from "../src/CodeMeta.ts";
 import { OpenAPIObject } from "openapi3-ts";
-import { generateZodClientFromOpenAPI } from "../src/generateZodClientFromOpenAPI.js";
+import { generateZodClientFromOpenAPI } from "../src/generateZodClientFromOpenAPI.ts";
 
 // the schemas and fixtures used in these tests are modified from examples here: https://swagger.io/docs/specification/data-models/oneof-anyof-allof-not/#anyof
 
@@ -30,7 +32,7 @@ const fixtures = {
 };
 
 describe("anyOf behavior", () => {
-    test("adds passthrough() to objects", () => {
+    test("adds passthrough() to objects", async (t) => {
         const zodSchema = getZodSchema({
             schema: {
                 anyOf: [
@@ -63,18 +65,16 @@ describe("anyOf behavior", () => {
             },
         });
 
-        expect(zodSchema).toMatchInlineSnapshot(
-            '"z.union([z.object({ age: z.number().int(), nickname: z.string().optional() }).passthrough(), z.object({ pet_type: z.enum(["Cat", "Dog"]), hunts: z.boolean().optional() }).passthrough()])"'
-        );
+        await assertSnapshot(t, zodSchema);
 
         const validator = createValidator(zodSchema);
         expect(validator(z, fixtures.petByAge)).toEqual(fixtures.petByAge);
         expect(validator(z, fixtures.petByType)).toEqual(fixtures.petByType);
         expect(validator(z, fixtures.petByAgeAndType)).toEqual(fixtures.petByAgeAndType);
-        expect(() => validator(z, fixtures.invalid)).toThrowError();
+        expect(() => validator(z, fixtures.invalid)).toThrow();
     });
 
-    test("handles mixes of primitive types and objects", () => {
+    test("handles mixes of primitive types and objects", async (t) => {
         const zodSchema = getZodSchema({
             schema: {
                 anyOf: [
@@ -108,19 +108,17 @@ describe("anyOf behavior", () => {
             },
         });
 
-        expect(zodSchema).toMatchInlineSnapshot(
-            '"z.union([z.object({ age: z.number().int(), nickname: z.string().optional() }).passthrough(), z.object({ pet_type: z.enum(["Cat", "Dog"]), hunts: z.boolean().optional() }).passthrough(), z.number()])"'
-        );
+        await assertSnapshot(t, zodSchema);
 
         const validator = createValidator(zodSchema);
         expect(validator(z, fixtures.petByAge)).toEqual(fixtures.petByAge);
         expect(validator(z, fixtures.petByType)).toEqual(fixtures.petByType);
         expect(validator(z, fixtures.petByAgeAndType)).toEqual(fixtures.petByAgeAndType);
-        expect(() => validator(z, fixtures.invalid)).toThrowError();
+        expect(() => validator(z, fixtures.invalid)).toThrow();
         expect(validator(z, 1)).toEqual(1);
     });
 
-    test("handles an array of types", () => {
+    test("handles an array of types", async (t) => {
         const zodSchema = getZodSchema({
             schema: {
                 anyOf: [
@@ -157,21 +155,19 @@ describe("anyOf behavior", () => {
             },
         });
 
-        expect(zodSchema).toMatchInlineSnapshot(
-            '"z.union([z.union([z.number(), z.boolean()]), z.object({ age: z.number().int(), nickname: z.string().optional() }).passthrough(), z.object({ pet_type: z.enum(["Cat", "Dog"]), hunts: z.boolean().optional() }).passthrough(), z.string()])"'
-        );
+        await assertSnapshot(t, zodSchema);
 
         const validator = createValidator(zodSchema);
         expect(validator(z, fixtures.petByAge)).toEqual(fixtures.petByAge);
         expect(validator(z, fixtures.petByType)).toEqual(fixtures.petByType);
         expect(validator(z, fixtures.petByAgeAndType)).toEqual(fixtures.petByAgeAndType);
-        expect(() => validator(z, fixtures.invalid)).toThrowError();
+        expect(() => validator(z, fixtures.invalid)).toThrow();
         expect(validator(z, 1)).toEqual(1);
         expect(validator(z, "hello")).toEqual("hello");
         expect(validator(z, true)).toEqual(true);
     });
 
-    test("handles $refs", async () => {
+    test("handles $refs", async (t) => {
         const openApiDoc: OpenAPIObject = {
             openapi: "3.0.2",
             info: {
@@ -228,46 +224,6 @@ describe("anyOf behavior", () => {
         };
 
         const output = await generateZodClientFromOpenAPI({ disableWriteToFile: true, openApiDoc });
-        expect(output).toMatchInlineSnapshot(`
-          "import { makeApi, Zodios, type ZodiosOptions } from "@franklin-ai/zodios";
-          import { z } from "zod";
-
-          const PetByAge = z
-            .object({ age: z.number().int(), nickname: z.string().optional() })
-            .passthrough();
-          const PetByType = z
-            .object({ pet_type: z.enum(["Cat", "Dog"]), hunts: z.boolean().optional() })
-            .passthrough();
-          const anyOfRef = z.union([PetByAge, PetByType]).optional();
-
-          export const schemas = {
-            PetByAge,
-            PetByType,
-            anyOfRef,
-          };
-
-          const endpoints = makeApi([
-            {
-              method: "get",
-              path: "/test",
-              requestFormat: "json",
-              parameters: [
-                {
-                  name: "anyOfRef",
-                  type: "Query",
-                  schema: anyOfRef,
-                },
-              ],
-              response: z.void(),
-            },
-          ]);
-
-          export const api = new Zodios(endpoints);
-
-          export function createApiClient(baseUrl: string, options?: ZodiosOptions) {
-            return new Zodios(baseUrl, endpoints, options);
-          }
-          "
-        `);
+        await assertSnapshot(t, output);
     });
 });

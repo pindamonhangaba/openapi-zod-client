@@ -1,11 +1,11 @@
 import type { ReferenceObject, SchemaObject } from "openapi3-ts";
 
-import { isReferenceObject } from "./isReferenceObject";
+import { isReferenceObject } from "./isReferenceObject.ts";
 
 export const getOpenApiDependencyGraph = (
     schemaRef: string[],
     getSchemaByRef: (ref: string) => SchemaObject | ReferenceObject
-) => {
+): { refsDependencyGraph: Record<string, Set<string>>; deepDependencyGraph: Record<string, Set<string>> } => {
     const visitedsRefs = {} as Record<string, boolean>;
     const refsDependencyGraph = {} as Record<string, Set<string>>;
 

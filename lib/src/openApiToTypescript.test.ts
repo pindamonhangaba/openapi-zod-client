@@ -1,11 +1,12 @@
-import {getTypescriptFromOpenApi, TsConversionContext} from "./openApiToTypescript";
+import {getTypescriptFromOpenApi, TsConversionContext} from "./openApiToTypescript.ts";
 
 import type {SchemaObject, SchemasObject} from "openapi3-ts";
 import {ts} from "tanu";
-import {describe, expect, test} from "vitest";
-import {makeSchemaResolver} from "./makeSchemaResolver";
-import {asComponentSchema} from "./utils";
-import type {TemplateContext} from "./template-context";
+import {describe, test} from "jsr:@std/testing/bdd";
+import {expect} from "jsr:@std/expect";
+import {makeSchemaResolver} from "./makeSchemaResolver.ts";
+import {asComponentSchema} from "./utils.ts";
+import type {TemplateContext} from "./template-context.ts";
 import type {OpenAPIV3} from "openapi-types";
 
 const makeSchema = (schema: SchemaObject | OpenAPIV3.SchemaObject) => schema as SchemaObject;

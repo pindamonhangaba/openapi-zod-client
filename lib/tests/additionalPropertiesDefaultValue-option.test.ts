@@ -1,8 +1,9 @@
-import { getZodSchema } from "../src/openApiToZod";
-import { test, expect } from "vitest";
+import { getZodSchema } from "../src/openApiToZod.ts";
+import { test } from "jsr:@std/testing/bdd";
+import { assertSnapshot } from "jsr:@std/testing/snapshot";
 
-test("additionalPropertiesDefaultValue-option", () => {
-    expect(
+test("additionalPropertiesDefaultValue-option", async (t) => {
+    await assertSnapshot(t,
         getZodSchema({
             schema: {
                 type: "object",
@@ -11,8 +12,8 @@ test("additionalPropertiesDefaultValue-option", () => {
                 },
             },
         })
-    ).toMatchInlineSnapshot('"z.object({ str: z.string() }).partial().passthrough()"');
-    expect(
+    );
+    await assertSnapshot(t,
         getZodSchema({
             schema: {
                 type: "object",
@@ -24,8 +25,8 @@ test("additionalPropertiesDefaultValue-option", () => {
                 additionalPropertiesDefaultValue: true
             }
         })
-    ).toMatchInlineSnapshot('"z.object({ str: z.string() }).partial().passthrough()"');
-    expect(
+    );
+    await assertSnapshot(t,
         getZodSchema({
             schema: {
                 type: "object",
@@ -37,8 +38,8 @@ test("additionalPropertiesDefaultValue-option", () => {
                 additionalPropertiesDefaultValue: { type: "number" }
             }
         })
-    ).toMatchInlineSnapshot('"z.object({ str: z.string() }).partial().passthrough()"');
-    expect(
+    );
+    await assertSnapshot(t,
         getZodSchema({
             schema: {
                 type: "object",
@@ -50,6 +51,5 @@ test("additionalPropertiesDefaultValue-option", () => {
                 additionalPropertiesDefaultValue: false
             }
         })
-    ).toMatchInlineSnapshot('"z.object({ str: z.string() }).partial()"');
-
+    );
 });

@@ -1,12 +1,12 @@
 import { isSchemaObject, type ReferenceObject, type SchemaObject } from "openapi3-ts";
 import { match } from "ts-pattern";
 
-import type { CodeMetaData, ConversionTypeContext } from "./CodeMeta";
-import { CodeMeta } from "./CodeMeta";
-import { isReferenceObject } from "./isReferenceObject";
-import type { TemplateContext } from "./template-context";
-import { escapeControlCharacters, isPrimitiveType, wrapWithQuotesIfNeeded } from "./utils";
-import { inferRequiredSchema } from "./inferRequiredOnly";
+import type { CodeMetaData, ConversionTypeContext } from "./CodeMeta.ts";
+import { CodeMeta } from "./CodeMeta.ts";
+import { isReferenceObject } from "./isReferenceObject.ts";
+import type { TemplateContext } from "./template-context.ts";
+import { escapeControlCharacters, isPrimitiveType, wrapWithQuotesIfNeeded } from "./utils.ts";
+import { inferRequiredSchema } from "./inferRequiredOnly.ts";
 
 type ConversionArgs = {
     schema: SchemaObject | ReferenceObject;
@@ -120,7 +120,7 @@ export function getZodSchema({ schema: $schema, ctx, meta: inheritedMeta, option
                 if ("type" in type.schema) {
                     if (Array.isArray(type.schema.type)) {
                         isObject = false;
-                    } else {
+                    } else if (type.schema.type) {
                         const schemaType = type.schema.type.toLowerCase() as NonNullable<typeof schema.type>;
                         isObject = !isPrimitiveType(schemaType);
                     }

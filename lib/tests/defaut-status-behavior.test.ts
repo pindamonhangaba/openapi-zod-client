@@ -1,8 +1,9 @@
-import { getZodClientTemplateContext, getZodiosEndpointDefinitionList } from "../src";
-import { expect, test } from "vitest";
+import { getZodClientTemplateContext, getZodiosEndpointDefinitionList } from "../src/index.ts";
+import { test } from "jsr:@std/testing/bdd";
+import { assertSnapshot } from "jsr:@std/testing/snapshot";
 import { OpenAPIObject } from "openapi3-ts";
 
-test("defaut-status-behavior", () => {
+test("defaut-status-behavior", async (t) => {
     const doc: OpenAPIObject = {
         openapi: "3.0.3",
         info: { version: "1", title: "Example API" },
@@ -26,56 +27,8 @@ test("defaut-status-behavior", () => {
     };
 
     const defaultResult = getZodClientTemplateContext(doc);
-    expect(defaultResult.endpoints).toMatchInlineSnapshot(`
-      [
-          {
-              "description": undefined,
-              "errors": [],
-              "method": "get",
-              "parameters": [],
-              "path": "/with-default-error",
-              "requestFormat": "json",
-              "response": "z.number()",
-          },
-          {
-              "description": undefined,
-              "errors": [],
-              "method": "get",
-              "parameters": [],
-              "path": "/with-default-response",
-              "requestFormat": "json",
-              "response": "z.void()",
-          },
-      ]
-    `);
+    await assertSnapshot(t, defaultResult.endpoints);
 
     const withAutoCorrectResult = getZodClientTemplateContext(doc, { defaultStatusBehavior: "auto-correct" });
-    expect(withAutoCorrectResult.endpoints).toMatchInlineSnapshot(`
-      [
-          {
-              "description": undefined,
-              "errors": [
-                  {
-                      "description": undefined,
-                      "schema": "z.string()",
-                      "status": "default",
-                  },
-              ],
-              "method": "get",
-              "parameters": [],
-              "path": "/with-default-error",
-              "requestFormat": "json",
-              "response": "z.number()",
-          },
-          {
-              "description": undefined,
-              "errors": [],
-              "method": "get",
-              "parameters": [],
-              "path": "/with-default-response",
-              "requestFormat": "json",
-              "response": "z.string()",
-          },
-      ]
-    `);
+    await assertSnapshot(t, withAutoCorrectResult.endpoints);
 });

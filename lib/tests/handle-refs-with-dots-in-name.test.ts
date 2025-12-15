@@ -1,8 +1,9 @@
-import { generateZodClientFromOpenAPI, getZodiosEndpointDefinitionList } from "../src";
-import { expect, test } from "vitest";
+import { generateZodClientFromOpenAPI, getZodiosEndpointDefinitionList } from "../src/index.ts";
+import { test } from "jsr:@std/testing/bdd";
+import { assertSnapshot } from "jsr:@std/testing/snapshot";
 import type { OpenAPIObject } from "openapi3-ts";
 
-test("handle-refs-with-dots-in-name", async () => {
+test("handle-refs-with-dots-in-name", async (t) => {
     const doc = {
         openapi: "3.0.3",
         info: { version: "1", title: "Example API" },
@@ -50,97 +51,9 @@ test("handle-refs-with-dots-in-name", async () => {
         },
     } as OpenAPIObject;
 
-    expect(getZodiosEndpointDefinitionList(doc)).toMatchInlineSnapshot(`
-      {
-          "deepDependencyGraph": {
-              "#/components/schemas/Basic.Thing": Set {
-                  "#/components/schemas/Aaa-bbb.CccDdd_eee.Fff_ggg.HhhIiii_jjj",
-              },
-          },
-          "endpoints": [
-              {
-                  "description": undefined,
-                  "errors": [],
-                  "method": "get",
-                  "parameters": [],
-                  "path": "/usual-ref-format",
-                  "requestFormat": "json",
-                  "response": "z.string()",
-              },
-              {
-                  "description": undefined,
-                  "errors": [],
-                  "method": "get",
-                  "parameters": [],
-                  "path": "/ref-with-dot-in-name",
-                  "requestFormat": "json",
-                  "response": "Basic_Thing",
-              },
-          ],
-          "issues": {
-              "ignoredFallbackResponse": [],
-              "ignoredGenericError": [],
-          },
-          "refsDependencyGraph": {
-              "#/components/schemas/Basic.Thing": Set {
-                  "#/components/schemas/Aaa-bbb.CccDdd_eee.Fff_ggg.HhhIiii_jjj",
-              },
-          },
-          "resolver": {
-              "getSchemaByRef": [Function],
-              "resolveRef": [Function],
-              "resolveSchemaName": [Function],
-          },
-          "schemaByName": {},
-          "zodSchemaByName": {
-              "Aaa_bbb_CccDdd_eee_Fff_ggg_HhhIiii_jjj": "z.object({ aaa: z.string(), bbb: z.string() }).partial().passthrough()",
-              "Basic": "z.string()",
-              "Basic_Thing": "z.object({ thing: Aaa_bbb_CccDdd_eee_Fff_ggg_HhhIiii_jjj }).partial().passthrough()",
-          },
-      }
-    `);
+    const endpoints = getZodiosEndpointDefinitionList(doc);
+    await assertSnapshot(t, endpoints);
 
     const output = await generateZodClientFromOpenAPI({ openApiDoc: doc, disableWriteToFile: true });
-    expect(output).toMatchInlineSnapshot(`
-      "import { makeApi, Zodios, type ZodiosOptions } from "@franklin-ai/zodios";
-      import { z } from "zod";
-
-      const Basic = z.string();
-      const Aaa_bbb_CccDdd_eee_Fff_ggg_HhhIiii_jjj = z
-        .object({ aaa: z.string(), bbb: z.string() })
-        .partial()
-        .passthrough();
-      const Basic_Thing = z
-        .object({ thing: Aaa_bbb_CccDdd_eee_Fff_ggg_HhhIiii_jjj })
-        .partial()
-        .passthrough();
-
-      export const schemas = {
-        Basic,
-        Aaa_bbb_CccDdd_eee_Fff_ggg_HhhIiii_jjj,
-        Basic_Thing,
-      };
-
-      const endpoints = makeApi([
-        {
-          method: "get",
-          path: "/ref-with-dot-in-name",
-          requestFormat: "json",
-          response: Basic_Thing,
-        },
-        {
-          method: "get",
-          path: "/usual-ref-format",
-          requestFormat: "json",
-          response: z.string(),
-        },
-      ]);
-
-      export const api = new Zodios(endpoints);
-
-      export function createApiClient(baseUrl: string, options?: ZodiosOptions) {
-        return new Zodios(baseUrl, endpoints, options);
-      }
-      "
-    `);
+    await assertSnapshot(t, output);
 });

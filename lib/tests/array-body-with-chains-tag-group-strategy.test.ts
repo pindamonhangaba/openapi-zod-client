@@ -1,8 +1,9 @@
 import type { OpenAPIObject } from "openapi3-ts";
-import { expect, test } from "vitest";
-import { generateZodClientFromOpenAPI } from "../src";
+import { test } from "jsr:@std/testing/bdd";
+import { assertSnapshot } from "jsr:@std/testing/snapshot";
+import { generateZodClientFromOpenAPI } from "../src/index.ts";
 
-test("array-body-with-chains-tag-group-strategy", async () => {
+test("array-body-with-chains-tag-group-strategy", async (t) => {
     const openApiDoc: OpenAPIObject = {
         openapi: "3.0.0",
         info: { title: "Test", version: "1.0.1" },
@@ -51,42 +52,5 @@ test("array-body-with-chains-tag-group-strategy", async () => {
         openApiDoc,
         options: { groupStrategy: "tag-file" },
     });
-    expect(output).toMatchInlineSnapshot(`
-      {
-          "Test": "import { makeApi, Zodios, type ZodiosOptions } from "@franklin-ai/zodios";
-      import { z } from "zod";
-
-      const putTest_Body = z.array(z.object({ testItem: z.string() }).partial());
-
-      export const schemas = {
-        putTest_Body,
-      };
-
-      const endpoints = makeApi([
-        {
-          method: "put",
-          path: "/test",
-          description: \`Test\`,
-          requestFormat: "json",
-          parameters: [
-            {
-              name: "body",
-              type: "Body",
-              schema: putTest_Body.min(1).max(10),
-            },
-          ],
-          response: z.void(),
-        },
-      ]);
-
-      export const TestApi = new Zodios(endpoints);
-
-      export function createApiClient(baseUrl: string, options?: ZodiosOptions) {
-        return new Zodios(baseUrl, endpoints, options);
-      }
-      ",
-          "__index": "export { TestApi } from "./Test";
-      ",
-      }
-    `);
+    await assertSnapshot(t, output);
 });

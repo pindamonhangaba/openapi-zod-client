@@ -1,8 +1,7 @@
-import type { HelperOptions } from "handlebars";
-import { create } from "handlebars";
+import Handlebars, { type HelperOptions } from "handlebars";
 
-export const getHandlebars = () => {
-    const instance = create();
+export const getHandlebars = (): typeof Handlebars => {
+    const instance = Handlebars.create();
     instance.registerHelper("ifeq", function (a: string, b: string, options: HelperOptions) {
         if (a === b) {
             // @ts-expect-error

@@ -1,10 +1,11 @@
 import type { OpenAPIObject } from "openapi3-ts";
-import { describe, expect, test } from "vitest";
-import { generateZodClientFromOpenAPI } from "../src";
-import type { TemplateContextGroupStrategy } from "../src/template-context";
+import { describe, test } from "jsr:@std/testing/bdd";
+import { assertSnapshot } from "jsr:@std/testing/snapshot";
+import { generateZodClientFromOpenAPI } from "../src/index.ts";
+import type { TemplateContextGroupStrategy } from "../src/template-context.ts";
 
 // https://github.com/astahmer/openapi-zod-client/issues/157
-describe("file group strategy with multi-props object as query parameter", async () => {
+describe("file group strategy with multi-props object as query parameter", () => {
     const openApiDoc: OpenAPIObject = {
         openapi: "3.0.1",
         info: {
@@ -39,7 +40,7 @@ describe("file group strategy with multi-props object as query parameter", async
         },
     };
 
-    const runTest = async (groupStrategy: TemplateContextGroupStrategy): Promise<void> => {
+    const runTest = async (groupStrategy: TemplateContextGroupStrategy, t: Deno.TestContext): Promise<void> => {
         const output = await generateZodClientFromOpenAPI({
             disableWriteToFile: true,
             openApiDoc,
@@ -86,9 +87,9 @@ export function createApiClient(baseUrl: string, options?: ZodiosOptions) {
                 ? `{\n${expectedIndex}\n${expectedApi}\n}`
                 : `{\n${expectedApi}\n${expectedIndex}\n}`;
 
-        expect(output).toMatchInlineSnapshot(expected);
+        await assertSnapshot(t, output);
     };
 
-    test("tag file", () => runTest("tag-file"));
-    test("method file", () => runTest("method-file"));
+    test("tag file", async (t) => await runTest("tag-file", t));
+    test("method file", async (t) => await runTest("method-file", t));
 });

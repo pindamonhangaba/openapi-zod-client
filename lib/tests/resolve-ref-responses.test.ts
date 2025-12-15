@@ -1,59 +1,33 @@
-import { getZodiosEndpointDefinitionList } from "../src";
-import { expect, test } from "vitest";
+import { getZodiosEndpointDefinitionList } from "../src/index.ts";
+import { test } from "jsr:@std/testing/bdd";
+import { expect } from "jsr:@std/expect";
+import { assertSnapshot } from "jsr:@std/testing/snapshot";
 
-test("resolve-ref-responses", () => {
+test("resolve-ref-responses", async (t) => {
     // Without the refiner function passed.
-    expect(
-        getZodiosEndpointDefinitionList({
-            openapi: "3.0.3",
-            info: { version: "1", title: "Example API" },
-            paths: {
-                "/": {
-                    get: {
-                        operationId: "getExample",
-                        responses: {
-                            "200": {
-                                $ref: "#/components/responses/ExampleResponse"
-                            },
+    const result = getZodiosEndpointDefinitionList({
+        openapi: "3.0.3",
+        info: { version: "1", title: "Example API" },
+        paths: {
+            "/": {
+                get: {
+                    operationId: "getExample",
+                    responses: {
+                        "200": {
+                            $ref: "#/components/responses/ExampleResponse"
                         },
                     },
                 },
             },
-            components: {
-                responses: {
-                    ExampleResponse: {
-                        description: "example response",
-                        content: { "application/json": { schema: { type: "string" } } },
-                    }
+        },
+        components: {
+            responses: {
+                ExampleResponse: {
+                    description: "example response",
+                    content: { "application/json": { schema: { type: "string" } } },
                 }
-            },
-        })
-    ).toMatchInlineSnapshot(`
-      {
-          "deepDependencyGraph": {},
-          "endpoints": [
-              {
-                  "description": undefined,
-                  "errors": [],
-                  "method": "get",
-                  "parameters": [],
-                  "path": "/",
-                  "requestFormat": "json",
-                  "response": "z.string()",
-              },
-          ],
-          "issues": {
-              "ignoredFallbackResponse": [],
-              "ignoredGenericError": [],
-          },
-          "refsDependencyGraph": {},
-          "resolver": {
-              "getSchemaByRef": [Function],
-              "resolveRef": [Function],
-              "resolveSchemaName": [Function],
-          },
-          "schemaByName": {},
-          "zodSchemaByName": {},
-      }
-    `);
+            }
+        },
+    });
+    await assertSnapshot(t, result);
 });

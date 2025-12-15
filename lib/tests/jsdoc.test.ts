@@ -1,8 +1,10 @@
 import { OpenAPIObject } from "openapi3-ts";
-import { test, expect } from "vitest";
-import { generateZodClientFromOpenAPI } from "../src";
+import { test } from "jsr:@std/testing/bdd";
+import { expect } from "jsr:@std/expect";
+import { assertSnapshot } from "jsr:@std/testing/snapshot";
+import { generateZodClientFromOpenAPI } from "../src/index.ts";
 
-test("jsdoc", async () => {
+test("jsdoc", async (t) => {
     const openApiDoc: OpenAPIObject = {
         openapi: "3.0.3",
         info: { version: "1", title: "Example API" },
@@ -95,108 +97,5 @@ test("jsdoc", async () => {
         },
     });
 
-    expect(output).toMatchInlineSnapshot(`"import { makeApi, Zodios, type ZodiosOptions } from "@franklin-ai/zodios";
-import { z } from "zod";
-
-type ComplexObject = Partial<{
-  /**
-   * A string with example tag
-   *
-   * @example "example"
-   */
-  example: string;
-  /**
-   * A string with examples tag
-   *
-   * @example Example 1: "example1"
-   * @example Example 2: "example2"
-   */
-  examples: string;
-  /**
-   * A string with many tags
-   *
-   * @minLength 1
-   * @maxLength 10
-   * @pattern ^[a-z]*$
-   * @enum a, b, c
-   */
-  manyTagsStr: "a" | "b" | "c";
-  /**
-   * A number with minimum tag
-   *
-   * @minimum 0
-   */
-  numMin: number;
-  /**
-   * A number with maximum tag
-   *
-   * @maximum 10
-   */
-  numMax: number;
-  /**
-   * A number with many tags
-   *
-   * @example 3
-   * @deprecated
-   * @default 5
-   * @see https://example.com
-   * @minimum 0
-   * @maximum 10
-   */
-  manyTagsNum: number;
-  /**
-   * A boolean
-   *
-   * @default true
-   */
-  bool: boolean;
-  ref: SimpleObject;
-  /**
-   * An array of SimpleObject
-   */
-  refArray: Array<SimpleObject>;
-}>;
-type SimpleObject = Partial<{
-  str: string;
-}>;
-
-const SimpleObject: z.ZodType<SimpleObject> = z
-  .object({ str: z.string() })
-  .partial()
-  .passthrough();
-const ComplexObject: z.ZodType<ComplexObject> = z
-  .object({
-    example: z.string(),
-    examples: z.string(),
-    manyTagsStr: z.enum(["a", "b", "c"]).regex(/^[a-z]*$/),
-    numMin: z.number().gte(0),
-    numMax: z.number().lte(10),
-    manyTagsNum: z.number().gte(0).lte(10).default(5),
-    bool: z.boolean().default(true),
-    ref: SimpleObject,
-    refArray: z.array(SimpleObject),
-  })
-  .partial()
-  .passthrough();
-
-export const schemas = {
-  SimpleObject,
-  ComplexObject,
-};
-
-const endpoints = makeApi([
-  {
-    method: "get",
-    path: "/test",
-    requestFormat: "json",
-    response: ComplexObject,
-  },
-]);
-
-export const api = new Zodios(endpoints);
-
-export function createApiClient(baseUrl: string, options?: ZodiosOptions) {
-  return new Zodios(baseUrl, endpoints, options);
-}
-"`);
+    await assertSnapshot(t, output);
 });

@@ -1,0 +1,316 @@
+export const snapshot = {};
+
+snapshot[`use-union-only-when-multiple-choices 1`] = `
+<ref *2> CodeMeta {
+  children: [
+    <ref *1> CodeMeta {
+      children: [
+        CodeMeta {
+          children: [],
+          code: "z.string()",
+          ctx: undefined,
+          meta: {
+            parent: [Circular *1],
+            referencedBy: [],
+          },
+          ref: undefined,
+          schema: {
+            type: "string",
+          },
+        },
+      ],
+      code: "z.string()",
+      ctx: undefined,
+      meta: {
+        isRequired: true,
+        name: "singleOneOf",
+        parent: [Circular *2],
+        referencedBy: [],
+      },
+      ref: undefined,
+      schema: {
+        oneOf: [
+          {
+            type: "string",
+          },
+        ],
+      },
+    },
+    <ref *3> CodeMeta {
+      children: [
+        CodeMeta {
+          children: [],
+          code: "z.string()",
+          ctx: undefined,
+          meta: {
+            parent: [Circular *3],
+            referencedBy: [],
+          },
+          ref: undefined,
+          schema: {
+            type: "string",
+          },
+        },
+        CodeMeta {
+          children: [],
+          code: "z.number()",
+          ctx: undefined,
+          meta: {
+            parent: [Circular *3],
+            referencedBy: [],
+          },
+          ref: undefined,
+          schema: {
+            type: "number",
+          },
+        },
+      ],
+      code: "z.union([z.string(), z.number()])",
+      ctx: undefined,
+      meta: {
+        isRequired: true,
+        name: "multipleOneOf",
+        parent: [Circular *2],
+        referencedBy: [],
+      },
+      ref: undefined,
+      schema: {
+        oneOf: [
+          {
+            type: "string",
+          },
+          {
+            type: "number",
+          },
+        ],
+      },
+    },
+    <ref *4> CodeMeta {
+      children: [
+        CodeMeta {
+          children: [],
+          code: "z.string()",
+          ctx: undefined,
+          meta: {
+            parent: [Circular *4],
+            referencedBy: [],
+          },
+          ref: undefined,
+          schema: {
+            type: "string",
+          },
+        },
+      ],
+      code: "z.string()",
+      ctx: undefined,
+      meta: {
+        isRequired: true,
+        name: "singleAnyOf",
+        parent: [Circular *2],
+        referencedBy: [],
+      },
+      ref: undefined,
+      schema: {
+        anyOf: [
+          {
+            type: "string",
+          },
+        ],
+      },
+    },
+    <ref *5> CodeMeta {
+      children: [
+        CodeMeta {
+          children: [],
+          code: "z.string()",
+          ctx: undefined,
+          meta: {
+            parent: [Circular *5],
+            referencedBy: [],
+          },
+          ref: undefined,
+          schema: {
+            type: "string",
+          },
+        },
+        CodeMeta {
+          children: [],
+          code: "z.number()",
+          ctx: undefined,
+          meta: {
+            parent: [Circular *5],
+            referencedBy: [],
+          },
+          ref: undefined,
+          schema: {
+            type: "number",
+          },
+        },
+      ],
+      code: "z.union([z.string(), z.number()])",
+      ctx: undefined,
+      meta: {
+        isRequired: true,
+        name: "multipleAnyOf",
+        parent: [Circular *2],
+        referencedBy: [],
+      },
+      ref: undefined,
+      schema: {
+        anyOf: [
+          {
+            type: "string",
+          },
+          {
+            type: "number",
+          },
+        ],
+      },
+    },
+    <ref *6> CodeMeta {
+      children: [
+        CodeMeta {
+          children: [],
+          code: "z.string()",
+          ctx: undefined,
+          meta: {
+            parent: [Circular *6],
+            referencedBy: [],
+          },
+          ref: undefined,
+          schema: {
+            type: "string",
+          },
+        },
+      ],
+      code: "z.string()",
+      ctx: undefined,
+      meta: {
+        isRequired: true,
+        name: "singleAllOf",
+        parent: [Circular *2],
+        referencedBy: [],
+      },
+      ref: undefined,
+      schema: {
+        allOf: [
+          {
+            type: "string",
+          },
+        ],
+      },
+    },
+    <ref *7> CodeMeta {
+      children: [
+        CodeMeta {
+          children: [],
+          code: "z.string()",
+          ctx: undefined,
+          meta: {
+            parent: [Circular *7],
+            referencedBy: [],
+          },
+          ref: undefined,
+          schema: {
+            type: "string",
+          },
+        },
+        CodeMeta {
+          children: [],
+          code: "z.number()",
+          ctx: undefined,
+          meta: {
+            parent: [Circular *7],
+            referencedBy: [],
+          },
+          ref: undefined,
+          schema: {
+            type: "number",
+          },
+        },
+      ],
+      code: "z.string().and(z.number())",
+      ctx: undefined,
+      meta: {
+        isRequired: true,
+        name: "multipleAllOf",
+        parent: [Circular *2],
+        referencedBy: [],
+      },
+      ref: undefined,
+      schema: {
+        allOf: [
+          {
+            type: "string",
+          },
+          {
+            type: "number",
+          },
+        ],
+      },
+    },
+  ],
+  code: "z.object({ singleOneOf: z.string(), multipleOneOf: z.union([z.string(), z.number()]), singleAnyOf: z.string(), multipleAnyOf: z.union([z.string(), z.number()]), singleAllOf: z.string(), multipleAllOf: z.string().and(z.number()) }).partial().passthrough()",
+  ctx: undefined,
+  meta: {
+    referencedBy: [],
+  },
+  ref: undefined,
+  schema: {
+    properties: {
+      multipleAllOf: {
+        allOf: [
+          {
+            type: "string",
+          },
+          {
+            type: "number",
+          },
+        ],
+      },
+      multipleAnyOf: {
+        anyOf: [
+          {
+            type: "string",
+          },
+          {
+            type: "number",
+          },
+        ],
+      },
+      multipleOneOf: {
+        oneOf: [
+          {
+            type: "string",
+          },
+          {
+            type: "number",
+          },
+        ],
+      },
+      singleAllOf: {
+        allOf: [
+          {
+            type: "string",
+          },
+        ],
+      },
+      singleAnyOf: {
+        anyOf: [
+          {
+            type: "string",
+          },
+        ],
+      },
+      singleOneOf: {
+        oneOf: [
+          {
+            type: "string",
+          },
+        ],
+      },
+    },
+    type: "object",
+  },
+}
+`;

@@ -1,9 +1,10 @@
 import type { OpenAPIObject } from "openapi3-ts";
-import { expect, test } from "vitest";
-import { generateZodClientFromOpenAPI } from "../src";
+import { test } from "jsr:@std/testing/bdd";
+import { assertSnapshot } from "jsr:@std/testing/snapshot";
+import { generateZodClientFromOpenAPI } from "../src/index.ts";
 
 // https://github.com/astahmer/openapi-zod-client/issues/116
-test("array-oneOf-discriminated-union", async () => {
+test("array-oneOf-discriminated-union", async (t) => {
     const openApiDoc: OpenAPIObject = {
         openapi: "3.0.3",
         info: {
@@ -55,42 +56,5 @@ test("array-oneOf-discriminated-union", async () => {
     };
 
     const output = await generateZodClientFromOpenAPI({ disableWriteToFile: true, openApiDoc });
-    expect(output).toMatchInlineSnapshot(`
-      "import { makeApi, Zodios, type ZodiosOptions } from "@franklin-ai/zodios";
-      import { z } from "zod";
-
-      const ArrayRequest = z.array(
-        z.discriminatedUnion("type", [
-          z.object({ type: z.literal("a") }).passthrough(),
-          z.object({ type: z.literal("b") }).passthrough(),
-        ])
-      );
-
-      export const schemas = {
-        ArrayRequest,
-      };
-
-      const endpoints = makeApi([
-        {
-          method: "post",
-          path: "/test",
-          requestFormat: "json",
-          parameters: [
-            {
-              name: "body",
-              type: "Body",
-              schema: ArrayRequest,
-            },
-          ],
-          response: z.void(),
-        },
-      ]);
-
-      export const api = new Zodios(endpoints);
-
-      export function createApiClient(baseUrl: string, options?: ZodiosOptions) {
-        return new Zodios(baseUrl, endpoints, options);
-      }
-      "
-    `);
+    await assertSnapshot(t, output);
 });

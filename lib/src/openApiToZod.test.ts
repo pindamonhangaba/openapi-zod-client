@@ -1,9 +1,9 @@
 import type { SchemaObject } from "openapi3-ts";
-import { expect, test } from "vitest";
-import { getZodSchema } from "./openApiToZod";
-import type { CodeMetaData, ConversionTypeContext } from "./CodeMeta";
-import { makeSchemaResolver } from "./makeSchemaResolver";
-import { asComponentSchema } from "./utils";
+
+import { getZodSchema } from "./openApiToZod.ts";
+import type { CodeMetaData, ConversionTypeContext } from "./CodeMeta.ts";
+import { makeSchemaResolver } from "./makeSchemaResolver.ts";
+import { asComponentSchema } from "./utils.ts";
 
 const makeSchema = (schema: SchemaObject) => schema;
 const getSchemaAsZodString = (schema: SchemaObject, meta?: CodeMetaData | undefined) =>

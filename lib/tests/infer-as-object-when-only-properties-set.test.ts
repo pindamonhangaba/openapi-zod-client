@@ -1,17 +1,17 @@
-import { getZodSchema } from "../src/openApiToZod";
-import { test, expect } from "vitest";
+import { getZodSchema } from "../src/openApiToZod.ts";
+import { test } from "jsr:@std/testing/bdd";
+import { assertSnapshot } from "jsr:@std/testing/snapshot";
 
-test("infer-as-object-when-only-properties-set", () => {
-    expect(
-        getZodSchema({
-            schema: {
-                properties: {
-                    str: { type: "string" },
-                    nested: {
-                        additionalProperties: { type: "number" },
-                    },
+test("infer-as-object-when-only-properties-set", async (t) => {
+    const result = getZodSchema({
+        schema: {
+            properties: {
+                str: { type: "string" },
+                nested: {
+                    additionalProperties: { type: "number" },
                 },
             },
-        })
-    ).toMatchInlineSnapshot('"z.object({ str: z.string(), nested: z.record(z.string(), z.number()) }).partial().passthrough()"');
+        },
+    });
+    await assertSnapshot(t, result);
 });

@@ -1,8 +1,10 @@
 import type { OpenAPIObject } from "openapi3-ts";
-import { expect, test } from "vitest";
-import { generateZodClientFromOpenAPI } from "../src";
+import { test } from "jsr:@std/testing/bdd";
+import { expect } from "jsr:@std/expect";
+import { assertSnapshot } from "jsr:@std/testing/snapshot";
+import { generateZodClientFromOpenAPI } from "../src/index.ts";
 
-test("schema-type-wrong-case", async () => {
+test("schema-type-wrong-case", async (t) => {
     const openApiDoc: OpenAPIObject = {
         openapi: "3.0.3",
         info: { title: "Swagger Petstore - OpenAPI 3.0", version: "1.0.11" },
@@ -26,30 +28,5 @@ test("schema-type-wrong-case", async () => {
     };
 
     const output = await generateZodClientFromOpenAPI({ disableWriteToFile: true, openApiDoc });
-    expect(output).toMatchInlineSnapshot(`
-      "import { makeApi, Zodios, type ZodiosOptions } from "@franklin-ai/zodios";
-      import { z } from "zod";
-
-      const test1 = z.object({ text1: z.number() }).partial().passthrough();
-
-      export const schemas = {
-        test1,
-      };
-
-      const endpoints = makeApi([
-        {
-          method: "put",
-          path: "/pet",
-          requestFormat: "json",
-          response: z.object({ text1: z.number() }).partial().passthrough(),
-        },
-      ]);
-
-      export const api = new Zodios(endpoints);
-
-      export function createApiClient(baseUrl: string, options?: ZodiosOptions) {
-        return new Zodios(baseUrl, endpoints, options);
-      }
-      "
-    `);
+    await assertSnapshot(t, output);
 });

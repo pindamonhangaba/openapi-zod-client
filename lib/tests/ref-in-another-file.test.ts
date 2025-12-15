@@ -1,39 +1,14 @@
 import SwaggerParser from "@apidevtools/swagger-parser";
 import { OpenAPIObject } from "openapi3-ts";
-import { resolve } from "path";
-import { getZodiosEndpointDefinitionList } from "../src";
-import { expect, test } from "vitest";
+import * as path from "@std/path";
+import { getZodiosEndpointDefinitionList } from "../src/index.ts";
+import { test } from "jsr:@std/testing/bdd";
+import { assertSnapshot } from "jsr:@std/testing/snapshot";
 
-test("ref-in-another-file", async () => {
+test("ref-in-another-file", async (t) => {
     const openApiDoc = (await SwaggerParser.bundle(
-        resolve(__dirname, "ref-in-another-file", "partial.yaml")
+        path.join(path.dirname(path.fromFileUrl(import.meta.url)), "ref-in-another-file", "partial.yaml")
     )) as OpenAPIObject;
-    expect(getZodiosEndpointDefinitionList(openApiDoc)).toMatchInlineSnapshot(`
-      {
-          "deepDependencyGraph": {},
-          "endpoints": [
-              {
-                  "description": "Gets robots.txt",
-                  "errors": [],
-                  "method": "get",
-                  "parameters": [],
-                  "path": "/robots.txt",
-                  "requestFormat": "json",
-                  "response": "z.object({ name: z.string(), completed: z.boolean(), "0_property_starting_with_number": z.number() }).passthrough()",
-              },
-          ],
-          "issues": {
-              "ignoredFallbackResponse": [],
-              "ignoredGenericError": [],
-          },
-          "refsDependencyGraph": {},
-          "resolver": {
-              "getSchemaByRef": [Function],
-              "resolveRef": [Function],
-              "resolveSchemaName": [Function],
-          },
-          "schemaByName": {},
-          "zodSchemaByName": {},
-      }
-    `);
+    const endpoints = getZodiosEndpointDefinitionList(openApiDoc);
+    await assertSnapshot(t, endpoints);
 });

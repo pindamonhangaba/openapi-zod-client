@@ -1,0 +1,38 @@
+export const snapshot = {};
+
+snapshot[`with-deprecated 1`] = `
+[
+  {
+    description: undefined,
+    errors: [],
+    method: "get",
+    parameters: [],
+    path: "/new-endpoint",
+    requestFormat: "json",
+    response: "z.number()",
+  },
+]
+`;
+
+snapshot[`with-deprecated 2`] = `
+[
+  {
+    description: undefined,
+    errors: [],
+    method: "get",
+    parameters: [],
+    path: "/deprecated-endpoint",
+    requestFormat: "json",
+    response: "z.string()",
+  },
+  {
+    description: undefined,
+    errors: [],
+    method: "get",
+    parameters: [],
+    path: "/new-endpoint",
+    requestFormat: "json",
+    response: "z.number()",
+  },
+]
+`;

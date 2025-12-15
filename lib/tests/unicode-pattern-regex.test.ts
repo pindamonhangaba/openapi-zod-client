@@ -1,9 +1,11 @@
-import { getZodSchema } from "../src";
-import { expect, test } from "vitest";
-import { getZodChain } from "../src/openApiToZod";
+import { getZodSchema } from "../src/index.ts";
+import { test } from "jsr:@std/testing/bdd";
+import { expect } from "jsr:@std/expect";
+import { assertSnapshot } from "jsr:@std/testing/snapshot";
+import { getZodChain } from "../src/openApiToZod.ts";
 import { SchemaObject } from "openapi3-ts";
 
-test("unicode-pattern-regex", () => {
+test("unicode-pattern-regex", async (t) => {
     const schema: SchemaObject = {
         type: "string",
         pattern: "\\p{L}+",
@@ -20,16 +22,16 @@ test("unicode-pattern-regex", () => {
         type: "string",
         pattern: "\\u{1F600}+",
     }
-    expect(getZodSchema({ schema: schema }) + getZodChain({ schema })).toMatchInlineSnapshot(
-        '"z.string().regex(/\\p{L}+/u).optional()"'
-    );
-    expect(getZodSchema({ schema: schemaWithSlashes }) + getZodChain({ schema: schemaWithSlashes })).toMatchInlineSnapshot(
-        '"z.string().regex(/\\p{L}+/u).optional()"'
-    );
-    expect(getZodSchema({ schema: schemaWithComplexUnicodePattern }) + getZodChain({ schema: schemaWithComplexUnicodePattern })).toMatchInlineSnapshot(
-        '"z.string().regex(/$|^[\\p{L}\\d]+[\\p{L}\\d\\s.&()\\*\'\',-;#]*|$/u).optional()"'
-    );
-    expect(getZodSchema({ schema: schemaWithSlashU }) + getZodChain({ schema: schemaWithSlashU })).toMatchInlineSnapshot(
-        '"z.string().regex(/\\u{1F600}+/u).optional()"'
-    );
+    
+    const result1 = getZodSchema({ schema: schema }) + getZodChain({ schema });
+    await assertSnapshot(t, result1);
+    
+    const result2 = getZodSchema({ schema: schemaWithSlashes }) + getZodChain({ schema: schemaWithSlashes });
+    await assertSnapshot(t, result2);
+    
+    const result3 = getZodSchema({ schema: schemaWithComplexUnicodePattern }) + getZodChain({ schema: schemaWithComplexUnicodePattern });
+    await assertSnapshot(t, result3);
+    
+    const result4 = getZodSchema({ schema: schemaWithSlashU }) + getZodChain({ schema: schemaWithSlashU });
+    await assertSnapshot(t, result4);
 });

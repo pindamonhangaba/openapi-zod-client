@@ -1,0 +1,30 @@
+export const snapshot = {};
+
+snapshot[`resolve-ref-responses 1`] = `
+{
+  deepDependencyGraph: {},
+  endpoints: [
+    {
+      description: undefined,
+      errors: [],
+      method: "get",
+      parameters: [],
+      path: "/",
+      requestFormat: "json",
+      response: "z.string()",
+    },
+  ],
+  issues: {
+    ignoredFallbackResponse: [],
+    ignoredGenericError: [],
+  },
+  refsDependencyGraph: {},
+  resolver: {
+    getSchemaByRef: [Function: getSchemaByRef],
+    resolveRef: [Function: resolveRef],
+    resolveSchemaName: [Function: resolveSchemaName],
+  },
+  schemaByName: {},
+  zodSchemaByName: {},
+}
+`;

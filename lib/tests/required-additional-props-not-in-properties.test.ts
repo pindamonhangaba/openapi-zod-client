@@ -1,20 +1,21 @@
-import { getZodSchema } from "../src/openApiToZod";
-import { test, expect } from "vitest";
+import { getZodSchema } from "../src/openApiToZod.ts";
+import { test } from "jsr:@std/testing/bdd";
+import { expect } from "jsr:@std/expect";
+import { assertSnapshot } from "jsr:@std/testing/snapshot";
 
-test("required-additional-props-not-in-properties", () => {
-    expect(
-        getZodSchema({
-            schema: {
-                properties: {
-                    name: {
-                        type: "string"
-                    },
-                    email: {
-                        type: "string"
-                    },
+test("required-additional-props-not-in-properties", async (t) => {
+    const result = getZodSchema({
+        schema: {
+            properties: {
+                name: {
+                    type: "string"
                 },
-                required: ['name', 'email', 'phone'],
+                email: {
+                    type: "string"
+                },
             },
-        })
-    ).toMatchInlineSnapshot('"z.object({ name: z.string(), email: z.string() }).passthrough()"');
+            required: ['name', 'email', 'phone'],
+        },
+    });
+    await assertSnapshot(t, result);
 });

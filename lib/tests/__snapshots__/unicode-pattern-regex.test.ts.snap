@@ -1,0 +1,9 @@
+export const snapshot = {};
+
+snapshot[`unicode-pattern-regex 1`] = `"z.string().regex(/\\\\p{L}+/u).optional()"`;
+
+snapshot[`unicode-pattern-regex 2`] = `"z.string().regex(/\\\\p{L}+/u).optional()"`;
+
+snapshot[`unicode-pattern-regex 3`] = `"z.string().regex(/\$|^[\\\\p{L}\\\\d]+[\\\\p{L}\\\\d\\\\s.&()\\\\*'',-;#]*|\$/u).optional()"`;
+
+snapshot[`unicode-pattern-regex 4`] = `"z.string().regex(/\\\\u{1F600}+/u).optional()"`;

@@ -1,4 +1,4 @@
-import type { ZodiosEndpointDefinition } from "@franklin-ai/zodios";
+import type { ZodiosEndpointDefinition } from "@zodios/core";
 import type {
     OpenAPIObject,
     OperationObject,
@@ -11,27 +11,37 @@ import type {
 } from "openapi3-ts";
 import type { ObjectLiteral } from "pastable";
 import { match, P } from "ts-pattern";
-import { sync } from "whence";
+import whence from "whence";
 
-import type { CodeMeta, ConversionTypeContext } from "./CodeMeta";
-import { getOpenApiDependencyGraph } from "./getOpenApiDependencyGraph";
-import { isReferenceObject } from "./isReferenceObject";
-import { makeSchemaResolver } from "./makeSchemaResolver";
-import { getZodChain, getZodSchema } from "./openApiToZod";
-import { getSchemaComplexity } from "./schema-complexity";
-import type { TemplateContext } from "./template-context";
+import type { CodeMeta, ConversionTypeContext } from "./CodeMeta.ts";
+import { getOpenApiDependencyGraph } from "./getOpenApiDependencyGraph.ts";
+import { isReferenceObject } from "./isReferenceObject.ts";
+import { makeSchemaResolver } from "./makeSchemaResolver.ts";
+import { getZodChain, getZodSchema } from "./openApiToZod.ts";
+import { getSchemaComplexity } from "./schema-complexity.ts";
+import type { TemplateContext } from "./template-context.ts";
 import {
     asComponentSchema,
     normalizeString,
     pathParamToVariableName,
     pathToVariableName,
     replaceHyphenatedPath,
-} from "./utils";
+} from "./utils.ts";
 
 const voidSchema = "z.void()";
 
+export type ZodiosEndpointDefinitionListResult = Required<ConversionTypeContext> & {
+    refsDependencyGraph: Record<string, Set<string>>;
+    deepDependencyGraph: Record<string, Set<string>>;
+    endpoints: EndpointDefinitionWithRefs[];
+    issues: {
+        ignoredFallbackResponse: string[];
+        ignoredGenericError: string[];
+    };
+};
+
 // eslint-disable-next-line sonarjs/cognitive-complexity
-export const getZodiosEndpointDefinitionList = (doc: OpenAPIObject, options?: TemplateContext["options"]) => {
+export const getZodiosEndpointDefinitionList = (doc: OpenAPIObject, options?: TemplateContext["options"]): ZodiosEndpointDefinitionListResult => {
     const resolver = makeSchemaResolver(doc);
     const graphs = getOpenApiDependencyGraph(
         Object.keys(doc.components?.schemas ?? {}).map((name) => asComponentSchema(name)),
@@ -41,17 +51,17 @@ export const getZodiosEndpointDefinitionList = (doc: OpenAPIObject, options?: Te
     const endpoints = [];
 
     const isMainResponseStatus = match(options?.isMainResponseStatus)
-        .with(P.string, (option) => (status: number) => sync(option, { status }, { functions: true }))
+        .with(P.string, (option) => (status: number) => whence.sync(option, { status }, { functions: true }))
         .with(P.nullish, () => (status: number) => status >= 200 && status < 300)
         .otherwise((fn) => fn);
 
     const isErrorStatus = match(options?.isErrorStatus)
-        .with(P.string, (option) => (status: number) => sync(option, { status }, { functions: true }))
+        .with(P.string, (option) => (status: number) => whence.sync(option, { status }, { functions: true }))
         .with(P.nullish, () => (status: number) => !(status >= 200 && status < 300))
         .otherwise((fn) => fn);
 
     const isMediaTypeAllowed = match(options?.isMediaTypeAllowed)
-        .with(P.string, (option) => (mediaType: string) => sync(option, { mediaType }, { functions: true }))
+        .with(P.string, (option) => (mediaType: string) => whence.sync(option, { mediaType }, { functions: true }))
         .with(P.nullish, () => (mediaType: string) => mediaType === "application/json")
         .otherwise((fn) => fn);
 

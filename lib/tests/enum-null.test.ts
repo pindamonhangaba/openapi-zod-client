@@ -1,9 +1,10 @@
 import type { OpenAPIObject } from "openapi3-ts";
-import { expect, test } from "vitest";
-import { generateZodClientFromOpenAPI } from "../src";
+import { test } from "jsr:@std/testing/bdd";
+import { assertSnapshot } from "jsr:@std/testing/snapshot";
+import { generateZodClientFromOpenAPI } from "../src/index.ts";
 
 // https://github.com/astahmer/openapi-zod-client/issues/61
-test("enum-null", async () => {
+test("enum-null", async (t) => {
     const openApiDoc: OpenAPIObject = {
         openapi: "3.0.0",
         info: {
@@ -111,71 +112,5 @@ test("enum-null", async () => {
         openApiDoc,
         options: { shouldExportAllTypes: true },
     });
-    expect(output).toMatchInlineSnapshot(`
-      "import { makeApi, Zodios, type ZodiosOptions } from "@franklin-ai/zodios";
-      import { z } from "zod";
-
-      type Compound = Partial<{
-        field: Null1 | Null2 | Null3 | Null4 | string;
-      }>;
-      type Null1 = null;
-      type Null2 = "a" | null;
-      type Null3 = "a" | null;
-      type Null4 = null;
-
-      const Null1 = z.literal(null);
-      const Null2 = z.enum(["a", null]);
-      const Null3 = z.enum(["a", null]);
-      const Null4 = z.literal(null);
-      const Compound: z.ZodType<Compound> = z
-        .object({ field: z.union([Null1, Null2, Null3, Null4, z.string()]) })
-        .partial()
-        .passthrough();
-
-      export const schemas = {
-        Null1,
-        Null2,
-        Null3,
-        Null4,
-        Compound,
-      };
-
-      const endpoints = makeApi([
-        {
-          method: "get",
-          path: "/sample",
-          requestFormat: "json",
-          response: z.literal(null),
-          errors: [
-            {
-              status: 400,
-              description: \`null with a string\`,
-              schema: z.enum(["a", null]),
-            },
-            {
-              status: 401,
-              description: \`null with a string and nullable\`,
-              schema: z.enum(["a", null]).nullable(),
-            },
-            {
-              status: 402,
-              description: \`null with nullable\`,
-              schema: z.literal(null).nullable(),
-            },
-            {
-              status: 403,
-              description: \`object that references null\`,
-              schema: Compound,
-            },
-          ],
-        },
-      ]);
-
-      export const api = new Zodios(endpoints);
-
-      export function createApiClient(baseUrl: string, options?: ZodiosOptions) {
-        return new Zodios(baseUrl, endpoints, options);
-      }
-      "
-    `);
+    await assertSnapshot(t, output);
 });

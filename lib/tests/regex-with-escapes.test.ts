@@ -1,9 +1,10 @@
-import { getZodSchema } from "../src/openApiToZod";
-import { test, expect } from "vitest";
+import { getZodSchema } from "../src/openApiToZod.ts";
+import { test } from "jsr:@std/testing/bdd";
+import { expect } from "jsr:@std/expect";
+import { assertSnapshot } from "jsr:@std/testing/snapshot";
 
-test("regex-with-escapes", () => {
-    expect(
-        getZodSchema({schema: {
+test("regex-with-escapes", async (t) => {
+    await assertSnapshot(t, getZodSchema({schema: {
             type: "object",
             properties: {
                 str: { 
@@ -11,8 +12,5 @@ test("regex-with-escapes", () => {
                     pattern: "^/$"
                 },
             }
-        }})
-    ).toMatchInlineSnapshot(
-        '"z.object({ str: z.string().regex(/^\\/$/) }).partial().passthrough()"'
-    );
+        }}));
 });

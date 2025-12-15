@@ -1,7 +1,7 @@
 import SwaggerParser from "@apidevtools/swagger-parser";
 import type { OpenAPIObject, SchemaObject } from "openapi3-ts";
-import { expect, test } from "vitest";
-import { getZodiosEndpointDefinitionList } from "./getZodiosEndpointDefinitionList";
+
+import { getZodiosEndpointDefinitionList } from "./getZodiosEndpointDefinitionList.ts";
 
 const baseDoc = {
     openapi: "3.0.3",

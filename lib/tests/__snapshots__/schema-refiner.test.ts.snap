@@ -1,0 +1,58 @@
+export const snapshot = {};
+
+snapshot[`schema-refiner 1`] = `
+<ref *1> CodeMeta {
+  children: [
+    CodeMeta {
+      children: [],
+      code: "z.string()",
+      ctx: undefined,
+      meta: {
+        isRequired: true,
+        name: "name",
+        parent: [Circular *1],
+        referencedBy: [],
+      },
+      ref: undefined,
+      schema: {
+        nullable: true,
+        type: "string",
+      },
+    },
+    CodeMeta {
+      children: [],
+      code: "z.string()",
+      ctx: undefined,
+      meta: {
+        isRequired: true,
+        name: "email",
+        parent: [Circular *1],
+        referencedBy: [],
+      },
+      ref: undefined,
+      schema: {
+        nullable: true,
+        type: "string",
+      },
+    },
+  ],
+  code: "z.object({ name: z.string().nullable(), email: z.string().nullable() }).partial().passthrough()",
+  ctx: undefined,
+  meta: {
+    referencedBy: [],
+  },
+  ref: undefined,
+  schema: {
+    properties: {
+      email: {
+        nullable: true,
+        type: "string",
+      },
+      name: {
+        nullable: true,
+        type: "string",
+      },
+    },
+  },
+}
+`;

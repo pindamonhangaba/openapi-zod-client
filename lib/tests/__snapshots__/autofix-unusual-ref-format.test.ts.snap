@@ -1,0 +1,41 @@
+export const snapshot = {};
+
+snapshot[`autofix-unusual-ref-format 1`] = `
+{
+  deepDependencyGraph: {},
+  endpoints: [
+    {
+      description: undefined,
+      errors: [],
+      method: "get",
+      parameters: [],
+      path: "/usual-ref-format",
+      requestFormat: "json",
+      response: "z.string()",
+    },
+    {
+      description: undefined,
+      errors: [],
+      method: "get",
+      parameters: [],
+      path: "/unusual-ref-format",
+      requestFormat: "json",
+      response: "z.string()",
+    },
+  ],
+  issues: {
+    ignoredFallbackResponse: [],
+    ignoredGenericError: [],
+  },
+  refsDependencyGraph: {},
+  resolver: {
+    getSchemaByRef: [Function: getSchemaByRef],
+    resolveRef: [Function: resolveRef],
+    resolveSchemaName: [Function: resolveSchemaName],
+  },
+  schemaByName: {},
+  zodSchemaByName: {
+    Basic: "z.string()",
+  },
+}
+`;

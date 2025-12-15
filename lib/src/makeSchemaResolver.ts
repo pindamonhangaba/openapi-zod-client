@@ -1,7 +1,7 @@
 import type { OpenAPIObject, SchemaObject } from "openapi3-ts";
 import { get } from "pastable/server";
 
-import { normalizeString } from "./utils";
+import { normalizeString } from "./utils.ts";
 
 const autocorrectRef = (ref: string) => (ref[1] === "/" ? ref : "#/" + ref.slice(1));
 
@@ -11,7 +11,13 @@ type RefInfo = {
     normalized: string;
 };
 
-export const makeSchemaResolver = (doc: OpenAPIObject) => {
+export type DocumentResolver = {
+    getSchemaByRef: (ref: string) => SchemaObject;
+    resolveRef: (ref: string) => RefInfo;
+    resolveSchemaName: (normalized: string) => RefInfo;
+};
+
+export const makeSchemaResolver = (doc: OpenAPIObject): DocumentResolver => {
     // both used for debugging purpose
     // eslint-disable-next-line sonarjs/no-unused-collection
     const nameByRef = new Map<string, string>();
@@ -51,5 +57,3 @@ export const makeSchemaResolver = (doc: OpenAPIObject) => {
         resolveSchemaName: (normalized: string) => byNormalized.get(normalized)!,
     };
 };
-
-export type DocumentResolver = ReturnType<typeof makeSchemaResolver>;

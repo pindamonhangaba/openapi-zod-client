@@ -1,7 +1,0 @@
-packages:
-  - "lib"
-  - "playground"
-  - "examples/*"
-
-catalog:
-  zod: 4.1.11

@@ -3,15 +3,15 @@ import { sortBy, sortListFromRefArray, sortObjKeysFromArray } from "pastable/ser
 import { ts } from "tanu";
 import { match } from "ts-pattern";
 
-import { getOpenApiDependencyGraph } from "./getOpenApiDependencyGraph";
-import type { EndpointDefinitionWithRefs } from "./getZodiosEndpointDefinitionList";
-import { getZodiosEndpointDefinitionList } from "./getZodiosEndpointDefinitionList";
-import type { TsConversionContext } from "./openApiToTypescript";
-import { getTypescriptFromOpenApi } from "./openApiToTypescript";
-import { getZodSchema } from "./openApiToZod";
-import { topologicalSort } from "./topologicalSort";
-import { asComponentSchema, normalizeString } from "./utils";
-import type { CodeMetaData } from "./CodeMeta";
+import { getOpenApiDependencyGraph } from "./getOpenApiDependencyGraph.ts";
+import type { EndpointDefinitionWithRefs } from "./getZodiosEndpointDefinitionList.ts";
+import { getZodiosEndpointDefinitionList } from "./getZodiosEndpointDefinitionList.ts";
+import type { TsConversionContext } from "./openApiToTypescript.ts";
+import { getTypescriptFromOpenApi } from "./openApiToTypescript.ts";
+import { getZodSchema } from "./openApiToZod.ts";
+import { topologicalSort } from "./topologicalSort.ts";
+import { asComponentSchema, normalizeString } from "./utils.ts";
+import type { CodeMetaData } from "./CodeMeta.ts";
 
 const file = ts.createSourceFile("", "", ts.ScriptTarget.ESNext, true);
 const printer = ts.createPrinter({ newLine: ts.NewLineKind.LineFeed });
@@ -21,7 +21,7 @@ export const getZodClientTemplateContext = (
     openApiDoc: OpenAPIObject,
     options?: TemplateContext["options"]
     // eslint-disable-next-line sonarjs/cognitive-complexity
-) => {
+): TemplateContext => {
     const result = getZodiosEndpointDefinitionList(openApiDoc, options);
     const data = makeTemplateContext();
 

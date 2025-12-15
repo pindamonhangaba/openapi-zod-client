@@ -1,5 +1,6 @@
 import prettier, { type Options } from "prettier";
-import parserTypescript from "prettier/parser-typescript";
+// @ts-ignore - prettier v2 parser import
+import parserTypescript from "prettier/parser-typescript.js";
 
 /** @see https://github.dev/stephenh/ts-poet/blob/5ea0dbb3c9f1f4b0ee51a54abb2d758102eda4a2/src/Code.ts#L231 */
 

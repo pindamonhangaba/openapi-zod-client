@@ -1,0 +1,71 @@
+export const snapshot = {};
+
+snapshot[`refine-default-endpoint-callback 1`] = `
+{
+  deepDependencyGraph: {},
+  endpoints: [
+    {
+      description: undefined,
+      errors: [],
+      method: "get",
+      parameters: [],
+      path: "/basic-schema",
+      requestFormat: "json",
+      response: "z.string()",
+    },
+  ],
+  issues: {
+    ignoredFallbackResponse: [],
+    ignoredGenericError: [],
+  },
+  refsDependencyGraph: {},
+  resolver: {
+    getSchemaByRef: [Function: getSchemaByRef],
+    resolveRef: [Function: resolveRef],
+    resolveSchemaName: [Function: resolveSchemaName],
+  },
+  schemaByName: {},
+  zodSchemaByName: {
+    Basic: "z.string()",
+  },
+}
+`;
+
+snapshot[`refine-default-endpoint-callback 2`] = `
+{
+  deepDependencyGraph: {},
+  endpoints: [
+    {
+      description: undefined,
+      errors: [],
+      method: "get",
+      operationId: "getBasicSchema",
+      parameters: [],
+      path: "/basic-schema",
+      requestFormat: "json",
+      response: "z.string()",
+      security: [
+        {
+          petstore_auth: [
+            "read:schema",
+          ],
+        },
+      ],
+    },
+  ],
+  issues: {
+    ignoredFallbackResponse: [],
+    ignoredGenericError: [],
+  },
+  refsDependencyGraph: {},
+  resolver: {
+    getSchemaByRef: [Function: getSchemaByRef],
+    resolveRef: [Function: resolveRef],
+    resolveSchemaName: [Function: resolveSchemaName],
+  },
+  schemaByName: {},
+  zodSchemaByName: {
+    Basic: "z.string()",
+  },
+}
+`;

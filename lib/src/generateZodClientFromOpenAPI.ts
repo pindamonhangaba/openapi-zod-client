@@ -1,14 +1,15 @@
-import path from "node:path";
+import * as path from "@std/path";
+import { ensureDir } from "@std/fs";
 
 import type { OpenAPIObject } from "openapi3-ts";
 import { capitalize, pick } from "pastable/server";
 import type { Options } from "prettier";
 import { match } from "ts-pattern";
 
-import { getHandlebars } from "./getHandlebars";
-import { maybePretty } from "./maybePretty";
-import type { TemplateContext } from "./template-context";
-import { getZodClientTemplateContext } from "./template-context";
+import { getHandlebars } from "./getHandlebars.ts";
+import { maybePretty } from "./maybePretty.ts";
+import type { TemplateContext } from "./template-context.ts";
+import { getZodClientTemplateContext } from "./template-context.ts";
 
 type GenerateZodClientFromOpenApiArgs<TOptions extends TemplateContext["options"] = TemplateContext["options"]> = {
     openApiDoc: OpenAPIObject;
@@ -44,16 +45,43 @@ export const generateZodClientFromOpenAPI = async <TOptions extends TemplateCont
 > => {
     const data = getZodClientTemplateContext(openApiDoc, options);
     const groupStrategy = options?.groupStrategy ?? "none";
+    
+    // Get base directory - handle both file:// (local) and https:// (JSR) URLs
+    let baseDir: string;
+    if (import.meta.url.startsWith("file://")) {
+        baseDir = path.dirname(path.fromFileUrl(import.meta.url));
+    } else {
+        // Running from JSR - use URL-based path resolution
+        baseDir = new URL(".", import.meta.url).href;
+    }
 
     if (!templatePath) {
         templatePath = match(groupStrategy)
-            .with("none", "tag-file", "method-file", () => path.join(__dirname, "../src/templates/default.hbs"))
-            .with("tag", "method", () => path.join(__dirname, "../src/templates/grouped.hbs"))
+            .with("none", "tag-file", "method-file", () => {
+                if (import.meta.url.startsWith("file://")) {
+                    return path.join(baseDir, "templates/default.hbs");
+                } else {
+                    return new URL("templates/default.hbs", baseDir).href;
+                }
+            })
+            .with("tag", "method", () => {
+                if (import.meta.url.startsWith("file://")) {
+                    return path.join(baseDir, "templates/grouped.hbs");
+                } else {
+                    return new URL("templates/grouped.hbs", baseDir).href;
+                }
+            })
             .exhaustive();
     }
 
-    const fs = await import("@liuli-util/fs-extra");
-    const source = await fs.readFile(templatePath, "utf8");
+    // Read template - handle both file paths and URLs
+    let source: string;
+    if (templatePath.startsWith("http://") || templatePath.startsWith("https://")) {
+        const response = await fetch(templatePath);
+        source = await response.text();
+    } else {
+        source = await Deno.readTextFile(templatePath);
+    }
     const hbs = handlebars ?? getHandlebars();
     const template = hbs.compile(source);
     const willWriteToFile = !disableWriteToFile && distPath;
@@ -63,23 +91,23 @@ export const generateZodClientFromOpenAPI = async <TOptions extends TemplateCont
         const outputByGroupName: Record<string, string> = {};
 
         if (willWriteToFile) {
-            await fs.ensureDir(distPath);
+            await ensureDir(distPath);
         }
 
         const groupNames = Object.fromEntries(
             Object.keys(data.endpointsGroups).map((groupName) => [`${capitalize(groupName)}Api`, groupName])
         );
 
-        const indexSource = await fs.readFile(path.join(__dirname, "../src/templates/grouped-index.hbs"), "utf8");
+        const indexSource = await Deno.readTextFile(path.join(baseDir, "templates/grouped-index.hbs"));
         const indexTemplate = hbs.compile(indexSource);
         const indexOutput = maybePretty(indexTemplate({ groupNames }), prettierConfig);
         outputByGroupName["__index"] = indexOutput;
 
         if (willWriteToFile) {
-            await fs.writeFile(path.join(distPath, "index.ts"), indexOutput);
+            await Deno.writeTextFile(path.join(distPath, "index.ts"), indexOutput);
         }
 
-        const commonSource = await fs.readFile(path.join(__dirname, "../src/templates/grouped-common.hbs"), "utf8");
+        const commonSource = await Deno.readTextFile(path.join(baseDir, "templates/grouped-common.hbs"));
         const commonTemplate = hbs.compile(commonSource);
         const commonSchemaNames = [...(data.commonSchemaNames ?? [])];
 
@@ -94,7 +122,7 @@ export const generateZodClientFromOpenAPI = async <TOptions extends TemplateCont
             outputByGroupName["__common"] = commonOutput;
 
             if (willWriteToFile) {
-                await fs.writeFile(path.join(distPath, "common.ts"), commonOutput);
+                await Deno.writeTextFile(path.join(distPath, "common.ts"), commonOutput);
             }
         }
 
@@ -113,7 +141,7 @@ export const generateZodClientFromOpenAPI = async <TOptions extends TemplateCont
 
             if (willWriteToFile) {
                 console.log("Writing to", path.join(distPath, `${groupName}.ts`));
-                await fs.writeFile(path.join(distPath, `${groupName}.ts`), prettyGroupOutput);
+                await Deno.writeTextFile(path.join(distPath, `${groupName}.ts`), prettyGroupOutput);
             }
         }
 
@@ -124,7 +152,7 @@ export const generateZodClientFromOpenAPI = async <TOptions extends TemplateCont
     const prettyOutput = maybePretty(output, prettierConfig);
 
     if (willWriteToFile) {
-        await fs.writeFile(distPath, prettyOutput);
+        await Deno.writeTextFile(distPath, prettyOutput);
     }
 
     return prettyOutput as any;

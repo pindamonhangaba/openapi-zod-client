@@ -1,8 +1,9 @@
-import { getZodiosEndpointDefinitionList } from "../src";
-import { expect, test } from "vitest";
+import { getZodiosEndpointDefinitionList } from "../src/index.ts";
+import { test } from "jsr:@std/testing/bdd";
+import { assertSnapshot } from "jsr:@std/testing/snapshot";
 
-test("autofix-unusual-ref-format", () => {
-    expect(
+test("autofix-unusual-ref-format", async (t) => {
+    await assertSnapshot(t,
         getZodiosEndpointDefinitionList({
             openapi: "3.0.3",
             info: { version: "1", title: "Example API" },
@@ -34,43 +35,5 @@ test("autofix-unusual-ref-format", () => {
                 },
             },
         })
-    ).toMatchInlineSnapshot(`
-      {
-          "deepDependencyGraph": {},
-          "endpoints": [
-              {
-                  "description": undefined,
-                  "errors": [],
-                  "method": "get",
-                  "parameters": [],
-                  "path": "/usual-ref-format",
-                  "requestFormat": "json",
-                  "response": "z.string()",
-              },
-              {
-                  "description": undefined,
-                  "errors": [],
-                  "method": "get",
-                  "parameters": [],
-                  "path": "/unusual-ref-format",
-                  "requestFormat": "json",
-                  "response": "z.string()",
-              },
-          ],
-          "issues": {
-              "ignoredFallbackResponse": [],
-              "ignoredGenericError": [],
-          },
-          "refsDependencyGraph": {},
-          "resolver": {
-              "getSchemaByRef": [Function],
-              "resolveRef": [Function],
-              "resolveSchemaName": [Function],
-          },
-          "schemaByName": {},
-          "zodSchemaByName": {
-              "Basic": "z.string()",
-          },
-      }
-    `);
+    );
 });

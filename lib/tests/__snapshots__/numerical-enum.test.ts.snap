@@ -1,0 +1,36 @@
+export const snapshot = {};
+
+snapshot[`numerical-enum-support 1`] = `
+'import { makeApi, Zodios, type ZodiosOptions } from "@franklin-ai/zodios";
+import { z } from "zod";
+
+const endpoints = makeApi([
+  {
+    method: "get",
+    path: "/sample",
+    requestFormat: "json",
+    parameters: [
+      {
+        name: "foo",
+        type: "Query",
+        schema: z.union([z.literal(1), z.literal(-2), z.literal(3)]).optional(),
+      },
+      {
+        name: "bar",
+        type: "Query",
+        schema: z
+          .union([z.literal(1.2), z.literal(34), z.literal(-56.789)])
+          .optional(),
+      },
+    ],
+    response: z.void(),
+  },
+]);
+
+export const api = new Zodios(endpoints);
+
+export function createApiClient(baseUrl: string, options?: ZodiosOptions) {
+  return new Zodios(baseUrl, endpoints, options);
+}
+'
+`;

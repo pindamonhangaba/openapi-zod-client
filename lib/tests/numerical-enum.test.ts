@@ -1,9 +1,10 @@
 import type { OpenAPIObject } from "openapi3-ts";
-import { expect, test } from "vitest";
-import { generateZodClientFromOpenAPI } from "../src";
+import { test } from "jsr:@std/testing/bdd";
+import { assertSnapshot } from "jsr:@std/testing/snapshot";
+import { generateZodClientFromOpenAPI } from "../src/index.ts";
 
 // https://github.com/astahmer/openapi-zod-client/issues/49
-test("numerical-enum-support", async () => {
+test("numerical-enum-support", async (t) => {
     const openApiDoc: OpenAPIObject = {
         openapi: "3.0.0",
         info: {
@@ -42,38 +43,5 @@ test("numerical-enum-support", async () => {
     };
 
     const output = await generateZodClientFromOpenAPI({ disableWriteToFile: true, openApiDoc });
-    expect(output).toMatchInlineSnapshot(`
-      "import { makeApi, Zodios, type ZodiosOptions } from "@franklin-ai/zodios";
-      import { z } from "zod";
-
-      const endpoints = makeApi([
-        {
-          method: "get",
-          path: "/sample",
-          requestFormat: "json",
-          parameters: [
-            {
-              name: "foo",
-              type: "Query",
-              schema: z.union([z.literal(1), z.literal(-2), z.literal(3)]).optional(),
-            },
-            {
-              name: "bar",
-              type: "Query",
-              schema: z
-                .union([z.literal(1.2), z.literal(34), z.literal(-56.789)])
-                .optional(),
-            },
-          ],
-          response: z.void(),
-        },
-      ]);
-
-      export const api = new Zodios(endpoints);
-
-      export function createApiClient(baseUrl: string, options?: ZodiosOptions) {
-        return new Zodios(baseUrl, endpoints, options);
-      }
-      "
-    `);
+    await assertSnapshot(t, output);
 });

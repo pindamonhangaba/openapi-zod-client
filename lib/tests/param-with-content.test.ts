@@ -1,8 +1,10 @@
 import type { OpenAPIObject } from "openapi3-ts";
-import { expect, test } from "vitest";
-import { generateZodClientFromOpenAPI } from "../src";
+import { test } from "jsr:@std/testing/bdd";
 
-test("param-with-content", async () => {
+import { assertSnapshot } from "jsr:@std/testing/snapshot";
+import { generateZodClientFromOpenAPI } from "../src/index.ts";
+
+test("param-with-content", async (t) => {
     const openApiDoc: OpenAPIObject = {
         openapi: "3.0.3",
         info: { title: "Swagger Petstore - OpenAPI 3.0", version: "1.0.11" },
@@ -59,65 +61,5 @@ test("param-with-content", async () => {
     };
 
     const output = await generateZodClientFromOpenAPI({ disableWriteToFile: true, openApiDoc });
-    expect(output).toMatchInlineSnapshot(`
-      "import { makeApi, Zodios, type ZodiosOptions } from "@franklin-ai/zodios";
-      import { z } from "zod";
-
-      const test3 = z.object({ text3: z.boolean() }).partial().passthrough();
-
-      export const schemas = {
-        test3,
-      };
-
-      const endpoints = makeApi([
-        {
-          method: "put",
-          path: "/pet",
-          requestFormat: "json",
-          parameters: [
-            {
-              name: "store",
-              type: "Path",
-              schema: z.number().int(),
-            },
-            {
-              name: "thing",
-              type: "Query",
-              schema: z
-                .object({ text1: z.string() })
-                .partial()
-                .passthrough()
-                .optional(),
-            },
-            {
-              name: "wrong param",
-              type: "Query",
-              schema: z
-                .object({ text2: z.number() })
-                .partial()
-                .passthrough()
-                .optional(),
-            },
-            {
-              name: "Accept-Language",
-              type: "Header",
-              schema: z.string().optional().default("EN"),
-            },
-            {
-              name: "missing",
-              type: "Query",
-              schema: z.unknown().optional(),
-            },
-          ],
-          response: z.object({ text3: z.boolean() }).partial().passthrough(),
-        },
-      ]);
-
-      export const api = new Zodios(endpoints);
-
-      export function createApiClient(baseUrl: string, options?: ZodiosOptions) {
-        return new Zodios(baseUrl, endpoints, options);
-      }
-      "
-    `);
+    await assertSnapshot(t, output);
 });

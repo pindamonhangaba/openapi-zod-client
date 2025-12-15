@@ -1,9 +1,10 @@
-import { getZodSchema } from "../src/openApiToZod";
-import { test, expect } from "vitest";
-import { generateZodClientFromOpenAPI } from "../src";
+import { getZodSchema } from "../src/openApiToZod.ts";
+import { test } from "jsr:@std/testing/bdd";
+import { assertSnapshot } from "jsr:@std/testing/snapshot";
+import { generateZodClientFromOpenAPI } from "../src/index.ts";
 import type { OpenAPIObject, SchemaObject } from "openapi3-ts";
 
-test("handle-props-with-special-characters", async () => {
+test("handle-props-with-special-characters", async (t) => {
     const schemaWithSpecialCharacters = {
         properties: {
             "@id": { type: "string" },
@@ -11,9 +12,8 @@ test("handle-props-with-special-characters", async () => {
         },
     } as SchemaObject;
 
-    expect(getZodSchema({ schema: schemaWithSpecialCharacters })).toMatchInlineSnapshot(
-        '"z.object({ "@id": z.string(), id: z.number() }).partial().passthrough()"'
-    );
+    const schema = getZodSchema({ schema: schemaWithSpecialCharacters });
+    await assertSnapshot(t, schema);
 
     const output = await generateZodClientFromOpenAPI({
         openApiDoc: {
@@ -38,27 +38,5 @@ test("handle-props-with-special-characters", async () => {
         } as OpenAPIObject,
         disableWriteToFile: true,
     });
-    expect(output).toMatchInlineSnapshot(`
-      "import { makeApi, Zodios, type ZodiosOptions } from "@franklin-ai/zodios";
-      import { z } from "zod";
-
-      const endpoints = makeApi([
-        {
-          method: "get",
-          path: "/something",
-          requestFormat: "json",
-          response: z
-            .object({ "@id": z.string(), id: z.number() })
-            .partial()
-            .passthrough(),
-        },
-      ]);
-
-      export const api = new Zodios(endpoints);
-
-      export function createApiClient(baseUrl: string, options?: ZodiosOptions) {
-        return new Zodios(baseUrl, endpoints, options);
-      }
-      "
-    `);
+    await assertSnapshot(t, output);
 });

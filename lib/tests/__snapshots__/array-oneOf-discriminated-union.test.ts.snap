@@ -1,0 +1,40 @@
+export const snapshot = {};
+
+snapshot[`array-oneOf-discriminated-union 1`] = `
+'import { makeApi, Zodios, type ZodiosOptions } from "@franklin-ai/zodios";
+import { z } from "zod";
+
+const ArrayRequest = z.array(
+  z.discriminatedUnion("type", [
+    z.object({ type: z.literal("a") }).passthrough(),
+    z.object({ type: z.literal("b") }).passthrough(),
+  ])
+);
+
+export const schemas = {
+  ArrayRequest,
+};
+
+const endpoints = makeApi([
+  {
+    method: "post",
+    path: "/test",
+    requestFormat: "json",
+    parameters: [
+      {
+        name: "body",
+        type: "Body",
+        schema: ArrayRequest,
+      },
+    ],
+    response: z.void(),
+  },
+]);
+
+export const api = new Zodios(endpoints);
+
+export function createApiClient(baseUrl: string, options?: ZodiosOptions) {
+  return new Zodios(baseUrl, endpoints, options);
+}
+'
+`;

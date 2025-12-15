@@ -1,0 +1,625 @@
+export const snapshot = {};
+
+snapshot[`anyOf behavior > adds passthrough() to objects 1`] = `
+<ref *2> CodeMeta {
+  children: [
+    <ref *1> CodeMeta {
+      children: [
+        CodeMeta {
+          children: [],
+          code: "z.number()",
+          ctx: undefined,
+          meta: {
+            isRequired: true,
+            name: "age",
+            parent: [Circular *1],
+            referencedBy: [],
+          },
+          ref: undefined,
+          schema: {
+            type: "integer",
+          },
+        },
+        CodeMeta {
+          children: [],
+          code: "z.string()",
+          ctx: undefined,
+          meta: {
+            isRequired: false,
+            name: "nickname",
+            parent: [Circular *1],
+            referencedBy: [],
+          },
+          ref: undefined,
+          schema: {
+            type: "string",
+          },
+        },
+      ],
+      code: "z.object({ age: z.number().int(), nickname: z.string().optional() }).passthrough()",
+      ctx: undefined,
+      meta: {
+        parent: [Circular *2],
+        referencedBy: [],
+      },
+      ref: undefined,
+      schema: {
+        properties: {
+          age: {
+            type: "integer",
+          },
+          nickname: {
+            type: "string",
+          },
+        },
+        required: [
+          "age",
+        ],
+        type: "object",
+      },
+    },
+    <ref *3> CodeMeta {
+      children: [
+        CodeMeta {
+          children: [],
+          code: 'z.enum(["Cat", "Dog"])',
+          ctx: undefined,
+          meta: {
+            isRequired: true,
+            name: "pet_type",
+            parent: [Circular *3],
+            referencedBy: [],
+          },
+          ref: undefined,
+          schema: {
+            enum: [
+              "Cat",
+              "Dog",
+            ],
+            type: "string",
+          },
+        },
+        CodeMeta {
+          children: [],
+          code: "z.boolean()",
+          ctx: undefined,
+          meta: {
+            isRequired: false,
+            name: "hunts",
+            parent: [Circular *3],
+            referencedBy: [],
+          },
+          ref: undefined,
+          schema: {
+            type: "boolean",
+          },
+        },
+      ],
+      code: 'z.object({ pet_type: z.enum(["Cat", "Dog"]), hunts: z.boolean().optional() }).passthrough()',
+      ctx: undefined,
+      meta: {
+        parent: [Circular *2],
+        referencedBy: [],
+      },
+      ref: undefined,
+      schema: {
+        properties: {
+          hunts: {
+            type: "boolean",
+          },
+          pet_type: {
+            enum: [
+              "Cat",
+              "Dog",
+            ],
+            type: "string",
+          },
+        },
+        required: [
+          "pet_type",
+        ],
+        type: "object",
+      },
+    },
+  ],
+  code: 'z.union([z.object({ age: z.number().int(), nickname: z.string().optional() }).passthrough(), z.object({ pet_type: z.enum(["Cat", "Dog"]), hunts: z.boolean().optional() }).passthrough()])',
+  ctx: undefined,
+  meta: {
+    referencedBy: [],
+  },
+  ref: undefined,
+  schema: {
+    anyOf: [
+      {
+        properties: {
+          age: {
+            type: "integer",
+          },
+          nickname: {
+            type: "string",
+          },
+        },
+        required: [
+          "age",
+        ],
+        type: "object",
+      },
+      {
+        properties: {
+          hunts: {
+            type: "boolean",
+          },
+          pet_type: {
+            enum: [
+              "Cat",
+              "Dog",
+            ],
+            type: "string",
+          },
+        },
+        required: [
+          "pet_type",
+        ],
+        type: "object",
+      },
+    ],
+  },
+}
+`;
+
+snapshot[`anyOf behavior > handles mixes of primitive types and objects 1`] = `
+<ref *2> CodeMeta {
+  children: [
+    <ref *1> CodeMeta {
+      children: [
+        CodeMeta {
+          children: [],
+          code: "z.number()",
+          ctx: undefined,
+          meta: {
+            isRequired: true,
+            name: "age",
+            parent: [Circular *1],
+            referencedBy: [],
+          },
+          ref: undefined,
+          schema: {
+            type: "integer",
+          },
+        },
+        CodeMeta {
+          children: [],
+          code: "z.string()",
+          ctx: undefined,
+          meta: {
+            isRequired: false,
+            name: "nickname",
+            parent: [Circular *1],
+            referencedBy: [],
+          },
+          ref: undefined,
+          schema: {
+            type: "string",
+          },
+        },
+      ],
+      code: "z.object({ age: z.number().int(), nickname: z.string().optional() }).passthrough()",
+      ctx: undefined,
+      meta: {
+        parent: [Circular *2],
+        referencedBy: [],
+      },
+      ref: undefined,
+      schema: {
+        properties: {
+          age: {
+            type: "integer",
+          },
+          nickname: {
+            type: "string",
+          },
+        },
+        required: [
+          "age",
+        ],
+        type: "object",
+      },
+    },
+    <ref *3> CodeMeta {
+      children: [
+        CodeMeta {
+          children: [],
+          code: 'z.enum(["Cat", "Dog"])',
+          ctx: undefined,
+          meta: {
+            isRequired: true,
+            name: "pet_type",
+            parent: [Circular *3],
+            referencedBy: [],
+          },
+          ref: undefined,
+          schema: {
+            enum: [
+              "Cat",
+              "Dog",
+            ],
+            type: "string",
+          },
+        },
+        CodeMeta {
+          children: [],
+          code: "z.boolean()",
+          ctx: undefined,
+          meta: {
+            isRequired: false,
+            name: "hunts",
+            parent: [Circular *3],
+            referencedBy: [],
+          },
+          ref: undefined,
+          schema: {
+            type: "boolean",
+          },
+        },
+      ],
+      code: 'z.object({ pet_type: z.enum(["Cat", "Dog"]), hunts: z.boolean().optional() }).passthrough()',
+      ctx: undefined,
+      meta: {
+        parent: [Circular *2],
+        referencedBy: [],
+      },
+      ref: undefined,
+      schema: {
+        properties: {
+          hunts: {
+            type: "boolean",
+          },
+          pet_type: {
+            enum: [
+              "Cat",
+              "Dog",
+            ],
+            type: "string",
+          },
+        },
+        required: [
+          "pet_type",
+        ],
+        type: "object",
+      },
+    },
+    CodeMeta {
+      children: [],
+      code: "z.number()",
+      ctx: undefined,
+      meta: {
+        parent: [Circular *2],
+        referencedBy: [],
+      },
+      ref: undefined,
+      schema: {
+        type: "number",
+      },
+    },
+  ],
+  code: 'z.union([z.object({ age: z.number().int(), nickname: z.string().optional() }).passthrough(), z.object({ pet_type: z.enum(["Cat", "Dog"]), hunts: z.boolean().optional() }).passthrough(), z.number()])',
+  ctx: undefined,
+  meta: {
+    referencedBy: [],
+  },
+  ref: undefined,
+  schema: {
+    anyOf: [
+      {
+        properties: {
+          age: {
+            type: "integer",
+          },
+          nickname: {
+            type: "string",
+          },
+        },
+        required: [
+          "age",
+        ],
+        type: "object",
+      },
+      {
+        properties: {
+          hunts: {
+            type: "boolean",
+          },
+          pet_type: {
+            enum: [
+              "Cat",
+              "Dog",
+            ],
+            type: "string",
+          },
+        },
+        required: [
+          "pet_type",
+        ],
+        type: "object",
+      },
+      {
+        type: "number",
+      },
+    ],
+  },
+}
+`;
+
+snapshot[`anyOf behavior > handles an array of types 1`] = `
+<ref *2> CodeMeta {
+  children: [
+    <ref *1> CodeMeta {
+      children: [
+        CodeMeta {
+          children: [],
+          code: "z.number()",
+          ctx: undefined,
+          meta: {
+            parent: [Circular *1],
+            referencedBy: [],
+          },
+          ref: undefined,
+          schema: {
+            type: "number",
+          },
+        },
+        CodeMeta {
+          children: [],
+          code: "z.boolean()",
+          ctx: undefined,
+          meta: {
+            parent: [Circular *1],
+            referencedBy: [],
+          },
+          ref: undefined,
+          schema: {
+            type: "boolean",
+          },
+        },
+      ],
+      code: "z.union([z.number(), z.boolean()])",
+      ctx: undefined,
+      meta: {
+        parent: [Circular *2],
+        referencedBy: [],
+      },
+      ref: undefined,
+      schema: {
+        type: [
+          "number",
+          "boolean",
+        ],
+      },
+    },
+    <ref *3> CodeMeta {
+      children: [
+        CodeMeta {
+          children: [],
+          code: "z.number()",
+          ctx: undefined,
+          meta: {
+            isRequired: true,
+            name: "age",
+            parent: [Circular *3],
+            referencedBy: [],
+          },
+          ref: undefined,
+          schema: {
+            type: "integer",
+          },
+        },
+        CodeMeta {
+          children: [],
+          code: "z.string()",
+          ctx: undefined,
+          meta: {
+            isRequired: false,
+            name: "nickname",
+            parent: [Circular *3],
+            referencedBy: [],
+          },
+          ref: undefined,
+          schema: {
+            type: "string",
+          },
+        },
+      ],
+      code: "z.object({ age: z.number().int(), nickname: z.string().optional() }).passthrough()",
+      ctx: undefined,
+      meta: {
+        parent: [Circular *2],
+        referencedBy: [],
+      },
+      ref: undefined,
+      schema: {
+        properties: {
+          age: {
+            type: "integer",
+          },
+          nickname: {
+            type: "string",
+          },
+        },
+        required: [
+          "age",
+        ],
+        type: "object",
+      },
+    },
+    <ref *4> CodeMeta {
+      children: [
+        CodeMeta {
+          children: [],
+          code: 'z.enum(["Cat", "Dog"])',
+          ctx: undefined,
+          meta: {
+            isRequired: true,
+            name: "pet_type",
+            parent: [Circular *4],
+            referencedBy: [],
+          },
+          ref: undefined,
+          schema: {
+            enum: [
+              "Cat",
+              "Dog",
+            ],
+            type: "string",
+          },
+        },
+        CodeMeta {
+          children: [],
+          code: "z.boolean()",
+          ctx: undefined,
+          meta: {
+            isRequired: false,
+            name: "hunts",
+            parent: [Circular *4],
+            referencedBy: [],
+          },
+          ref: undefined,
+          schema: {
+            type: "boolean",
+          },
+        },
+      ],
+      code: 'z.object({ pet_type: z.enum(["Cat", "Dog"]), hunts: z.boolean().optional() }).passthrough()',
+      ctx: undefined,
+      meta: {
+        parent: [Circular *2],
+        referencedBy: [],
+      },
+      ref: undefined,
+      schema: {
+        properties: {
+          hunts: {
+            type: "boolean",
+          },
+          pet_type: {
+            enum: [
+              "Cat",
+              "Dog",
+            ],
+            type: "string",
+          },
+        },
+        required: [
+          "pet_type",
+        ],
+        type: "object",
+      },
+    },
+    CodeMeta {
+      children: [],
+      code: "z.string()",
+      ctx: undefined,
+      meta: {
+        parent: [Circular *2],
+        referencedBy: [],
+      },
+      ref: undefined,
+      schema: {
+        type: "string",
+      },
+    },
+  ],
+  code: 'z.union([z.union([z.number(), z.boolean()]), z.object({ age: z.number().int(), nickname: z.string().optional() }).passthrough(), z.object({ pet_type: z.enum(["Cat", "Dog"]), hunts: z.boolean().optional() }).passthrough(), z.string()])',
+  ctx: undefined,
+  meta: {
+    referencedBy: [],
+  },
+  ref: undefined,
+  schema: {
+    anyOf: [
+      {
+        type: [
+          "number",
+          "boolean",
+        ],
+      },
+      {
+        properties: {
+          age: {
+            type: "integer",
+          },
+          nickname: {
+            type: "string",
+          },
+        },
+        required: [
+          "age",
+        ],
+        type: "object",
+      },
+      {
+        properties: {
+          hunts: {
+            type: "boolean",
+          },
+          pet_type: {
+            enum: [
+              "Cat",
+              "Dog",
+            ],
+            type: "string",
+          },
+        },
+        required: [
+          "pet_type",
+        ],
+        type: "object",
+      },
+      {
+        type: "string",
+      },
+    ],
+  },
+}
+`;
+
+snapshot[`anyOf behavior > handles \$refs 1`] = `
+'import { makeApi, Zodios, type ZodiosOptions } from "@franklin-ai/zodios";
+import { z } from "zod";
+
+const PetByAge = z
+  .object({ age: z.number().int(), nickname: z.string().optional() })
+  .passthrough();
+const PetByType = z
+  .object({ pet_type: z.enum(["Cat", "Dog"]), hunts: z.boolean().optional() })
+  .passthrough();
+const anyOfRef = z.union([PetByAge, PetByType]).optional();
+
+export const schemas = {
+  PetByAge,
+  PetByType,
+  anyOfRef,
+};
+
+const endpoints = makeApi([
+  {
+    method: "get",
+    path: "/test",
+    requestFormat: "json",
+    parameters: [
+      {
+        name: "anyOfRef",
+        type: "Query",
+        schema: anyOfRef,
+      },
+    ],
+    response: z.void(),
+  },
+]);
+
+export const api = new Zodios(endpoints);
+
+export function createApiClient(baseUrl: string, options?: ZodiosOptions) {
+  return new Zodios(baseUrl, endpoints, options);
+}
+'
+`;

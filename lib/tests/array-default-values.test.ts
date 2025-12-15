@@ -1,9 +1,10 @@
 import type { OpenAPIObject } from "openapi3-ts";
-import { expect, test } from "vitest";
-import { generateZodClientFromOpenAPI } from "../src";
+import { test } from "jsr:@std/testing/bdd";
+import { assertSnapshot } from "jsr:@std/testing/snapshot";
+import { generateZodClientFromOpenAPI } from "../src/index.ts";
 
 // https://github.com/astahmer/openapi-zod-client/issues/61
-test("array-default-values", async () => {
+test("array-default-values", async (t) => {
     const openApiDoc: OpenAPIObject = {
         openapi: "3.0.0",
         info: {
@@ -99,75 +100,5 @@ test("array-default-values", async () => {
     };
 
     const output = await generateZodClientFromOpenAPI({ disableWriteToFile: true, openApiDoc });
-    expect(output).toMatchInlineSnapshot(`
-      "import { makeApi, Zodios, type ZodiosOptions } from "@franklin-ai/zodios";
-      import { z } from "zod";
-
-      const array_object = z
-        .array(z.object({ foo: z.string() }).partial().passthrough())
-        .optional()
-        .default([{ foo: "bar" }]);
-      const MyComponent = z
-        .object({ id: z.number(), name: z.string() })
-        .partial()
-        .passthrough();
-      const MyEnum = z.enum(["one", "two", "three"]);
-
-      export const schemas = {
-        array_object,
-        MyComponent,
-        MyEnum,
-      };
-
-      const endpoints = makeApi([
-        {
-          method: "get",
-          path: "/sample",
-          requestFormat: "json",
-          parameters: [
-            {
-              name: "array-empty",
-              type: "Query",
-              schema: z.array(z.string()).optional().default([]),
-            },
-            {
-              name: "array-string",
-              type: "Query",
-              schema: z.array(z.string()).optional().default(["one", "two"]),
-            },
-            {
-              name: "array-number",
-              type: "Query",
-              schema: z.array(z.number()).optional().default([1, 2]),
-            },
-            {
-              name: "array-object",
-              type: "Query",
-              schema: array_object,
-            },
-            {
-              name: "array-ref-object",
-              type: "Query",
-              schema: z
-                .array(MyComponent)
-                .optional()
-                .default([{ id: 1, name: "foo" }]),
-            },
-            {
-              name: "array-ref-enum",
-              type: "Query",
-              schema: z.array(MyEnum).optional().default(["one", "two"]),
-            },
-          ],
-          response: z.void(),
-        },
-      ]);
-
-      export const api = new Zodios(endpoints);
-
-      export function createApiClient(baseUrl: string, options?: ZodiosOptions) {
-        return new Zodios(baseUrl, endpoints, options);
-      }
-      "
-    `);
+    await assertSnapshot(t, output);
 });

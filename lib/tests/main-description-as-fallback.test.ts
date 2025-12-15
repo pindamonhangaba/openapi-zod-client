@@ -1,8 +1,9 @@
 import { SchemasObject } from "openapi3-ts";
-import { expect, it } from "vitest";
-import { generateZodClientFromOpenAPI } from "../src";
+import { test } from "jsr:@std/testing/bdd";
+import { assertSnapshot } from "jsr:@std/testing/snapshot";
+import { generateZodClientFromOpenAPI } from "../src/index.ts";
 
-it("use main-description-as-fallback", async () => {
+test("use main-description-as-fallback", async (t) => {
     const schemas = {
         Main: {
             type: "object",
@@ -39,25 +40,5 @@ it("use main-description-as-fallback", async () => {
         options: { useMainResponseDescriptionAsEndpointDefinitionFallback: true },
     });
 
-    expect(result).toMatchInlineSnapshot(`
-      "import { makeApi, Zodios, type ZodiosOptions } from "@franklin-ai/zodios";
-      import { z } from "zod";
-
-      const endpoints = makeApi([
-        {
-          method: "get",
-          path: "/example",
-          description: \`get example\`,
-          requestFormat: "json",
-          response: z.object({ str: z.string(), nb: z.number() }).passthrough(),
-        },
-      ]);
-
-      export const api = new Zodios(endpoints);
-
-      export function createApiClient(baseUrl: string, options?: ZodiosOptions) {
-        return new Zodios(baseUrl, endpoints, options);
-      }
-      "
-    `);
+    await assertSnapshot(t, result);
 });

@@ -1,9 +1,10 @@
 import type { OpenAPIObject } from "openapi3-ts";
-import { expect, test } from "vitest";
-import { generateZodClientFromOpenAPI } from "../src";
+import { test } from "jsr:@std/testing/bdd";
+import { assertSnapshot } from "jsr:@std/testing/snapshot";
+import { generateZodClientFromOpenAPI } from "../src/index.ts";
 
 // https://github.com/astahmer/openapi-zod-client/issues/49
-test("allOf-missing-and", async () => {
+test("allOf-missing-and", async (t) => {
     const openApiDoc: OpenAPIObject = {
         openapi: "3.0.3",
         info: { title: "Swagger Petstore - OpenAPI 3.0", version: "1.0.11" },
@@ -36,36 +37,5 @@ test("allOf-missing-and", async () => {
     };
 
     const output = await generateZodClientFromOpenAPI({ disableWriteToFile: true, openApiDoc });
-    expect(output).toMatchInlineSnapshot(`
-      "import { makeApi, Zodios, type ZodiosOptions } from "@franklin-ai/zodios";
-      import { z } from "zod";
-
-      const test1 = z.object({ text1: z.string() }).partial().passthrough();
-      const test2 = z.object({ text2: z.number() }).partial().passthrough();
-      const test3 = z.object({ text3: z.boolean() }).partial().passthrough();
-      const test4 = test1.and(test2).and(test3);
-
-      export const schemas = {
-        test1,
-        test2,
-        test3,
-        test4,
-      };
-
-      const endpoints = makeApi([
-        {
-          method: "put",
-          path: "/pet",
-          requestFormat: "json",
-          response: test4,
-        },
-      ]);
-
-      export const api = new Zodios(endpoints);
-
-      export function createApiClient(baseUrl: string, options?: ZodiosOptions) {
-        return new Zodios(baseUrl, endpoints, options);
-      }
-      "
-    `);
+    await assertSnapshot(t, output);
 });

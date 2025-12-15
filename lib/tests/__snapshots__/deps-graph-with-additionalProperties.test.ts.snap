@@ -1,0 +1,18 @@
+export const snapshot = {};
+
+snapshot[`deps-graph-with-additionalProperties 1`] = `
+{
+  deepDependencyGraph: {
+    ResponsesMap: Set(2) {
+      "ResponseItem",
+      "Something",
+    },
+  },
+  refsDependencyGraph: {
+    ResponsesMap: Set(2) {
+      "ResponseItem",
+      "Something",
+    },
+  },
+}
+`;

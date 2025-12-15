@@ -1,0 +1,3283 @@
+export const snapshot = {};
+
+snapshot[`recursive-schema > indirect single recursive 1`] = `
+<ref *6> CodeMeta {
+  children: [
+    <ref *2> CodeMeta {
+      children: [
+        <ref *1> CodeMeta {
+          children: [
+            CodeMeta {
+              children: [],
+              code: "z.string()",
+              ctx: {
+                resolver: {
+                  getSchemaByRef: [Function: getSchemaByRef],
+                  resolveRef: [Function: resolveRef],
+                  resolveSchemaName: [Function: resolveSchemaName],
+                },
+                schemaByName: {},
+                zodSchemaByName: {
+                  Middle: "z.object({ user: User }).partial().passthrough()",
+                  User: "z.object({ name: z.string(), middle: Middle }).partial().passthrough()",
+                },
+              },
+              meta: {
+                isRequired: true,
+                name: "name",
+                parent: [Circular *1],
+                referencedBy: [
+                  [Circular *2],
+                ],
+              },
+              ref: undefined,
+              schema: {
+                type: "string",
+              },
+            },
+            <ref *4> CodeMeta {
+              children: [
+                <ref *3> CodeMeta {
+                  children: [
+                    <ref *5> CodeMeta {
+                      children: [],
+                      code: undefined,
+                      ctx: {
+                        resolver: {
+                          getSchemaByRef: [Function: getSchemaByRef],
+                          resolveRef: [Function: resolveRef],
+                          resolveSchemaName: [Function: resolveSchemaName],
+                        },
+                        schemaByName: {},
+                        zodSchemaByName: {
+                          Middle: "z.object({ user: User }).partial().passthrough()",
+                          User: "z.object({ name: z.string(), middle: Middle }).partial().passthrough()",
+                        },
+                      },
+                      meta: {
+                        isRequired: true,
+                        name: "user",
+                        parent: [Circular *3],
+                        referencedBy: [
+                          [Circular *2],
+                          [Circular *4],
+                          [Circular *5],
+                        ],
+                      },
+                      ref: "#/components/schemas/User",
+                      schema: {
+                        "\$ref": "#/components/schemas/User",
+                      },
+                    },
+                  ],
+                  code: "z.object({ user: User }).partial().passthrough()",
+                  ctx: {
+                    resolver: {
+                      getSchemaByRef: [Function: getSchemaByRef],
+                      resolveRef: [Function: resolveRef],
+                      resolveSchemaName: [Function: resolveSchemaName],
+                    },
+                    schemaByName: {},
+                    zodSchemaByName: {
+                      Middle: "z.object({ user: User }).partial().passthrough()",
+                      User: "z.object({ name: z.string(), middle: Middle }).partial().passthrough()",
+                    },
+                  },
+                  meta: {
+                    parent: [Circular *4],
+                    referencedBy: [
+                      [Circular *2],
+                      [Circular *4],
+                    ],
+                  },
+                  ref: undefined,
+                  schema: {
+                    properties: {
+                      user: {
+                        "\$ref": "#/components/schemas/User",
+                      },
+                    },
+                    type: "object",
+                  },
+                },
+              ],
+              code: undefined,
+              ctx: {
+                resolver: {
+                  getSchemaByRef: [Function: getSchemaByRef],
+                  resolveRef: [Function: resolveRef],
+                  resolveSchemaName: [Function: resolveSchemaName],
+                },
+                schemaByName: {},
+                zodSchemaByName: {
+                  Middle: "z.object({ user: User }).partial().passthrough()",
+                  User: "z.object({ name: z.string(), middle: Middle }).partial().passthrough()",
+                },
+              },
+              meta: {
+                isRequired: true,
+                name: "middle",
+                parent: [Circular *1],
+                referencedBy: [
+                  [Circular *2],
+                  [Circular *4],
+                ],
+              },
+              ref: "#/components/schemas/Middle",
+              schema: {
+                "\$ref": "#/components/schemas/Middle",
+              },
+            },
+          ],
+          code: "z.object({ name: z.string(), middle: Middle }).partial().passthrough()",
+          ctx: {
+            resolver: {
+              getSchemaByRef: [Function: getSchemaByRef],
+              resolveRef: [Function: resolveRef],
+              resolveSchemaName: [Function: resolveSchemaName],
+            },
+            schemaByName: {},
+            zodSchemaByName: {
+              Middle: "z.object({ user: User }).partial().passthrough()",
+              User: "z.object({ name: z.string(), middle: Middle }).partial().passthrough()",
+            },
+          },
+          meta: {
+            parent: [Circular *2],
+            referencedBy: [
+              [Circular *2],
+            ],
+          },
+          ref: undefined,
+          schema: {
+            properties: {
+              middle: {
+                "\$ref": "#/components/schemas/Middle",
+              },
+              name: {
+                type: "string",
+              },
+            },
+            type: "object",
+          },
+        },
+      ],
+      code: undefined,
+      ctx: {
+        resolver: {
+          getSchemaByRef: [Function: getSchemaByRef],
+          resolveRef: [Function: resolveRef],
+          resolveSchemaName: [Function: resolveSchemaName],
+        },
+        schemaByName: {},
+        zodSchemaByName: {
+          Middle: "z.object({ user: User }).partial().passthrough()",
+          User: "z.object({ name: z.string(), middle: Middle }).partial().passthrough()",
+        },
+      },
+      meta: {
+        isRequired: true,
+        name: "recursive",
+        parent: [Circular *6],
+        referencedBy: [
+          [Circular *2],
+        ],
+      },
+      ref: "#/components/schemas/User",
+      schema: {
+        "\$ref": "#/components/schemas/User",
+      },
+    },
+    CodeMeta {
+      children: [],
+      code: "z.number()",
+      ctx: {
+        resolver: {
+          getSchemaByRef: [Function: getSchemaByRef],
+          resolveRef: [Function: resolveRef],
+          resolveSchemaName: [Function: resolveSchemaName],
+        },
+        schemaByName: {},
+        zodSchemaByName: {
+          Middle: "z.object({ user: User }).partial().passthrough()",
+          User: "z.object({ name: z.string(), middle: Middle }).partial().passthrough()",
+        },
+      },
+      meta: {
+        isRequired: true,
+        name: "basic",
+        parent: [Circular *6],
+        referencedBy: [],
+      },
+      ref: undefined,
+      schema: {
+        type: "number",
+      },
+    },
+  ],
+  code: "z.object({ recursive: User, basic: z.number() }).partial().passthrough()",
+  ctx: {
+    resolver: {
+      getSchemaByRef: [Function: getSchemaByRef],
+      resolveRef: [Function: resolveRef],
+      resolveSchemaName: [Function: resolveSchemaName],
+    },
+    schemaByName: {},
+    zodSchemaByName: {
+      Middle: "z.object({ user: User }).partial().passthrough()",
+      User: "z.object({ name: z.string(), middle: Middle }).partial().passthrough()",
+    },
+  },
+  meta: {
+    referencedBy: [],
+  },
+  ref: undefined,
+  schema: {
+    properties: {
+      basic: {
+        type: "number",
+      },
+      recursive: {
+        "\$ref": "#/components/schemas/User",
+      },
+    },
+    type: "object",
+  },
+}
+`;
+
+snapshot[`recursive-schema > indirect single recursive 2`] = `
+{
+  resolver: {
+    getSchemaByRef: [Function: getSchemaByRef],
+    resolveRef: [Function: resolveRef],
+    resolveSchemaName: [Function: resolveSchemaName],
+  },
+  schemaByName: {},
+  zodSchemaByName: {
+    Middle: "z.object({ user: User }).partial().passthrough()",
+    User: "z.object({ name: z.string(), middle: Middle }).partial().passthrough()",
+  },
+}
+`;
+
+snapshot[`recursive-schema > indirect single recursive 3`] = `
+{
+  deepDependencyGraph: {
+    "#/components/schemas/Middle": Set(2) {
+      "#/components/schemas/Middle",
+      "#/components/schemas/User",
+    },
+    "#/components/schemas/User": Set(2) {
+      "#/components/schemas/Middle",
+      "#/components/schemas/User",
+    },
+  },
+  refsDependencyGraph: {
+    "#/components/schemas/Middle": Set(1) {
+      "#/components/schemas/User",
+    },
+    "#/components/schemas/User": Set(1) {
+      "#/components/schemas/Middle",
+    },
+  },
+}
+`;
+
+snapshot[`recursive-schema > indirect single recursive 4`] = `
+[
+  "#/components/schemas/User",
+  "#/components/schemas/Middle",
+]
+`;
+
+snapshot[`recursive-schema > indirect single recursive 5`] = `
+'import { makeApi, Zodios, type ZodiosOptions } from "@franklin-ai/zodios";
+import { z } from "zod";
+
+type User = Partial<{
+  name: string;
+  middle: Middle;
+}>;
+type Middle = Partial<{
+  user: User;
+}>;
+
+const Middle: z.ZodType<Middle> = z.lazy(() =>
+  z.object({ user: User }).partial().passthrough()
+);
+const User: z.ZodType<User> = z.lazy(() =>
+  z.object({ name: z.string(), middle: Middle }).partial().passthrough()
+);
+
+export const schemas = {
+  Middle,
+  User,
+};
+
+const endpoints = makeApi([
+  {
+    method: "get",
+    path: "/example",
+    requestFormat: "json",
+    response: z
+      .object({ recursive: User, basic: z.number() })
+      .partial()
+      .passthrough(),
+  },
+]);
+
+export const api = new Zodios(endpoints);
+
+export function createApiClient(baseUrl: string, options?: ZodiosOptions) {
+  return new Zodios(baseUrl, endpoints, options);
+}
+'
+`;
+
+snapshot[`recursive-schema > recursive array 1`] = `
+<ref *8> CodeMeta {
+  children: [
+    <ref *2> CodeMeta {
+      children: [
+        <ref *1> CodeMeta {
+          children: [
+            CodeMeta {
+              children: [],
+              code: "z.boolean()",
+              ctx: {
+                resolver: {
+                  getSchemaByRef: [Function: getSchemaByRef],
+                  resolveRef: [Function: resolveRef],
+                  resolveSchemaName: [Function: resolveSchemaName],
+                },
+                schemaByName: {},
+                zodSchemaByName: {
+                  ObjectWithRecursiveArray: "z.object({ isInsideObjectWithRecursiveArray: z.boolean(), array: z.array(ObjectWithRecursiveArray) }).partial().passthrough()",
+                },
+              },
+              meta: {
+                isRequired: true,
+                name: "isInsideObjectWithRecursiveArray",
+                parent: [Circular *1],
+                referencedBy: [
+                  [Circular *2],
+                ],
+              },
+              ref: undefined,
+              schema: {
+                type: "boolean",
+              },
+            },
+            <ref *7> CodeMeta {
+              children: [
+                <ref *4> CodeMeta {
+                  children: [
+                    <ref *3> CodeMeta {
+                      children: [
+                        CodeMeta {
+                          children: [],
+                          code: "z.boolean()",
+                          ctx: {
+                            resolver: {
+                              getSchemaByRef: [Function: getSchemaByRef],
+                              resolveRef: [Function: resolveRef],
+                              resolveSchemaName: [Function: resolveSchemaName],
+                            },
+                            schemaByName: {},
+                            zodSchemaByName: {
+                              ObjectWithRecursiveArray: "z.object({ isInsideObjectWithRecursiveArray: z.boolean(), array: z.array(ObjectWithRecursiveArray) }).partial().passthrough()",
+                            },
+                          },
+                          meta: {
+                            isRequired: true,
+                            name: "isInsideObjectWithRecursiveArray",
+                            parent: [Circular *3],
+                            referencedBy: [
+                              [Circular *2],
+                              [Circular *4],
+                            ],
+                          },
+                          ref: undefined,
+                          schema: {
+                            type: "boolean",
+                          },
+                        },
+                        <ref *5> CodeMeta {
+                          children: [
+                            <ref *6> CodeMeta {
+                              children: [],
+                              code: undefined,
+                              ctx: {
+                                resolver: {
+                                  getSchemaByRef: [Function: getSchemaByRef],
+                                  resolveRef: [Function: resolveRef],
+                                  resolveSchemaName: [Function: resolveSchemaName],
+                                },
+                                schemaByName: {},
+                                zodSchemaByName: {
+                                  ObjectWithRecursiveArray: "z.object({ isInsideObjectWithRecursiveArray: z.boolean(), array: z.array(ObjectWithRecursiveArray) }).partial().passthrough()",
+                                },
+                              },
+                              meta: {
+                                parent: [Circular *5],
+                                referencedBy: [
+                                  [Circular *2],
+                                  [Circular *4],
+                                  [Circular *6],
+                                ],
+                              },
+                              ref: "#/components/schemas/ObjectWithRecursiveArray",
+                              schema: {
+                                "\$ref": "#/components/schemas/ObjectWithRecursiveArray",
+                              },
+                            },
+                          ],
+                          code: "z.array(ObjectWithRecursiveArray)",
+                          ctx: {
+                            resolver: {
+                              getSchemaByRef: [Function: getSchemaByRef],
+                              resolveRef: [Function: resolveRef],
+                              resolveSchemaName: [Function: resolveSchemaName],
+                            },
+                            schemaByName: {},
+                            zodSchemaByName: {
+                              ObjectWithRecursiveArray: "z.object({ isInsideObjectWithRecursiveArray: z.boolean(), array: z.array(ObjectWithRecursiveArray) }).partial().passthrough()",
+                            },
+                          },
+                          meta: {
+                            isRequired: true,
+                            name: "array",
+                            parent: [Circular *3],
+                            referencedBy: [
+                              [Circular *2],
+                              [Circular *4],
+                            ],
+                          },
+                          ref: undefined,
+                          schema: {
+                            items: {
+                              "\$ref": "#/components/schemas/ObjectWithRecursiveArray",
+                            },
+                            type: "array",
+                          },
+                        },
+                      ],
+                      code: "z.object({ isInsideObjectWithRecursiveArray: z.boolean(), array: z.array(ObjectWithRecursiveArray) }).partial().passthrough()",
+                      ctx: {
+                        resolver: {
+                          getSchemaByRef: [Function: getSchemaByRef],
+                          resolveRef: [Function: resolveRef],
+                          resolveSchemaName: [Function: resolveSchemaName],
+                        },
+                        schemaByName: {},
+                        zodSchemaByName: {
+                          ObjectWithRecursiveArray: "z.object({ isInsideObjectWithRecursiveArray: z.boolean(), array: z.array(ObjectWithRecursiveArray) }).partial().passthrough()",
+                        },
+                      },
+                      meta: {
+                        parent: [Circular *4],
+                        referencedBy: [
+                          [Circular *2],
+                          [Circular *4],
+                        ],
+                      },
+                      ref: undefined,
+                      schema: {
+                        properties: {
+                          array: {
+                            items: {
+                              "\$ref": "#/components/schemas/ObjectWithRecursiveArray",
+                            },
+                            type: "array",
+                          },
+                          isInsideObjectWithRecursiveArray: {
+                            type: "boolean",
+                          },
+                        },
+                        type: "object",
+                      },
+                    },
+                  ],
+                  code: undefined,
+                  ctx: {
+                    resolver: {
+                      getSchemaByRef: [Function: getSchemaByRef],
+                      resolveRef: [Function: resolveRef],
+                      resolveSchemaName: [Function: resolveSchemaName],
+                    },
+                    schemaByName: {},
+                    zodSchemaByName: {
+                      ObjectWithRecursiveArray: "z.object({ isInsideObjectWithRecursiveArray: z.boolean(), array: z.array(ObjectWithRecursiveArray) }).partial().passthrough()",
+                    },
+                  },
+                  meta: {
+                    parent: [Circular *7],
+                    referencedBy: [
+                      [Circular *2],
+                      [Circular *4],
+                    ],
+                  },
+                  ref: "#/components/schemas/ObjectWithRecursiveArray",
+                  schema: {
+                    "\$ref": "#/components/schemas/ObjectWithRecursiveArray",
+                  },
+                },
+              ],
+              code: "z.array(ObjectWithRecursiveArray)",
+              ctx: {
+                resolver: {
+                  getSchemaByRef: [Function: getSchemaByRef],
+                  resolveRef: [Function: resolveRef],
+                  resolveSchemaName: [Function: resolveSchemaName],
+                },
+                schemaByName: {},
+                zodSchemaByName: {
+                  ObjectWithRecursiveArray: "z.object({ isInsideObjectWithRecursiveArray: z.boolean(), array: z.array(ObjectWithRecursiveArray) }).partial().passthrough()",
+                },
+              },
+              meta: {
+                isRequired: true,
+                name: "array",
+                parent: [Circular *1],
+                referencedBy: [
+                  [Circular *2],
+                ],
+              },
+              ref: undefined,
+              schema: {
+                items: {
+                  "\$ref": "#/components/schemas/ObjectWithRecursiveArray",
+                },
+                type: "array",
+              },
+            },
+          ],
+          code: "z.object({ isInsideObjectWithRecursiveArray: z.boolean(), array: z.array(ObjectWithRecursiveArray) }).partial().passthrough()",
+          ctx: {
+            resolver: {
+              getSchemaByRef: [Function: getSchemaByRef],
+              resolveRef: [Function: resolveRef],
+              resolveSchemaName: [Function: resolveSchemaName],
+            },
+            schemaByName: {},
+            zodSchemaByName: {
+              ObjectWithRecursiveArray: "z.object({ isInsideObjectWithRecursiveArray: z.boolean(), array: z.array(ObjectWithRecursiveArray) }).partial().passthrough()",
+            },
+          },
+          meta: {
+            parent: [Circular *2],
+            referencedBy: [
+              [Circular *2],
+            ],
+          },
+          ref: undefined,
+          schema: {
+            properties: {
+              array: {
+                items: {
+                  "\$ref": "#/components/schemas/ObjectWithRecursiveArray",
+                },
+                type: "array",
+              },
+              isInsideObjectWithRecursiveArray: {
+                type: "boolean",
+              },
+            },
+            type: "object",
+          },
+        },
+      ],
+      code: undefined,
+      ctx: {
+        resolver: {
+          getSchemaByRef: [Function: getSchemaByRef],
+          resolveRef: [Function: resolveRef],
+          resolveSchemaName: [Function: resolveSchemaName],
+        },
+        schemaByName: {},
+        zodSchemaByName: {
+          ObjectWithRecursiveArray: "z.object({ isInsideObjectWithRecursiveArray: z.boolean(), array: z.array(ObjectWithRecursiveArray) }).partial().passthrough()",
+        },
+      },
+      meta: {
+        isRequired: true,
+        name: "recursiveRef",
+        parent: [Circular *8],
+        referencedBy: [
+          [Circular *2],
+        ],
+      },
+      ref: "#/components/schemas/ObjectWithRecursiveArray",
+      schema: {
+        "\$ref": "#/components/schemas/ObjectWithRecursiveArray",
+      },
+    },
+    CodeMeta {
+      children: [],
+      code: "z.number()",
+      ctx: {
+        resolver: {
+          getSchemaByRef: [Function: getSchemaByRef],
+          resolveRef: [Function: resolveRef],
+          resolveSchemaName: [Function: resolveSchemaName],
+        },
+        schemaByName: {},
+        zodSchemaByName: {
+          ObjectWithRecursiveArray: "z.object({ isInsideObjectWithRecursiveArray: z.boolean(), array: z.array(ObjectWithRecursiveArray) }).partial().passthrough()",
+        },
+      },
+      meta: {
+        isRequired: true,
+        name: "basic",
+        parent: [Circular *8],
+        referencedBy: [],
+      },
+      ref: undefined,
+      schema: {
+        type: "number",
+      },
+    },
+  ],
+  code: "z.object({ recursiveRef: ObjectWithRecursiveArray, basic: z.number() }).partial().passthrough()",
+  ctx: {
+    resolver: {
+      getSchemaByRef: [Function: getSchemaByRef],
+      resolveRef: [Function: resolveRef],
+      resolveSchemaName: [Function: resolveSchemaName],
+    },
+    schemaByName: {},
+    zodSchemaByName: {
+      ObjectWithRecursiveArray: "z.object({ isInsideObjectWithRecursiveArray: z.boolean(), array: z.array(ObjectWithRecursiveArray) }).partial().passthrough()",
+    },
+  },
+  meta: {
+    referencedBy: [],
+  },
+  ref: undefined,
+  schema: {
+    properties: {
+      basic: {
+        type: "number",
+      },
+      recursiveRef: {
+        "\$ref": "#/components/schemas/ObjectWithRecursiveArray",
+      },
+    },
+    type: "object",
+  },
+}
+`;
+
+snapshot[`recursive-schema > recursive array 2`] = `
+{
+  resolver: {
+    getSchemaByRef: [Function: getSchemaByRef],
+    resolveRef: [Function: resolveRef],
+    resolveSchemaName: [Function: resolveSchemaName],
+  },
+  schemaByName: {},
+  zodSchemaByName: {
+    ObjectWithRecursiveArray: "z.object({ isInsideObjectWithRecursiveArray: z.boolean(), array: z.array(ObjectWithRecursiveArray) }).partial().passthrough()",
+  },
+}
+`;
+
+snapshot[`recursive-schema > recursive array 3`] = `
+{
+  deepDependencyGraph: {
+    "#/components/schemas/ObjectWithRecursiveArray": Set(1) {
+      "#/components/schemas/ObjectWithRecursiveArray",
+    },
+  },
+  endpoints: [
+    {
+      description: undefined,
+      errors: [],
+      method: "get",
+      parameters: [],
+      path: "/example",
+      requestFormat: "json",
+      response: "z.object({ recursiveRef: ObjectWithRecursiveArray, basic: z.number() }).partial().passthrough()",
+    },
+  ],
+  issues: {
+    ignoredFallbackResponse: [],
+    ignoredGenericError: [],
+  },
+  refsDependencyGraph: {
+    "#/components/schemas/ObjectWithRecursiveArray": Set(1) {
+      "#/components/schemas/ObjectWithRecursiveArray",
+    },
+  },
+  resolver: {
+    getSchemaByRef: [Function: getSchemaByRef],
+    resolveRef: [Function: resolveRef],
+    resolveSchemaName: [Function: resolveSchemaName],
+  },
+  schemaByName: {},
+  zodSchemaByName: {
+    ObjectWithRecursiveArray: "z.object({ isInsideObjectWithRecursiveArray: z.boolean(), array: z.array(ObjectWithRecursiveArray) }).partial().passthrough()",
+  },
+}
+`;
+
+snapshot[`recursive-schema > direct recursive 1`] = `
+<ref *1> CodeMeta {
+  children: [
+    CodeMeta {
+      children: [],
+      code: "z.string()",
+      ctx: {
+        resolver: {
+          getSchemaByRef: [Function: getSchemaByRef],
+          resolveRef: [Function: resolveRef],
+          resolveSchemaName: [Function: resolveSchemaName],
+        },
+        schemaByName: {},
+        zodSchemaByName: {
+          User: "z.object({ name: z.string(), parent: User }).partial().passthrough()",
+        },
+      },
+      meta: {
+        isRequired: true,
+        name: "name",
+        parent: [Circular *1],
+        referencedBy: [],
+      },
+      ref: undefined,
+      schema: {
+        type: "string",
+      },
+    },
+    <ref *3> CodeMeta {
+      children: [
+        <ref *2> CodeMeta {
+          children: [
+            CodeMeta {
+              children: [],
+              code: "z.string()",
+              ctx: {
+                resolver: {
+                  getSchemaByRef: [Function: getSchemaByRef],
+                  resolveRef: [Function: resolveRef],
+                  resolveSchemaName: [Function: resolveSchemaName],
+                },
+                schemaByName: {},
+                zodSchemaByName: {
+                  User: "z.object({ name: z.string(), parent: User }).partial().passthrough()",
+                },
+              },
+              meta: {
+                isRequired: true,
+                name: "name",
+                parent: [Circular *2],
+                referencedBy: [
+                  [Circular *3],
+                ],
+              },
+              ref: undefined,
+              schema: {
+                type: "string",
+              },
+            },
+            <ref *5> CodeMeta {
+              children: [
+                <ref *4> CodeMeta {
+                  children: [
+                    CodeMeta {
+                      children: [],
+                      code: "z.string()",
+                      ctx: {
+                        resolver: {
+                          getSchemaByRef: [Function: getSchemaByRef],
+                          resolveRef: [Function: resolveRef],
+                          resolveSchemaName: [Function: resolveSchemaName],
+                        },
+                        schemaByName: {},
+                        zodSchemaByName: {
+                          User: "z.object({ name: z.string(), parent: User }).partial().passthrough()",
+                        },
+                      },
+                      meta: {
+                        isRequired: true,
+                        name: "name",
+                        parent: [Circular *4],
+                        referencedBy: [
+                          [Circular *3],
+                          [Circular *5],
+                        ],
+                      },
+                      ref: undefined,
+                      schema: {
+                        type: "string",
+                      },
+                    },
+                    <ref *6> CodeMeta {
+                      children: [],
+                      code: undefined,
+                      ctx: {
+                        resolver: {
+                          getSchemaByRef: [Function: getSchemaByRef],
+                          resolveRef: [Function: resolveRef],
+                          resolveSchemaName: [Function: resolveSchemaName],
+                        },
+                        schemaByName: {},
+                        zodSchemaByName: {
+                          User: "z.object({ name: z.string(), parent: User }).partial().passthrough()",
+                        },
+                      },
+                      meta: {
+                        isRequired: true,
+                        name: "parent",
+                        parent: [Circular *4],
+                        referencedBy: [
+                          [Circular *3],
+                          [Circular *5],
+                          [Circular *6],
+                        ],
+                      },
+                      ref: "#/components/schemas/User",
+                      schema: {
+                        "\$ref": "#/components/schemas/User",
+                      },
+                    },
+                  ],
+                  code: "z.object({ name: z.string(), parent: User }).partial().passthrough()",
+                  ctx: {
+                    resolver: {
+                      getSchemaByRef: [Function: getSchemaByRef],
+                      resolveRef: [Function: resolveRef],
+                      resolveSchemaName: [Function: resolveSchemaName],
+                    },
+                    schemaByName: {},
+                    zodSchemaByName: {
+                      User: "z.object({ name: z.string(), parent: User }).partial().passthrough()",
+                    },
+                  },
+                  meta: {
+                    parent: [Circular *5],
+                    referencedBy: [
+                      [Circular *3],
+                      [Circular *5],
+                    ],
+                  },
+                  ref: undefined,
+                  schema: {
+                    properties: {
+                      name: {
+                        type: "string",
+                      },
+                      parent: {
+                        "\$ref": "#/components/schemas/User",
+                      },
+                    },
+                    type: "object",
+                  },
+                },
+              ],
+              code: undefined,
+              ctx: {
+                resolver: {
+                  getSchemaByRef: [Function: getSchemaByRef],
+                  resolveRef: [Function: resolveRef],
+                  resolveSchemaName: [Function: resolveSchemaName],
+                },
+                schemaByName: {},
+                zodSchemaByName: {
+                  User: "z.object({ name: z.string(), parent: User }).partial().passthrough()",
+                },
+              },
+              meta: {
+                isRequired: true,
+                name: "parent",
+                parent: [Circular *2],
+                referencedBy: [
+                  [Circular *3],
+                  [Circular *5],
+                ],
+              },
+              ref: "#/components/schemas/User",
+              schema: {
+                "\$ref": "#/components/schemas/User",
+              },
+            },
+          ],
+          code: "z.object({ name: z.string(), parent: User }).partial().passthrough()",
+          ctx: {
+            resolver: {
+              getSchemaByRef: [Function: getSchemaByRef],
+              resolveRef: [Function: resolveRef],
+              resolveSchemaName: [Function: resolveSchemaName],
+            },
+            schemaByName: {},
+            zodSchemaByName: {
+              User: "z.object({ name: z.string(), parent: User }).partial().passthrough()",
+            },
+          },
+          meta: {
+            parent: [Circular *3],
+            referencedBy: [
+              [Circular *3],
+            ],
+          },
+          ref: undefined,
+          schema: {
+            properties: {
+              name: {
+                type: "string",
+              },
+              parent: {
+                "\$ref": "#/components/schemas/User",
+              },
+            },
+            type: "object",
+          },
+        },
+      ],
+      code: undefined,
+      ctx: {
+        resolver: {
+          getSchemaByRef: [Function: getSchemaByRef],
+          resolveRef: [Function: resolveRef],
+          resolveSchemaName: [Function: resolveSchemaName],
+        },
+        schemaByName: {},
+        zodSchemaByName: {
+          User: "z.object({ name: z.string(), parent: User }).partial().passthrough()",
+        },
+      },
+      meta: {
+        isRequired: true,
+        name: "parent",
+        parent: [Circular *1],
+        referencedBy: [
+          [Circular *3],
+        ],
+      },
+      ref: "#/components/schemas/User",
+      schema: {
+        "\$ref": "#/components/schemas/User",
+      },
+    },
+  ],
+  code: "z.object({ name: z.string(), parent: User }).partial().passthrough()",
+  ctx: {
+    resolver: {
+      getSchemaByRef: [Function: getSchemaByRef],
+      resolveRef: [Function: resolveRef],
+      resolveSchemaName: [Function: resolveSchemaName],
+    },
+    schemaByName: {},
+    zodSchemaByName: {
+      User: "z.object({ name: z.string(), parent: User }).partial().passthrough()",
+    },
+  },
+  meta: {
+    referencedBy: [],
+  },
+  ref: undefined,
+  schema: {
+    properties: {
+      name: {
+        type: "string",
+      },
+      parent: {
+        "\$ref": "#/components/schemas/User",
+      },
+    },
+    type: "object",
+  },
+}
+`;
+
+snapshot[`recursive-schema > direct recursive 2`] = `
+{
+  resolver: {
+    getSchemaByRef: [Function: getSchemaByRef],
+    resolveRef: [Function: resolveRef],
+    resolveSchemaName: [Function: resolveSchemaName],
+  },
+  schemaByName: {},
+  zodSchemaByName: {
+    User: "z.object({ name: z.string(), parent: User }).partial().passthrough()",
+  },
+}
+`;
+
+snapshot[`recursive-schema > multiple recursive in one root schema 1`] = `
+<ref *28> CodeMeta {
+  children: [
+    <ref *2> CodeMeta {
+      children: [
+        <ref *1> CodeMeta {
+          children: [
+            CodeMeta {
+              children: [],
+              code: "z.string()",
+              ctx: {
+                resolver: {
+                  getSchemaByRef: [Function: getSchemaByRef],
+                  resolveRef: [Function: resolveRef],
+                  resolveSchemaName: [Function: resolveSchemaName],
+                },
+                schemaByName: {},
+                zodSchemaByName: {
+                  Friend: "z.object({ nickname: z.string(), user: UserWithFriends, circle: z.array(Friend) }).partial().passthrough()",
+                  UserWithFriends: "z.object({ name: z.string(), parent: UserWithFriends, friends: z.array(Friend), bestFriend: Friend }).partial().passthrough()",
+                },
+              },
+              meta: {
+                isRequired: true,
+                name: "name",
+                parent: [Circular *1],
+                referencedBy: [
+                  [Circular *2],
+                ],
+              },
+              ref: undefined,
+              schema: {
+                type: "string",
+              },
+            },
+            <ref *4> CodeMeta {
+              children: [
+                <ref *3> CodeMeta {
+                  children: [
+                    CodeMeta {
+                      children: [],
+                      code: "z.string()",
+                      ctx: {
+                        resolver: {
+                          getSchemaByRef: [Function: getSchemaByRef],
+                          resolveRef: [Function: resolveRef],
+                          resolveSchemaName: [Function: resolveSchemaName],
+                        },
+                        schemaByName: {},
+                        zodSchemaByName: {
+                          Friend: "z.object({ nickname: z.string(), user: UserWithFriends, circle: z.array(Friend) }).partial().passthrough()",
+                          UserWithFriends: "z.object({ name: z.string(), parent: UserWithFriends, friends: z.array(Friend), bestFriend: Friend }).partial().passthrough()",
+                        },
+                      },
+                      meta: {
+                        isRequired: true,
+                        name: "name",
+                        parent: [Circular *3],
+                        referencedBy: [
+                          [Circular *2],
+                          [Circular *4],
+                        ],
+                      },
+                      ref: undefined,
+                      schema: {
+                        type: "string",
+                      },
+                    },
+                    <ref *5> CodeMeta {
+                      children: [],
+                      code: undefined,
+                      ctx: {
+                        resolver: {
+                          getSchemaByRef: [Function: getSchemaByRef],
+                          resolveRef: [Function: resolveRef],
+                          resolveSchemaName: [Function: resolveSchemaName],
+                        },
+                        schemaByName: {},
+                        zodSchemaByName: {
+                          Friend: "z.object({ nickname: z.string(), user: UserWithFriends, circle: z.array(Friend) }).partial().passthrough()",
+                          UserWithFriends: "z.object({ name: z.string(), parent: UserWithFriends, friends: z.array(Friend), bestFriend: Friend }).partial().passthrough()",
+                        },
+                      },
+                      meta: {
+                        isRequired: true,
+                        name: "parent",
+                        parent: [Circular *3],
+                        referencedBy: [
+                          [Circular *2],
+                          [Circular *4],
+                          [Circular *5],
+                        ],
+                      },
+                      ref: "#/components/schemas/UserWithFriends",
+                      schema: {
+                        "\$ref": "#/components/schemas/UserWithFriends",
+                      },
+                    },
+                    <ref *11> CodeMeta {
+                      children: [
+                        <ref *7> CodeMeta {
+                          children: [
+                            <ref *6> CodeMeta {
+                              children: [
+                                CodeMeta {
+                                  children: [],
+                                  code: "z.string()",
+                                  ctx: {
+                                    resolver: {
+                                      getSchemaByRef: [Function: getSchemaByRef],
+                                      resolveRef: [Function: resolveRef],
+                                      resolveSchemaName: [Function: resolveSchemaName],
+                                    },
+                                    schemaByName: {},
+                                    zodSchemaByName: {
+                                      Friend: "z.object({ nickname: z.string(), user: UserWithFriends, circle: z.array(Friend) }).partial().passthrough()",
+                                      UserWithFriends: "z.object({ name: z.string(), parent: UserWithFriends, friends: z.array(Friend), bestFriend: Friend }).partial().passthrough()",
+                                    },
+                                  },
+                                  meta: {
+                                    isRequired: true,
+                                    name: "nickname",
+                                    parent: [Circular *6],
+                                    referencedBy: [
+                                      [Circular *2],
+                                      [Circular *4],
+                                      [Circular *7],
+                                    ],
+                                  },
+                                  ref: undefined,
+                                  schema: {
+                                    type: "string",
+                                  },
+                                },
+                                <ref *8> CodeMeta {
+                                  children: [],
+                                  code: undefined,
+                                  ctx: {
+                                    resolver: {
+                                      getSchemaByRef: [Function: getSchemaByRef],
+                                      resolveRef: [Function: resolveRef],
+                                      resolveSchemaName: [Function: resolveSchemaName],
+                                    },
+                                    schemaByName: {},
+                                    zodSchemaByName: {
+                                      Friend: "z.object({ nickname: z.string(), user: UserWithFriends, circle: z.array(Friend) }).partial().passthrough()",
+                                      UserWithFriends: "z.object({ name: z.string(), parent: UserWithFriends, friends: z.array(Friend), bestFriend: Friend }).partial().passthrough()",
+                                    },
+                                  },
+                                  meta: {
+                                    isRequired: true,
+                                    name: "user",
+                                    parent: [Circular *6],
+                                    referencedBy: [
+                                      [Circular *2],
+                                      [Circular *4],
+                                      [Circular *7],
+                                      [Circular *8],
+                                    ],
+                                  },
+                                  ref: "#/components/schemas/UserWithFriends",
+                                  schema: {
+                                    "\$ref": "#/components/schemas/UserWithFriends",
+                                  },
+                                },
+                                <ref *9> CodeMeta {
+                                  children: [
+                                    <ref *10> CodeMeta {
+                                      children: [],
+                                      code: undefined,
+                                      ctx: {
+                                        resolver: {
+                                          getSchemaByRef: [Function: getSchemaByRef],
+                                          resolveRef: [Function: resolveRef],
+                                          resolveSchemaName: [Function: resolveSchemaName],
+                                        },
+                                        schemaByName: {},
+                                        zodSchemaByName: {
+                                          Friend: "z.object({ nickname: z.string(), user: UserWithFriends, circle: z.array(Friend) }).partial().passthrough()",
+                                          UserWithFriends: "z.object({ name: z.string(), parent: UserWithFriends, friends: z.array(Friend), bestFriend: Friend }).partial().passthrough()",
+                                        },
+                                      },
+                                      meta: {
+                                        parent: [Circular *9],
+                                        referencedBy: [
+                                          [Circular *2],
+                                          [Circular *4],
+                                          [Circular *7],
+                                          [Circular *10],
+                                        ],
+                                      },
+                                      ref: "#/components/schemas/Friend",
+                                      schema: {
+                                        "\$ref": "#/components/schemas/Friend",
+                                      },
+                                    },
+                                  ],
+                                  code: "z.array(Friend)",
+                                  ctx: {
+                                    resolver: {
+                                      getSchemaByRef: [Function: getSchemaByRef],
+                                      resolveRef: [Function: resolveRef],
+                                      resolveSchemaName: [Function: resolveSchemaName],
+                                    },
+                                    schemaByName: {},
+                                    zodSchemaByName: {
+                                      Friend: "z.object({ nickname: z.string(), user: UserWithFriends, circle: z.array(Friend) }).partial().passthrough()",
+                                      UserWithFriends: "z.object({ name: z.string(), parent: UserWithFriends, friends: z.array(Friend), bestFriend: Friend }).partial().passthrough()",
+                                    },
+                                  },
+                                  meta: {
+                                    isRequired: true,
+                                    name: "circle",
+                                    parent: [Circular *6],
+                                    referencedBy: [
+                                      [Circular *2],
+                                      [Circular *4],
+                                      [Circular *7],
+                                    ],
+                                  },
+                                  ref: undefined,
+                                  schema: {
+                                    items: {
+                                      "\$ref": "#/components/schemas/Friend",
+                                    },
+                                    type: "array",
+                                  },
+                                },
+                              ],
+                              code: "z.object({ nickname: z.string(), user: UserWithFriends, circle: z.array(Friend) }).partial().passthrough()",
+                              ctx: {
+                                resolver: {
+                                  getSchemaByRef: [Function: getSchemaByRef],
+                                  resolveRef: [Function: resolveRef],
+                                  resolveSchemaName: [Function: resolveSchemaName],
+                                },
+                                schemaByName: {},
+                                zodSchemaByName: {
+                                  Friend: "z.object({ nickname: z.string(), user: UserWithFriends, circle: z.array(Friend) }).partial().passthrough()",
+                                  UserWithFriends: "z.object({ name: z.string(), parent: UserWithFriends, friends: z.array(Friend), bestFriend: Friend }).partial().passthrough()",
+                                },
+                              },
+                              meta: {
+                                parent: [Circular *7],
+                                referencedBy: [
+                                  [Circular *2],
+                                  [Circular *4],
+                                  [Circular *7],
+                                ],
+                              },
+                              ref: undefined,
+                              schema: {
+                                properties: {
+                                  circle: {
+                                    items: {
+                                      "\$ref": "#/components/schemas/Friend",
+                                    },
+                                    type: "array",
+                                  },
+                                  nickname: {
+                                    type: "string",
+                                  },
+                                  user: {
+                                    "\$ref": "#/components/schemas/UserWithFriends",
+                                  },
+                                },
+                                type: "object",
+                              },
+                            },
+                          ],
+                          code: undefined,
+                          ctx: {
+                            resolver: {
+                              getSchemaByRef: [Function: getSchemaByRef],
+                              resolveRef: [Function: resolveRef],
+                              resolveSchemaName: [Function: resolveSchemaName],
+                            },
+                            schemaByName: {},
+                            zodSchemaByName: {
+                              Friend: "z.object({ nickname: z.string(), user: UserWithFriends, circle: z.array(Friend) }).partial().passthrough()",
+                              UserWithFriends: "z.object({ name: z.string(), parent: UserWithFriends, friends: z.array(Friend), bestFriend: Friend }).partial().passthrough()",
+                            },
+                          },
+                          meta: {
+                            parent: [Circular *11],
+                            referencedBy: [
+                              [Circular *2],
+                              [Circular *4],
+                              [Circular *7],
+                            ],
+                          },
+                          ref: "#/components/schemas/Friend",
+                          schema: {
+                            "\$ref": "#/components/schemas/Friend",
+                          },
+                        },
+                      ],
+                      code: "z.array(Friend)",
+                      ctx: {
+                        resolver: {
+                          getSchemaByRef: [Function: getSchemaByRef],
+                          resolveRef: [Function: resolveRef],
+                          resolveSchemaName: [Function: resolveSchemaName],
+                        },
+                        schemaByName: {},
+                        zodSchemaByName: {
+                          Friend: "z.object({ nickname: z.string(), user: UserWithFriends, circle: z.array(Friend) }).partial().passthrough()",
+                          UserWithFriends: "z.object({ name: z.string(), parent: UserWithFriends, friends: z.array(Friend), bestFriend: Friend }).partial().passthrough()",
+                        },
+                      },
+                      meta: {
+                        isRequired: true,
+                        name: "friends",
+                        parent: [Circular *3],
+                        referencedBy: [
+                          [Circular *2],
+                          [Circular *4],
+                        ],
+                      },
+                      ref: undefined,
+                      schema: {
+                        items: {
+                          "\$ref": "#/components/schemas/Friend",
+                        },
+                        type: "array",
+                      },
+                    },
+                    <ref *13> CodeMeta {
+                      children: [
+                        <ref *12> CodeMeta {
+                          children: [
+                            CodeMeta {
+                              children: [],
+                              code: "z.string()",
+                              ctx: {
+                                resolver: {
+                                  getSchemaByRef: [Function: getSchemaByRef],
+                                  resolveRef: [Function: resolveRef],
+                                  resolveSchemaName: [Function: resolveSchemaName],
+                                },
+                                schemaByName: {},
+                                zodSchemaByName: {
+                                  Friend: "z.object({ nickname: z.string(), user: UserWithFriends, circle: z.array(Friend) }).partial().passthrough()",
+                                  UserWithFriends: "z.object({ name: z.string(), parent: UserWithFriends, friends: z.array(Friend), bestFriend: Friend }).partial().passthrough()",
+                                },
+                              },
+                              meta: {
+                                isRequired: true,
+                                name: "nickname",
+                                parent: [Circular *12],
+                                referencedBy: [
+                                  [Circular *2],
+                                  [Circular *4],
+                                  [Circular *13],
+                                ],
+                              },
+                              ref: undefined,
+                              schema: {
+                                type: "string",
+                              },
+                            },
+                            <ref *14> CodeMeta {
+                              children: [],
+                              code: undefined,
+                              ctx: {
+                                resolver: {
+                                  getSchemaByRef: [Function: getSchemaByRef],
+                                  resolveRef: [Function: resolveRef],
+                                  resolveSchemaName: [Function: resolveSchemaName],
+                                },
+                                schemaByName: {},
+                                zodSchemaByName: {
+                                  Friend: "z.object({ nickname: z.string(), user: UserWithFriends, circle: z.array(Friend) }).partial().passthrough()",
+                                  UserWithFriends: "z.object({ name: z.string(), parent: UserWithFriends, friends: z.array(Friend), bestFriend: Friend }).partial().passthrough()",
+                                },
+                              },
+                              meta: {
+                                isRequired: true,
+                                name: "user",
+                                parent: [Circular *12],
+                                referencedBy: [
+                                  [Circular *2],
+                                  [Circular *4],
+                                  [Circular *13],
+                                  [Circular *14],
+                                ],
+                              },
+                              ref: "#/components/schemas/UserWithFriends",
+                              schema: {
+                                "\$ref": "#/components/schemas/UserWithFriends",
+                              },
+                            },
+                            <ref *15> CodeMeta {
+                              children: [
+                                <ref *16> CodeMeta {
+                                  children: [],
+                                  code: undefined,
+                                  ctx: {
+                                    resolver: {
+                                      getSchemaByRef: [Function: getSchemaByRef],
+                                      resolveRef: [Function: resolveRef],
+                                      resolveSchemaName: [Function: resolveSchemaName],
+                                    },
+                                    schemaByName: {},
+                                    zodSchemaByName: {
+                                      Friend: "z.object({ nickname: z.string(), user: UserWithFriends, circle: z.array(Friend) }).partial().passthrough()",
+                                      UserWithFriends: "z.object({ name: z.string(), parent: UserWithFriends, friends: z.array(Friend), bestFriend: Friend }).partial().passthrough()",
+                                    },
+                                  },
+                                  meta: {
+                                    parent: [Circular *15],
+                                    referencedBy: [
+                                      [Circular *2],
+                                      [Circular *4],
+                                      [Circular *13],
+                                      [Circular *16],
+                                    ],
+                                  },
+                                  ref: "#/components/schemas/Friend",
+                                  schema: {
+                                    "\$ref": "#/components/schemas/Friend",
+                                  },
+                                },
+                              ],
+                              code: "z.array(Friend)",
+                              ctx: {
+                                resolver: {
+                                  getSchemaByRef: [Function: getSchemaByRef],
+                                  resolveRef: [Function: resolveRef],
+                                  resolveSchemaName: [Function: resolveSchemaName],
+                                },
+                                schemaByName: {},
+                                zodSchemaByName: {
+                                  Friend: "z.object({ nickname: z.string(), user: UserWithFriends, circle: z.array(Friend) }).partial().passthrough()",
+                                  UserWithFriends: "z.object({ name: z.string(), parent: UserWithFriends, friends: z.array(Friend), bestFriend: Friend }).partial().passthrough()",
+                                },
+                              },
+                              meta: {
+                                isRequired: true,
+                                name: "circle",
+                                parent: [Circular *12],
+                                referencedBy: [
+                                  [Circular *2],
+                                  [Circular *4],
+                                  [Circular *13],
+                                ],
+                              },
+                              ref: undefined,
+                              schema: {
+                                items: {
+                                  "\$ref": "#/components/schemas/Friend",
+                                },
+                                type: "array",
+                              },
+                            },
+                          ],
+                          code: "z.object({ nickname: z.string(), user: UserWithFriends, circle: z.array(Friend) }).partial().passthrough()",
+                          ctx: {
+                            resolver: {
+                              getSchemaByRef: [Function: getSchemaByRef],
+                              resolveRef: [Function: resolveRef],
+                              resolveSchemaName: [Function: resolveSchemaName],
+                            },
+                            schemaByName: {},
+                            zodSchemaByName: {
+                              Friend: "z.object({ nickname: z.string(), user: UserWithFriends, circle: z.array(Friend) }).partial().passthrough()",
+                              UserWithFriends: "z.object({ name: z.string(), parent: UserWithFriends, friends: z.array(Friend), bestFriend: Friend }).partial().passthrough()",
+                            },
+                          },
+                          meta: {
+                            parent: [Circular *13],
+                            referencedBy: [
+                              [Circular *2],
+                              [Circular *4],
+                              [Circular *13],
+                            ],
+                          },
+                          ref: undefined,
+                          schema: {
+                            properties: {
+                              circle: {
+                                items: {
+                                  "\$ref": "#/components/schemas/Friend",
+                                },
+                                type: "array",
+                              },
+                              nickname: {
+                                type: "string",
+                              },
+                              user: {
+                                "\$ref": "#/components/schemas/UserWithFriends",
+                              },
+                            },
+                            type: "object",
+                          },
+                        },
+                      ],
+                      code: undefined,
+                      ctx: {
+                        resolver: {
+                          getSchemaByRef: [Function: getSchemaByRef],
+                          resolveRef: [Function: resolveRef],
+                          resolveSchemaName: [Function: resolveSchemaName],
+                        },
+                        schemaByName: {},
+                        zodSchemaByName: {
+                          Friend: "z.object({ nickname: z.string(), user: UserWithFriends, circle: z.array(Friend) }).partial().passthrough()",
+                          UserWithFriends: "z.object({ name: z.string(), parent: UserWithFriends, friends: z.array(Friend), bestFriend: Friend }).partial().passthrough()",
+                        },
+                      },
+                      meta: {
+                        isRequired: true,
+                        name: "bestFriend",
+                        parent: [Circular *3],
+                        referencedBy: [
+                          [Circular *2],
+                          [Circular *4],
+                          [Circular *13],
+                        ],
+                      },
+                      ref: "#/components/schemas/Friend",
+                      schema: {
+                        "\$ref": "#/components/schemas/Friend",
+                      },
+                    },
+                  ],
+                  code: "z.object({ name: z.string(), parent: UserWithFriends, friends: z.array(Friend), bestFriend: Friend }).partial().passthrough()",
+                  ctx: {
+                    resolver: {
+                      getSchemaByRef: [Function: getSchemaByRef],
+                      resolveRef: [Function: resolveRef],
+                      resolveSchemaName: [Function: resolveSchemaName],
+                    },
+                    schemaByName: {},
+                    zodSchemaByName: {
+                      Friend: "z.object({ nickname: z.string(), user: UserWithFriends, circle: z.array(Friend) }).partial().passthrough()",
+                      UserWithFriends: "z.object({ name: z.string(), parent: UserWithFriends, friends: z.array(Friend), bestFriend: Friend }).partial().passthrough()",
+                    },
+                  },
+                  meta: {
+                    parent: [Circular *4],
+                    referencedBy: [
+                      [Circular *2],
+                      [Circular *4],
+                    ],
+                  },
+                  ref: undefined,
+                  schema: {
+                    properties: {
+                      bestFriend: {
+                        "\$ref": "#/components/schemas/Friend",
+                      },
+                      friends: {
+                        items: {
+                          "\$ref": "#/components/schemas/Friend",
+                        },
+                        type: "array",
+                      },
+                      name: {
+                        type: "string",
+                      },
+                      parent: {
+                        "\$ref": "#/components/schemas/UserWithFriends",
+                      },
+                    },
+                    type: "object",
+                  },
+                },
+              ],
+              code: undefined,
+              ctx: {
+                resolver: {
+                  getSchemaByRef: [Function: getSchemaByRef],
+                  resolveRef: [Function: resolveRef],
+                  resolveSchemaName: [Function: resolveSchemaName],
+                },
+                schemaByName: {},
+                zodSchemaByName: {
+                  Friend: "z.object({ nickname: z.string(), user: UserWithFriends, circle: z.array(Friend) }).partial().passthrough()",
+                  UserWithFriends: "z.object({ name: z.string(), parent: UserWithFriends, friends: z.array(Friend), bestFriend: Friend }).partial().passthrough()",
+                },
+              },
+              meta: {
+                isRequired: true,
+                name: "parent",
+                parent: [Circular *1],
+                referencedBy: [
+                  [Circular *2],
+                  [Circular *4],
+                ],
+              },
+              ref: "#/components/schemas/UserWithFriends",
+              schema: {
+                "\$ref": "#/components/schemas/UserWithFriends",
+              },
+            },
+            <ref *22> CodeMeta {
+              children: [
+                <ref *18> CodeMeta {
+                  children: [
+                    <ref *17> CodeMeta {
+                      children: [
+                        CodeMeta {
+                          children: [],
+                          code: "z.string()",
+                          ctx: {
+                            resolver: {
+                              getSchemaByRef: [Function: getSchemaByRef],
+                              resolveRef: [Function: resolveRef],
+                              resolveSchemaName: [Function: resolveSchemaName],
+                            },
+                            schemaByName: {},
+                            zodSchemaByName: {
+                              Friend: "z.object({ nickname: z.string(), user: UserWithFriends, circle: z.array(Friend) }).partial().passthrough()",
+                              UserWithFriends: "z.object({ name: z.string(), parent: UserWithFriends, friends: z.array(Friend), bestFriend: Friend }).partial().passthrough()",
+                            },
+                          },
+                          meta: {
+                            isRequired: true,
+                            name: "nickname",
+                            parent: [Circular *17],
+                            referencedBy: [
+                              [Circular *2],
+                              [Circular *18],
+                            ],
+                          },
+                          ref: undefined,
+                          schema: {
+                            type: "string",
+                          },
+                        },
+                        <ref *19> CodeMeta {
+                          children: [],
+                          code: undefined,
+                          ctx: {
+                            resolver: {
+                              getSchemaByRef: [Function: getSchemaByRef],
+                              resolveRef: [Function: resolveRef],
+                              resolveSchemaName: [Function: resolveSchemaName],
+                            },
+                            schemaByName: {},
+                            zodSchemaByName: {
+                              Friend: "z.object({ nickname: z.string(), user: UserWithFriends, circle: z.array(Friend) }).partial().passthrough()",
+                              UserWithFriends: "z.object({ name: z.string(), parent: UserWithFriends, friends: z.array(Friend), bestFriend: Friend }).partial().passthrough()",
+                            },
+                          },
+                          meta: {
+                            isRequired: true,
+                            name: "user",
+                            parent: [Circular *17],
+                            referencedBy: [
+                              [Circular *2],
+                              [Circular *18],
+                              [Circular *19],
+                            ],
+                          },
+                          ref: "#/components/schemas/UserWithFriends",
+                          schema: {
+                            "\$ref": "#/components/schemas/UserWithFriends",
+                          },
+                        },
+                        <ref *20> CodeMeta {
+                          children: [
+                            <ref *21> CodeMeta {
+                              children: [],
+                              code: undefined,
+                              ctx: {
+                                resolver: {
+                                  getSchemaByRef: [Function: getSchemaByRef],
+                                  resolveRef: [Function: resolveRef],
+                                  resolveSchemaName: [Function: resolveSchemaName],
+                                },
+                                schemaByName: {},
+                                zodSchemaByName: {
+                                  Friend: "z.object({ nickname: z.string(), user: UserWithFriends, circle: z.array(Friend) }).partial().passthrough()",
+                                  UserWithFriends: "z.object({ name: z.string(), parent: UserWithFriends, friends: z.array(Friend), bestFriend: Friend }).partial().passthrough()",
+                                },
+                              },
+                              meta: {
+                                parent: [Circular *20],
+                                referencedBy: [
+                                  [Circular *2],
+                                  [Circular *18],
+                                  [Circular *21],
+                                ],
+                              },
+                              ref: "#/components/schemas/Friend",
+                              schema: {
+                                "\$ref": "#/components/schemas/Friend",
+                              },
+                            },
+                          ],
+                          code: "z.array(Friend)",
+                          ctx: {
+                            resolver: {
+                              getSchemaByRef: [Function: getSchemaByRef],
+                              resolveRef: [Function: resolveRef],
+                              resolveSchemaName: [Function: resolveSchemaName],
+                            },
+                            schemaByName: {},
+                            zodSchemaByName: {
+                              Friend: "z.object({ nickname: z.string(), user: UserWithFriends, circle: z.array(Friend) }).partial().passthrough()",
+                              UserWithFriends: "z.object({ name: z.string(), parent: UserWithFriends, friends: z.array(Friend), bestFriend: Friend }).partial().passthrough()",
+                            },
+                          },
+                          meta: {
+                            isRequired: true,
+                            name: "circle",
+                            parent: [Circular *17],
+                            referencedBy: [
+                              [Circular *2],
+                              [Circular *18],
+                            ],
+                          },
+                          ref: undefined,
+                          schema: {
+                            items: {
+                              "\$ref": "#/components/schemas/Friend",
+                            },
+                            type: "array",
+                          },
+                        },
+                      ],
+                      code: "z.object({ nickname: z.string(), user: UserWithFriends, circle: z.array(Friend) }).partial().passthrough()",
+                      ctx: {
+                        resolver: {
+                          getSchemaByRef: [Function: getSchemaByRef],
+                          resolveRef: [Function: resolveRef],
+                          resolveSchemaName: [Function: resolveSchemaName],
+                        },
+                        schemaByName: {},
+                        zodSchemaByName: {
+                          Friend: "z.object({ nickname: z.string(), user: UserWithFriends, circle: z.array(Friend) }).partial().passthrough()",
+                          UserWithFriends: "z.object({ name: z.string(), parent: UserWithFriends, friends: z.array(Friend), bestFriend: Friend }).partial().passthrough()",
+                        },
+                      },
+                      meta: {
+                        parent: [Circular *18],
+                        referencedBy: [
+                          [Circular *2],
+                          [Circular *18],
+                        ],
+                      },
+                      ref: undefined,
+                      schema: {
+                        properties: {
+                          circle: {
+                            items: {
+                              "\$ref": "#/components/schemas/Friend",
+                            },
+                            type: "array",
+                          },
+                          nickname: {
+                            type: "string",
+                          },
+                          user: {
+                            "\$ref": "#/components/schemas/UserWithFriends",
+                          },
+                        },
+                        type: "object",
+                      },
+                    },
+                  ],
+                  code: undefined,
+                  ctx: {
+                    resolver: {
+                      getSchemaByRef: [Function: getSchemaByRef],
+                      resolveRef: [Function: resolveRef],
+                      resolveSchemaName: [Function: resolveSchemaName],
+                    },
+                    schemaByName: {},
+                    zodSchemaByName: {
+                      Friend: "z.object({ nickname: z.string(), user: UserWithFriends, circle: z.array(Friend) }).partial().passthrough()",
+                      UserWithFriends: "z.object({ name: z.string(), parent: UserWithFriends, friends: z.array(Friend), bestFriend: Friend }).partial().passthrough()",
+                    },
+                  },
+                  meta: {
+                    parent: [Circular *22],
+                    referencedBy: [
+                      [Circular *2],
+                      [Circular *18],
+                    ],
+                  },
+                  ref: "#/components/schemas/Friend",
+                  schema: {
+                    "\$ref": "#/components/schemas/Friend",
+                  },
+                },
+              ],
+              code: "z.array(Friend)",
+              ctx: {
+                resolver: {
+                  getSchemaByRef: [Function: getSchemaByRef],
+                  resolveRef: [Function: resolveRef],
+                  resolveSchemaName: [Function: resolveSchemaName],
+                },
+                schemaByName: {},
+                zodSchemaByName: {
+                  Friend: "z.object({ nickname: z.string(), user: UserWithFriends, circle: z.array(Friend) }).partial().passthrough()",
+                  UserWithFriends: "z.object({ name: z.string(), parent: UserWithFriends, friends: z.array(Friend), bestFriend: Friend }).partial().passthrough()",
+                },
+              },
+              meta: {
+                isRequired: true,
+                name: "friends",
+                parent: [Circular *1],
+                referencedBy: [
+                  [Circular *2],
+                ],
+              },
+              ref: undefined,
+              schema: {
+                items: {
+                  "\$ref": "#/components/schemas/Friend",
+                },
+                type: "array",
+              },
+            },
+            <ref *24> CodeMeta {
+              children: [
+                <ref *23> CodeMeta {
+                  children: [
+                    CodeMeta {
+                      children: [],
+                      code: "z.string()",
+                      ctx: {
+                        resolver: {
+                          getSchemaByRef: [Function: getSchemaByRef],
+                          resolveRef: [Function: resolveRef],
+                          resolveSchemaName: [Function: resolveSchemaName],
+                        },
+                        schemaByName: {},
+                        zodSchemaByName: {
+                          Friend: "z.object({ nickname: z.string(), user: UserWithFriends, circle: z.array(Friend) }).partial().passthrough()",
+                          UserWithFriends: "z.object({ name: z.string(), parent: UserWithFriends, friends: z.array(Friend), bestFriend: Friend }).partial().passthrough()",
+                        },
+                      },
+                      meta: {
+                        isRequired: true,
+                        name: "nickname",
+                        parent: [Circular *23],
+                        referencedBy: [
+                          [Circular *2],
+                          [Circular *24],
+                        ],
+                      },
+                      ref: undefined,
+                      schema: {
+                        type: "string",
+                      },
+                    },
+                    <ref *25> CodeMeta {
+                      children: [],
+                      code: undefined,
+                      ctx: {
+                        resolver: {
+                          getSchemaByRef: [Function: getSchemaByRef],
+                          resolveRef: [Function: resolveRef],
+                          resolveSchemaName: [Function: resolveSchemaName],
+                        },
+                        schemaByName: {},
+                        zodSchemaByName: {
+                          Friend: "z.object({ nickname: z.string(), user: UserWithFriends, circle: z.array(Friend) }).partial().passthrough()",
+                          UserWithFriends: "z.object({ name: z.string(), parent: UserWithFriends, friends: z.array(Friend), bestFriend: Friend }).partial().passthrough()",
+                        },
+                      },
+                      meta: {
+                        isRequired: true,
+                        name: "user",
+                        parent: [Circular *23],
+                        referencedBy: [
+                          [Circular *2],
+                          [Circular *24],
+                          [Circular *25],
+                        ],
+                      },
+                      ref: "#/components/schemas/UserWithFriends",
+                      schema: {
+                        "\$ref": "#/components/schemas/UserWithFriends",
+                      },
+                    },
+                    <ref *26> CodeMeta {
+                      children: [
+                        <ref *27> CodeMeta {
+                          children: [],
+                          code: undefined,
+                          ctx: {
+                            resolver: {
+                              getSchemaByRef: [Function: getSchemaByRef],
+                              resolveRef: [Function: resolveRef],
+                              resolveSchemaName: [Function: resolveSchemaName],
+                            },
+                            schemaByName: {},
+                            zodSchemaByName: {
+                              Friend: "z.object({ nickname: z.string(), user: UserWithFriends, circle: z.array(Friend) }).partial().passthrough()",
+                              UserWithFriends: "z.object({ name: z.string(), parent: UserWithFriends, friends: z.array(Friend), bestFriend: Friend }).partial().passthrough()",
+                            },
+                          },
+                          meta: {
+                            parent: [Circular *26],
+                            referencedBy: [
+                              [Circular *2],
+                              [Circular *24],
+                              [Circular *27],
+                            ],
+                          },
+                          ref: "#/components/schemas/Friend",
+                          schema: {
+                            "\$ref": "#/components/schemas/Friend",
+                          },
+                        },
+                      ],
+                      code: "z.array(Friend)",
+                      ctx: {
+                        resolver: {
+                          getSchemaByRef: [Function: getSchemaByRef],
+                          resolveRef: [Function: resolveRef],
+                          resolveSchemaName: [Function: resolveSchemaName],
+                        },
+                        schemaByName: {},
+                        zodSchemaByName: {
+                          Friend: "z.object({ nickname: z.string(), user: UserWithFriends, circle: z.array(Friend) }).partial().passthrough()",
+                          UserWithFriends: "z.object({ name: z.string(), parent: UserWithFriends, friends: z.array(Friend), bestFriend: Friend }).partial().passthrough()",
+                        },
+                      },
+                      meta: {
+                        isRequired: true,
+                        name: "circle",
+                        parent: [Circular *23],
+                        referencedBy: [
+                          [Circular *2],
+                          [Circular *24],
+                        ],
+                      },
+                      ref: undefined,
+                      schema: {
+                        items: {
+                          "\$ref": "#/components/schemas/Friend",
+                        },
+                        type: "array",
+                      },
+                    },
+                  ],
+                  code: "z.object({ nickname: z.string(), user: UserWithFriends, circle: z.array(Friend) }).partial().passthrough()",
+                  ctx: {
+                    resolver: {
+                      getSchemaByRef: [Function: getSchemaByRef],
+                      resolveRef: [Function: resolveRef],
+                      resolveSchemaName: [Function: resolveSchemaName],
+                    },
+                    schemaByName: {},
+                    zodSchemaByName: {
+                      Friend: "z.object({ nickname: z.string(), user: UserWithFriends, circle: z.array(Friend) }).partial().passthrough()",
+                      UserWithFriends: "z.object({ name: z.string(), parent: UserWithFriends, friends: z.array(Friend), bestFriend: Friend }).partial().passthrough()",
+                    },
+                  },
+                  meta: {
+                    parent: [Circular *24],
+                    referencedBy: [
+                      [Circular *2],
+                      [Circular *24],
+                    ],
+                  },
+                  ref: undefined,
+                  schema: {
+                    properties: {
+                      circle: {
+                        items: {
+                          "\$ref": "#/components/schemas/Friend",
+                        },
+                        type: "array",
+                      },
+                      nickname: {
+                        type: "string",
+                      },
+                      user: {
+                        "\$ref": "#/components/schemas/UserWithFriends",
+                      },
+                    },
+                    type: "object",
+                  },
+                },
+              ],
+              code: undefined,
+              ctx: {
+                resolver: {
+                  getSchemaByRef: [Function: getSchemaByRef],
+                  resolveRef: [Function: resolveRef],
+                  resolveSchemaName: [Function: resolveSchemaName],
+                },
+                schemaByName: {},
+                zodSchemaByName: {
+                  Friend: "z.object({ nickname: z.string(), user: UserWithFriends, circle: z.array(Friend) }).partial().passthrough()",
+                  UserWithFriends: "z.object({ name: z.string(), parent: UserWithFriends, friends: z.array(Friend), bestFriend: Friend }).partial().passthrough()",
+                },
+              },
+              meta: {
+                isRequired: true,
+                name: "bestFriend",
+                parent: [Circular *1],
+                referencedBy: [
+                  [Circular *2],
+                  [Circular *24],
+                ],
+              },
+              ref: "#/components/schemas/Friend",
+              schema: {
+                "\$ref": "#/components/schemas/Friend",
+              },
+            },
+          ],
+          code: "z.object({ name: z.string(), parent: UserWithFriends, friends: z.array(Friend), bestFriend: Friend }).partial().passthrough()",
+          ctx: {
+            resolver: {
+              getSchemaByRef: [Function: getSchemaByRef],
+              resolveRef: [Function: resolveRef],
+              resolveSchemaName: [Function: resolveSchemaName],
+            },
+            schemaByName: {},
+            zodSchemaByName: {
+              Friend: "z.object({ nickname: z.string(), user: UserWithFriends, circle: z.array(Friend) }).partial().passthrough()",
+              UserWithFriends: "z.object({ name: z.string(), parent: UserWithFriends, friends: z.array(Friend), bestFriend: Friend }).partial().passthrough()",
+            },
+          },
+          meta: {
+            parent: [Circular *2],
+            referencedBy: [
+              [Circular *2],
+            ],
+          },
+          ref: undefined,
+          schema: {
+            properties: {
+              bestFriend: {
+                "\$ref": "#/components/schemas/Friend",
+              },
+              friends: {
+                items: {
+                  "\$ref": "#/components/schemas/Friend",
+                },
+                type: "array",
+              },
+              name: {
+                type: "string",
+              },
+              parent: {
+                "\$ref": "#/components/schemas/UserWithFriends",
+              },
+            },
+            type: "object",
+          },
+        },
+      ],
+      code: undefined,
+      ctx: {
+        resolver: {
+          getSchemaByRef: [Function: getSchemaByRef],
+          resolveRef: [Function: resolveRef],
+          resolveSchemaName: [Function: resolveSchemaName],
+        },
+        schemaByName: {},
+        zodSchemaByName: {
+          Friend: "z.object({ nickname: z.string(), user: UserWithFriends, circle: z.array(Friend) }).partial().passthrough()",
+          UserWithFriends: "z.object({ name: z.string(), parent: UserWithFriends, friends: z.array(Friend), bestFriend: Friend }).partial().passthrough()",
+        },
+      },
+      meta: {
+        isRequired: true,
+        name: "recursiveUser",
+        parent: [Circular *28],
+        referencedBy: [
+          [Circular *2],
+        ],
+      },
+      ref: "#/components/schemas/UserWithFriends",
+      schema: {
+        "\$ref": "#/components/schemas/UserWithFriends",
+      },
+    },
+    CodeMeta {
+      children: [],
+      code: "z.number()",
+      ctx: {
+        resolver: {
+          getSchemaByRef: [Function: getSchemaByRef],
+          resolveRef: [Function: resolveRef],
+          resolveSchemaName: [Function: resolveSchemaName],
+        },
+        schemaByName: {},
+        zodSchemaByName: {
+          Friend: "z.object({ nickname: z.string(), user: UserWithFriends, circle: z.array(Friend) }).partial().passthrough()",
+          UserWithFriends: "z.object({ name: z.string(), parent: UserWithFriends, friends: z.array(Friend), bestFriend: Friend }).partial().passthrough()",
+        },
+      },
+      meta: {
+        isRequired: true,
+        name: "basic",
+        parent: [Circular *28],
+        referencedBy: [],
+      },
+      ref: undefined,
+      schema: {
+        type: "number",
+      },
+    },
+  ],
+  code: "z.object({ recursiveUser: UserWithFriends, basic: z.number() }).partial().passthrough()",
+  ctx: {
+    resolver: {
+      getSchemaByRef: [Function: getSchemaByRef],
+      resolveRef: [Function: resolveRef],
+      resolveSchemaName: [Function: resolveSchemaName],
+    },
+    schemaByName: {},
+    zodSchemaByName: {
+      Friend: "z.object({ nickname: z.string(), user: UserWithFriends, circle: z.array(Friend) }).partial().passthrough()",
+      UserWithFriends: "z.object({ name: z.string(), parent: UserWithFriends, friends: z.array(Friend), bestFriend: Friend }).partial().passthrough()",
+    },
+  },
+  meta: {
+    referencedBy: [],
+  },
+  ref: undefined,
+  schema: {
+    properties: {
+      basic: {
+        type: "number",
+      },
+      recursiveUser: {
+        "\$ref": "#/components/schemas/UserWithFriends",
+      },
+    },
+    type: "object",
+  },
+}
+`;
+
+snapshot[`recursive-schema > multiple recursive in one root schema 2`] = `
+{
+  resolver: {
+    getSchemaByRef: [Function: getSchemaByRef],
+    resolveRef: [Function: resolveRef],
+    resolveSchemaName: [Function: resolveSchemaName],
+  },
+  schemaByName: {},
+  zodSchemaByName: {
+    Friend: "z.object({ nickname: z.string(), user: UserWithFriends, circle: z.array(Friend) }).partial().passthrough()",
+    UserWithFriends: "z.object({ name: z.string(), parent: UserWithFriends, friends: z.array(Friend), bestFriend: Friend }).partial().passthrough()",
+  },
+}
+`;
+
+snapshot[`recursive-schema > multiple recursive in one root schema 3`] = `
+{
+  deepDependencyGraph: {
+    "#/components/schemas/Friend": Set(2) {
+      "#/components/schemas/Friend",
+      "#/components/schemas/UserWithFriends",
+    },
+    "#/components/schemas/ObjectWithRecursiveArray": Set(1) {
+      "#/components/schemas/ObjectWithRecursiveArray",
+    },
+    "#/components/schemas/ResponseSchema": Set(1) {
+      "#/components/schemas/ObjectWithRecursiveArray",
+    },
+    "#/components/schemas/User": Set(1) {
+      "#/components/schemas/User",
+    },
+    "#/components/schemas/UserWithFriends": Set(2) {
+      "#/components/schemas/Friend",
+      "#/components/schemas/UserWithFriends",
+    },
+  },
+  endpoints: [
+    {
+      description: undefined,
+      errors: [],
+      method: "get",
+      parameters: [],
+      path: "/example",
+      requestFormat: "json",
+      response: "z.object({ someUser: UserWithFriends, someProp: z.boolean() }).partial().passthrough()",
+    },
+  ],
+  issues: {
+    ignoredFallbackResponse: [],
+    ignoredGenericError: [],
+  },
+  refsDependencyGraph: {
+    "#/components/schemas/Friend": Set(2) {
+      "#/components/schemas/Friend",
+      "#/components/schemas/UserWithFriends",
+    },
+    "#/components/schemas/ObjectWithRecursiveArray": Set(1) {
+      "#/components/schemas/ObjectWithRecursiveArray",
+    },
+    "#/components/schemas/ResponseSchema": Set(1) {
+      "#/components/schemas/ObjectWithRecursiveArray",
+    },
+    "#/components/schemas/User": Set(1) {
+      "#/components/schemas/User",
+    },
+    "#/components/schemas/UserWithFriends": Set(2) {
+      "#/components/schemas/Friend",
+      "#/components/schemas/UserWithFriends",
+    },
+  },
+  resolver: {
+    getSchemaByRef: [Function: getSchemaByRef],
+    resolveRef: [Function: resolveRef],
+    resolveSchemaName: [Function: resolveSchemaName],
+  },
+  schemaByName: {},
+  zodSchemaByName: {
+    Friend: "z.object({ nickname: z.string(), user: UserWithFriends, circle: z.array(Friend) }).partial().passthrough()",
+    UserWithFriends: "z.object({ name: z.string(), parent: UserWithFriends, friends: z.array(Friend), bestFriend: Friend }).partial().passthrough()",
+  },
+}
+`;
+
+snapshot[`recursive-schema > multiple recursive in one root schema 4`] = `
+{
+  circularTypeByName: {
+    Friend: true,
+    UserWithFriends: true,
+  },
+  emittedType: {
+    Friend: true,
+    ObjectWithRecursiveArray: true,
+    User: true,
+    UserWithFriends: true,
+  },
+  endpoints: [
+    {
+      description: undefined,
+      errors: [],
+      method: "get",
+      parameters: [],
+      path: "/example",
+      requestFormat: "json",
+      response: "z.object({ someUser: UserWithFriends, someProp: z.boolean() }).partial().passthrough()",
+    },
+  ],
+  endpointsGroups: {},
+  options: {
+    baseUrl: "",
+    withAlias: false,
+  },
+  schemas: {
+    Friend: "z.lazy(() => z.object({ nickname: z.string(), user: UserWithFriends, circle: z.array(Friend) }).partial().passthrough())",
+    UserWithFriends: "z.lazy(() => z.object({ name: z.string(), parent: UserWithFriends, friends: z.array(Friend), bestFriend: Friend }).partial().passthrough())",
+  },
+  types: {
+    Friend: "type Friend = Partial<{
+    nickname: string;
+    user: UserWithFriends;
+    circle: Array<Friend>;
+}>;",
+    ObjectWithRecursiveArray: "type ObjectWithRecursiveArray = Partial<{
+    isInsideObjectWithRecursiveArray: boolean;
+    array: Array<ObjectWithRecursiveArray>;
+}>;",
+    User: "type User = Partial<{
+    name: string;
+    parent: User;
+}>;",
+    UserWithFriends: "type UserWithFriends = Partial<{
+    name: string;
+    parent: UserWithFriends;
+    friends: Array<Friend>;
+    bestFriend: Friend;
+}>;",
+  },
+}
+`;
+
+snapshot[`recursive-schema > multiple recursive in one root schema 5`] = `
+'import { makeApi, Zodios, type ZodiosOptions } from "@franklin-ai/zodios";
+import { z } from "zod";
+
+type User = Partial<{
+  name: string;
+  parent: User;
+}>;
+type UserWithFriends = Partial<{
+  name: string;
+  parent: UserWithFriends;
+  friends: Array<Friend>;
+  bestFriend: Friend;
+}>;
+type Friend = Partial<{
+  nickname: string;
+  user: UserWithFriends;
+  circle: Array<Friend>;
+}>;
+type ObjectWithRecursiveArray = Partial<{
+  isInsideObjectWithRecursiveArray: boolean;
+  array: Array<ObjectWithRecursiveArray>;
+}>;
+
+const Friend: z.ZodType<Friend> = z.lazy(() =>
+  z
+    .object({
+      nickname: z.string(),
+      user: UserWithFriends,
+      circle: z.array(Friend),
+    })
+    .partial()
+    .passthrough()
+);
+const UserWithFriends: z.ZodType<UserWithFriends> = z.lazy(() =>
+  z
+    .object({
+      name: z.string(),
+      parent: UserWithFriends,
+      friends: z.array(Friend),
+      bestFriend: Friend,
+    })
+    .partial()
+    .passthrough()
+);
+
+export const schemas = {
+  Friend,
+  UserWithFriends,
+};
+
+const endpoints = makeApi([
+  {
+    method: "get",
+    path: "/example",
+    requestFormat: "json",
+    response: z
+      .object({ someUser: UserWithFriends, someProp: z.boolean() })
+      .partial()
+      .passthrough(),
+  },
+]);
+
+export const api = new Zodios(endpoints);
+
+export function createApiClient(baseUrl: string, options?: ZodiosOptions) {
+  return new Zodios(baseUrl, endpoints, options);
+}
+'
+`;
+
+snapshot[`recursive-schema > recursive schema with \$ref to another simple schema should still generate and output that simple schema and its dependencies 1`] = `
+<ref *12> CodeMeta {
+  children: [
+    <ref *2> CodeMeta {
+      children: [
+        <ref *1> CodeMeta {
+          children: [
+            CodeMeta {
+              children: [],
+              code: "z.string()",
+              ctx: {
+                resolver: {
+                  getSchemaByRef: [Function: getSchemaByRef],
+                  resolveRef: [Function: resolveRef],
+                  resolveSchemaName: [Function: resolveSchemaName],
+                },
+                schemaByName: {},
+                zodSchemaByName: {
+                  Author: "z.object({ name: z.string(), mail: z.string(), settings: Settings }).partial().passthrough()",
+                  Playlist: "z.object({ name: z.string(), author: Author, songs: z.array(Song) }).partial().passthrough()",
+                  Settings: "z.object({ theme_color: z.string() }).partial().passthrough()",
+                  Song: "z.object({ name: z.string(), duration: z.number(), in_playlists: z.array(Playlist) }).partial().passthrough()",
+                },
+              },
+              meta: {
+                isRequired: true,
+                name: "name",
+                parent: [Circular *1],
+                referencedBy: [
+                  [Circular *2],
+                ],
+              },
+              ref: undefined,
+              schema: {
+                type: "string",
+              },
+            },
+            <ref *4> CodeMeta {
+              children: [
+                <ref *3> CodeMeta {
+                  children: [
+                    CodeMeta {
+                      children: [],
+                      code: "z.string()",
+                      ctx: {
+                        resolver: {
+                          getSchemaByRef: [Function: getSchemaByRef],
+                          resolveRef: [Function: resolveRef],
+                          resolveSchemaName: [Function: resolveSchemaName],
+                        },
+                        schemaByName: {},
+                        zodSchemaByName: {
+                          Author: "z.object({ name: z.string(), mail: z.string(), settings: Settings }).partial().passthrough()",
+                          Playlist: "z.object({ name: z.string(), author: Author, songs: z.array(Song) }).partial().passthrough()",
+                          Settings: "z.object({ theme_color: z.string() }).partial().passthrough()",
+                          Song: "z.object({ name: z.string(), duration: z.number(), in_playlists: z.array(Playlist) }).partial().passthrough()",
+                        },
+                      },
+                      meta: {
+                        isRequired: true,
+                        name: "name",
+                        parent: [Circular *3],
+                        referencedBy: [
+                          [Circular *2],
+                          [Circular *4],
+                        ],
+                      },
+                      ref: undefined,
+                      schema: {
+                        type: "string",
+                      },
+                    },
+                    CodeMeta {
+                      children: [],
+                      code: "z.string()",
+                      ctx: {
+                        resolver: {
+                          getSchemaByRef: [Function: getSchemaByRef],
+                          resolveRef: [Function: resolveRef],
+                          resolveSchemaName: [Function: resolveSchemaName],
+                        },
+                        schemaByName: {},
+                        zodSchemaByName: {
+                          Author: "z.object({ name: z.string(), mail: z.string(), settings: Settings }).partial().passthrough()",
+                          Playlist: "z.object({ name: z.string(), author: Author, songs: z.array(Song) }).partial().passthrough()",
+                          Settings: "z.object({ theme_color: z.string() }).partial().passthrough()",
+                          Song: "z.object({ name: z.string(), duration: z.number(), in_playlists: z.array(Playlist) }).partial().passthrough()",
+                        },
+                      },
+                      meta: {
+                        isRequired: true,
+                        name: "mail",
+                        parent: [Circular *3],
+                        referencedBy: [
+                          [Circular *2],
+                          [Circular *4],
+                        ],
+                      },
+                      ref: undefined,
+                      schema: {
+                        type: "string",
+                      },
+                    },
+                    <ref *6> CodeMeta {
+                      children: [
+                        <ref *5> CodeMeta {
+                          children: [
+                            CodeMeta {
+                              children: [],
+                              code: "z.string()",
+                              ctx: {
+                                resolver: {
+                                  getSchemaByRef: [Function: getSchemaByRef],
+                                  resolveRef: [Function: resolveRef],
+                                  resolveSchemaName: [Function: resolveSchemaName],
+                                },
+                                schemaByName: {},
+                                zodSchemaByName: {
+                                  Author: "z.object({ name: z.string(), mail: z.string(), settings: Settings }).partial().passthrough()",
+                                  Playlist: "z.object({ name: z.string(), author: Author, songs: z.array(Song) }).partial().passthrough()",
+                                  Settings: "z.object({ theme_color: z.string() }).partial().passthrough()",
+                                  Song: "z.object({ name: z.string(), duration: z.number(), in_playlists: z.array(Playlist) }).partial().passthrough()",
+                                },
+                              },
+                              meta: {
+                                isRequired: true,
+                                name: "theme_color",
+                                parent: [Circular *5],
+                                referencedBy: [
+                                  [Circular *2],
+                                  [Circular *4],
+                                  [Circular *6],
+                                ],
+                              },
+                              ref: undefined,
+                              schema: {
+                                type: "string",
+                              },
+                            },
+                          ],
+                          code: "z.object({ theme_color: z.string() }).partial().passthrough()",
+                          ctx: {
+                            resolver: {
+                              getSchemaByRef: [Function: getSchemaByRef],
+                              resolveRef: [Function: resolveRef],
+                              resolveSchemaName: [Function: resolveSchemaName],
+                            },
+                            schemaByName: {},
+                            zodSchemaByName: {
+                              Author: "z.object({ name: z.string(), mail: z.string(), settings: Settings }).partial().passthrough()",
+                              Playlist: "z.object({ name: z.string(), author: Author, songs: z.array(Song) }).partial().passthrough()",
+                              Settings: "z.object({ theme_color: z.string() }).partial().passthrough()",
+                              Song: "z.object({ name: z.string(), duration: z.number(), in_playlists: z.array(Playlist) }).partial().passthrough()",
+                            },
+                          },
+                          meta: {
+                            parent: [Circular *6],
+                            referencedBy: [
+                              [Circular *2],
+                              [Circular *4],
+                              [Circular *6],
+                            ],
+                          },
+                          ref: undefined,
+                          schema: {
+                            properties: {
+                              theme_color: {
+                                type: "string",
+                              },
+                            },
+                            type: "object",
+                          },
+                        },
+                      ],
+                      code: undefined,
+                      ctx: {
+                        resolver: {
+                          getSchemaByRef: [Function: getSchemaByRef],
+                          resolveRef: [Function: resolveRef],
+                          resolveSchemaName: [Function: resolveSchemaName],
+                        },
+                        schemaByName: {},
+                        zodSchemaByName: {
+                          Author: "z.object({ name: z.string(), mail: z.string(), settings: Settings }).partial().passthrough()",
+                          Playlist: "z.object({ name: z.string(), author: Author, songs: z.array(Song) }).partial().passthrough()",
+                          Settings: "z.object({ theme_color: z.string() }).partial().passthrough()",
+                          Song: "z.object({ name: z.string(), duration: z.number(), in_playlists: z.array(Playlist) }).partial().passthrough()",
+                        },
+                      },
+                      meta: {
+                        isRequired: true,
+                        name: "settings",
+                        parent: [Circular *3],
+                        referencedBy: [
+                          [Circular *2],
+                          [Circular *4],
+                          [Circular *6],
+                        ],
+                      },
+                      ref: "#/components/schemas/Settings",
+                      schema: {
+                        "\$ref": "#/components/schemas/Settings",
+                      },
+                    },
+                  ],
+                  code: "z.object({ name: z.string(), mail: z.string(), settings: Settings }).partial().passthrough()",
+                  ctx: {
+                    resolver: {
+                      getSchemaByRef: [Function: getSchemaByRef],
+                      resolveRef: [Function: resolveRef],
+                      resolveSchemaName: [Function: resolveSchemaName],
+                    },
+                    schemaByName: {},
+                    zodSchemaByName: {
+                      Author: "z.object({ name: z.string(), mail: z.string(), settings: Settings }).partial().passthrough()",
+                      Playlist: "z.object({ name: z.string(), author: Author, songs: z.array(Song) }).partial().passthrough()",
+                      Settings: "z.object({ theme_color: z.string() }).partial().passthrough()",
+                      Song: "z.object({ name: z.string(), duration: z.number(), in_playlists: z.array(Playlist) }).partial().passthrough()",
+                    },
+                  },
+                  meta: {
+                    parent: [Circular *4],
+                    referencedBy: [
+                      [Circular *2],
+                      [Circular *4],
+                    ],
+                  },
+                  ref: undefined,
+                  schema: {
+                    properties: {
+                      mail: {
+                        type: "string",
+                      },
+                      name: {
+                        type: "string",
+                      },
+                      settings: {
+                        "\$ref": "#/components/schemas/Settings",
+                      },
+                    },
+                    type: "object",
+                  },
+                },
+              ],
+              code: undefined,
+              ctx: {
+                resolver: {
+                  getSchemaByRef: [Function: getSchemaByRef],
+                  resolveRef: [Function: resolveRef],
+                  resolveSchemaName: [Function: resolveSchemaName],
+                },
+                schemaByName: {},
+                zodSchemaByName: {
+                  Author: "z.object({ name: z.string(), mail: z.string(), settings: Settings }).partial().passthrough()",
+                  Playlist: "z.object({ name: z.string(), author: Author, songs: z.array(Song) }).partial().passthrough()",
+                  Settings: "z.object({ theme_color: z.string() }).partial().passthrough()",
+                  Song: "z.object({ name: z.string(), duration: z.number(), in_playlists: z.array(Playlist) }).partial().passthrough()",
+                },
+              },
+              meta: {
+                isRequired: true,
+                name: "author",
+                parent: [Circular *1],
+                referencedBy: [
+                  [Circular *2],
+                  [Circular *4],
+                ],
+              },
+              ref: "#/components/schemas/Author",
+              schema: {
+                "\$ref": "#/components/schemas/Author",
+              },
+            },
+            <ref *11> CodeMeta {
+              children: [
+                <ref *8> CodeMeta {
+                  children: [
+                    <ref *7> CodeMeta {
+                      children: [
+                        CodeMeta {
+                          children: [],
+                          code: "z.string()",
+                          ctx: {
+                            resolver: {
+                              getSchemaByRef: [Function: getSchemaByRef],
+                              resolveRef: [Function: resolveRef],
+                              resolveSchemaName: [Function: resolveSchemaName],
+                            },
+                            schemaByName: {},
+                            zodSchemaByName: {
+                              Author: "z.object({ name: z.string(), mail: z.string(), settings: Settings }).partial().passthrough()",
+                              Playlist: "z.object({ name: z.string(), author: Author, songs: z.array(Song) }).partial().passthrough()",
+                              Settings: "z.object({ theme_color: z.string() }).partial().passthrough()",
+                              Song: "z.object({ name: z.string(), duration: z.number(), in_playlists: z.array(Playlist) }).partial().passthrough()",
+                            },
+                          },
+                          meta: {
+                            isRequired: true,
+                            name: "name",
+                            parent: [Circular *7],
+                            referencedBy: [
+                              [Circular *2],
+                              [Circular *8],
+                            ],
+                          },
+                          ref: undefined,
+                          schema: {
+                            type: "string",
+                          },
+                        },
+                        CodeMeta {
+                          children: [],
+                          code: "z.number()",
+                          ctx: {
+                            resolver: {
+                              getSchemaByRef: [Function: getSchemaByRef],
+                              resolveRef: [Function: resolveRef],
+                              resolveSchemaName: [Function: resolveSchemaName],
+                            },
+                            schemaByName: {},
+                            zodSchemaByName: {
+                              Author: "z.object({ name: z.string(), mail: z.string(), settings: Settings }).partial().passthrough()",
+                              Playlist: "z.object({ name: z.string(), author: Author, songs: z.array(Song) }).partial().passthrough()",
+                              Settings: "z.object({ theme_color: z.string() }).partial().passthrough()",
+                              Song: "z.object({ name: z.string(), duration: z.number(), in_playlists: z.array(Playlist) }).partial().passthrough()",
+                            },
+                          },
+                          meta: {
+                            isRequired: true,
+                            name: "duration",
+                            parent: [Circular *7],
+                            referencedBy: [
+                              [Circular *2],
+                              [Circular *8],
+                            ],
+                          },
+                          ref: undefined,
+                          schema: {
+                            type: "number",
+                          },
+                        },
+                        <ref *9> CodeMeta {
+                          children: [
+                            <ref *10> CodeMeta {
+                              children: [],
+                              code: undefined,
+                              ctx: {
+                                resolver: {
+                                  getSchemaByRef: [Function: getSchemaByRef],
+                                  resolveRef: [Function: resolveRef],
+                                  resolveSchemaName: [Function: resolveSchemaName],
+                                },
+                                schemaByName: {},
+                                zodSchemaByName: {
+                                  Author: "z.object({ name: z.string(), mail: z.string(), settings: Settings }).partial().passthrough()",
+                                  Playlist: "z.object({ name: z.string(), author: Author, songs: z.array(Song) }).partial().passthrough()",
+                                  Settings: "z.object({ theme_color: z.string() }).partial().passthrough()",
+                                  Song: "z.object({ name: z.string(), duration: z.number(), in_playlists: z.array(Playlist) }).partial().passthrough()",
+                                },
+                              },
+                              meta: {
+                                parent: [Circular *9],
+                                referencedBy: [
+                                  [Circular *2],
+                                  [Circular *8],
+                                  [Circular *10],
+                                ],
+                              },
+                              ref: "#/components/schemas/Playlist",
+                              schema: {
+                                "\$ref": "#/components/schemas/Playlist",
+                              },
+                            },
+                          ],
+                          code: "z.array(Playlist)",
+                          ctx: {
+                            resolver: {
+                              getSchemaByRef: [Function: getSchemaByRef],
+                              resolveRef: [Function: resolveRef],
+                              resolveSchemaName: [Function: resolveSchemaName],
+                            },
+                            schemaByName: {},
+                            zodSchemaByName: {
+                              Author: "z.object({ name: z.string(), mail: z.string(), settings: Settings }).partial().passthrough()",
+                              Playlist: "z.object({ name: z.string(), author: Author, songs: z.array(Song) }).partial().passthrough()",
+                              Settings: "z.object({ theme_color: z.string() }).partial().passthrough()",
+                              Song: "z.object({ name: z.string(), duration: z.number(), in_playlists: z.array(Playlist) }).partial().passthrough()",
+                            },
+                          },
+                          meta: {
+                            isRequired: true,
+                            name: "in_playlists",
+                            parent: [Circular *7],
+                            referencedBy: [
+                              [Circular *2],
+                              [Circular *8],
+                            ],
+                          },
+                          ref: undefined,
+                          schema: {
+                            items: {
+                              "\$ref": "#/components/schemas/Playlist",
+                            },
+                            type: "array",
+                          },
+                        },
+                      ],
+                      code: "z.object({ name: z.string(), duration: z.number(), in_playlists: z.array(Playlist) }).partial().passthrough()",
+                      ctx: {
+                        resolver: {
+                          getSchemaByRef: [Function: getSchemaByRef],
+                          resolveRef: [Function: resolveRef],
+                          resolveSchemaName: [Function: resolveSchemaName],
+                        },
+                        schemaByName: {},
+                        zodSchemaByName: {
+                          Author: "z.object({ name: z.string(), mail: z.string(), settings: Settings }).partial().passthrough()",
+                          Playlist: "z.object({ name: z.string(), author: Author, songs: z.array(Song) }).partial().passthrough()",
+                          Settings: "z.object({ theme_color: z.string() }).partial().passthrough()",
+                          Song: "z.object({ name: z.string(), duration: z.number(), in_playlists: z.array(Playlist) }).partial().passthrough()",
+                        },
+                      },
+                      meta: {
+                        parent: [Circular *8],
+                        referencedBy: [
+                          [Circular *2],
+                          [Circular *8],
+                        ],
+                      },
+                      ref: undefined,
+                      schema: {
+                        properties: {
+                          duration: {
+                            type: "number",
+                          },
+                          in_playlists: {
+                            items: {
+                              "\$ref": "#/components/schemas/Playlist",
+                            },
+                            type: "array",
+                          },
+                          name: {
+                            type: "string",
+                          },
+                        },
+                        type: "object",
+                      },
+                    },
+                  ],
+                  code: undefined,
+                  ctx: {
+                    resolver: {
+                      getSchemaByRef: [Function: getSchemaByRef],
+                      resolveRef: [Function: resolveRef],
+                      resolveSchemaName: [Function: resolveSchemaName],
+                    },
+                    schemaByName: {},
+                    zodSchemaByName: {
+                      Author: "z.object({ name: z.string(), mail: z.string(), settings: Settings }).partial().passthrough()",
+                      Playlist: "z.object({ name: z.string(), author: Author, songs: z.array(Song) }).partial().passthrough()",
+                      Settings: "z.object({ theme_color: z.string() }).partial().passthrough()",
+                      Song: "z.object({ name: z.string(), duration: z.number(), in_playlists: z.array(Playlist) }).partial().passthrough()",
+                    },
+                  },
+                  meta: {
+                    parent: [Circular *11],
+                    referencedBy: [
+                      [Circular *2],
+                      [Circular *8],
+                    ],
+                  },
+                  ref: "#/components/schemas/Song",
+                  schema: {
+                    "\$ref": "#/components/schemas/Song",
+                  },
+                },
+              ],
+              code: "z.array(Song)",
+              ctx: {
+                resolver: {
+                  getSchemaByRef: [Function: getSchemaByRef],
+                  resolveRef: [Function: resolveRef],
+                  resolveSchemaName: [Function: resolveSchemaName],
+                },
+                schemaByName: {},
+                zodSchemaByName: {
+                  Author: "z.object({ name: z.string(), mail: z.string(), settings: Settings }).partial().passthrough()",
+                  Playlist: "z.object({ name: z.string(), author: Author, songs: z.array(Song) }).partial().passthrough()",
+                  Settings: "z.object({ theme_color: z.string() }).partial().passthrough()",
+                  Song: "z.object({ name: z.string(), duration: z.number(), in_playlists: z.array(Playlist) }).partial().passthrough()",
+                },
+              },
+              meta: {
+                isRequired: true,
+                name: "songs",
+                parent: [Circular *1],
+                referencedBy: [
+                  [Circular *2],
+                ],
+              },
+              ref: undefined,
+              schema: {
+                items: {
+                  "\$ref": "#/components/schemas/Song",
+                },
+                type: "array",
+              },
+            },
+          ],
+          code: "z.object({ name: z.string(), author: Author, songs: z.array(Song) }).partial().passthrough()",
+          ctx: {
+            resolver: {
+              getSchemaByRef: [Function: getSchemaByRef],
+              resolveRef: [Function: resolveRef],
+              resolveSchemaName: [Function: resolveSchemaName],
+            },
+            schemaByName: {},
+            zodSchemaByName: {
+              Author: "z.object({ name: z.string(), mail: z.string(), settings: Settings }).partial().passthrough()",
+              Playlist: "z.object({ name: z.string(), author: Author, songs: z.array(Song) }).partial().passthrough()",
+              Settings: "z.object({ theme_color: z.string() }).partial().passthrough()",
+              Song: "z.object({ name: z.string(), duration: z.number(), in_playlists: z.array(Playlist) }).partial().passthrough()",
+            },
+          },
+          meta: {
+            parent: [Circular *2],
+            referencedBy: [
+              [Circular *2],
+            ],
+          },
+          ref: undefined,
+          schema: {
+            properties: {
+              author: {
+                "\$ref": "#/components/schemas/Author",
+              },
+              name: {
+                type: "string",
+              },
+              songs: {
+                items: {
+                  "\$ref": "#/components/schemas/Song",
+                },
+                type: "array",
+              },
+            },
+            type: "object",
+          },
+        },
+      ],
+      code: undefined,
+      ctx: {
+        resolver: {
+          getSchemaByRef: [Function: getSchemaByRef],
+          resolveRef: [Function: resolveRef],
+          resolveSchemaName: [Function: resolveSchemaName],
+        },
+        schemaByName: {},
+        zodSchemaByName: {
+          Author: "z.object({ name: z.string(), mail: z.string(), settings: Settings }).partial().passthrough()",
+          Playlist: "z.object({ name: z.string(), author: Author, songs: z.array(Song) }).partial().passthrough()",
+          Settings: "z.object({ theme_color: z.string() }).partial().passthrough()",
+          Song: "z.object({ name: z.string(), duration: z.number(), in_playlists: z.array(Playlist) }).partial().passthrough()",
+        },
+      },
+      meta: {
+        isRequired: true,
+        name: "playlist",
+        parent: [Circular *12],
+        referencedBy: [
+          [Circular *2],
+        ],
+      },
+      ref: "#/components/schemas/Playlist",
+      schema: {
+        "\$ref": "#/components/schemas/Playlist",
+      },
+    },
+    <ref *14> CodeMeta {
+      children: [
+        <ref *13> CodeMeta {
+          children: [
+            CodeMeta {
+              children: [],
+              code: "z.string()",
+              ctx: {
+                resolver: {
+                  getSchemaByRef: [Function: getSchemaByRef],
+                  resolveRef: [Function: resolveRef],
+                  resolveSchemaName: [Function: resolveSchemaName],
+                },
+                schemaByName: {},
+                zodSchemaByName: {
+                  Author: "z.object({ name: z.string(), mail: z.string(), settings: Settings }).partial().passthrough()",
+                  Playlist: "z.object({ name: z.string(), author: Author, songs: z.array(Song) }).partial().passthrough()",
+                  Settings: "z.object({ theme_color: z.string() }).partial().passthrough()",
+                  Song: "z.object({ name: z.string(), duration: z.number(), in_playlists: z.array(Playlist) }).partial().passthrough()",
+                },
+              },
+              meta: {
+                isRequired: true,
+                name: "name",
+                parent: [Circular *13],
+                referencedBy: [
+                  [Circular *14],
+                ],
+              },
+              ref: undefined,
+              schema: {
+                type: "string",
+              },
+            },
+            CodeMeta {
+              children: [],
+              code: "z.string()",
+              ctx: {
+                resolver: {
+                  getSchemaByRef: [Function: getSchemaByRef],
+                  resolveRef: [Function: resolveRef],
+                  resolveSchemaName: [Function: resolveSchemaName],
+                },
+                schemaByName: {},
+                zodSchemaByName: {
+                  Author: "z.object({ name: z.string(), mail: z.string(), settings: Settings }).partial().passthrough()",
+                  Playlist: "z.object({ name: z.string(), author: Author, songs: z.array(Song) }).partial().passthrough()",
+                  Settings: "z.object({ theme_color: z.string() }).partial().passthrough()",
+                  Song: "z.object({ name: z.string(), duration: z.number(), in_playlists: z.array(Playlist) }).partial().passthrough()",
+                },
+              },
+              meta: {
+                isRequired: true,
+                name: "mail",
+                parent: [Circular *13],
+                referencedBy: [
+                  [Circular *14],
+                ],
+              },
+              ref: undefined,
+              schema: {
+                type: "string",
+              },
+            },
+            <ref *16> CodeMeta {
+              children: [
+                <ref *15> CodeMeta {
+                  children: [
+                    CodeMeta {
+                      children: [],
+                      code: "z.string()",
+                      ctx: {
+                        resolver: {
+                          getSchemaByRef: [Function: getSchemaByRef],
+                          resolveRef: [Function: resolveRef],
+                          resolveSchemaName: [Function: resolveSchemaName],
+                        },
+                        schemaByName: {},
+                        zodSchemaByName: {
+                          Author: "z.object({ name: z.string(), mail: z.string(), settings: Settings }).partial().passthrough()",
+                          Playlist: "z.object({ name: z.string(), author: Author, songs: z.array(Song) }).partial().passthrough()",
+                          Settings: "z.object({ theme_color: z.string() }).partial().passthrough()",
+                          Song: "z.object({ name: z.string(), duration: z.number(), in_playlists: z.array(Playlist) }).partial().passthrough()",
+                        },
+                      },
+                      meta: {
+                        isRequired: true,
+                        name: "theme_color",
+                        parent: [Circular *15],
+                        referencedBy: [
+                          [Circular *14],
+                          [Circular *16],
+                        ],
+                      },
+                      ref: undefined,
+                      schema: {
+                        type: "string",
+                      },
+                    },
+                  ],
+                  code: "z.object({ theme_color: z.string() }).partial().passthrough()",
+                  ctx: {
+                    resolver: {
+                      getSchemaByRef: [Function: getSchemaByRef],
+                      resolveRef: [Function: resolveRef],
+                      resolveSchemaName: [Function: resolveSchemaName],
+                    },
+                    schemaByName: {},
+                    zodSchemaByName: {
+                      Author: "z.object({ name: z.string(), mail: z.string(), settings: Settings }).partial().passthrough()",
+                      Playlist: "z.object({ name: z.string(), author: Author, songs: z.array(Song) }).partial().passthrough()",
+                      Settings: "z.object({ theme_color: z.string() }).partial().passthrough()",
+                      Song: "z.object({ name: z.string(), duration: z.number(), in_playlists: z.array(Playlist) }).partial().passthrough()",
+                    },
+                  },
+                  meta: {
+                    parent: [Circular *16],
+                    referencedBy: [
+                      [Circular *14],
+                      [Circular *16],
+                    ],
+                  },
+                  ref: undefined,
+                  schema: {
+                    properties: {
+                      theme_color: {
+                        type: "string",
+                      },
+                    },
+                    type: "object",
+                  },
+                },
+              ],
+              code: undefined,
+              ctx: {
+                resolver: {
+                  getSchemaByRef: [Function: getSchemaByRef],
+                  resolveRef: [Function: resolveRef],
+                  resolveSchemaName: [Function: resolveSchemaName],
+                },
+                schemaByName: {},
+                zodSchemaByName: {
+                  Author: "z.object({ name: z.string(), mail: z.string(), settings: Settings }).partial().passthrough()",
+                  Playlist: "z.object({ name: z.string(), author: Author, songs: z.array(Song) }).partial().passthrough()",
+                  Settings: "z.object({ theme_color: z.string() }).partial().passthrough()",
+                  Song: "z.object({ name: z.string(), duration: z.number(), in_playlists: z.array(Playlist) }).partial().passthrough()",
+                },
+              },
+              meta: {
+                isRequired: true,
+                name: "settings",
+                parent: [Circular *13],
+                referencedBy: [
+                  [Circular *14],
+                  [Circular *16],
+                ],
+              },
+              ref: "#/components/schemas/Settings",
+              schema: {
+                "\$ref": "#/components/schemas/Settings",
+              },
+            },
+          ],
+          code: "z.object({ name: z.string(), mail: z.string(), settings: Settings }).partial().passthrough()",
+          ctx: {
+            resolver: {
+              getSchemaByRef: [Function: getSchemaByRef],
+              resolveRef: [Function: resolveRef],
+              resolveSchemaName: [Function: resolveSchemaName],
+            },
+            schemaByName: {},
+            zodSchemaByName: {
+              Author: "z.object({ name: z.string(), mail: z.string(), settings: Settings }).partial().passthrough()",
+              Playlist: "z.object({ name: z.string(), author: Author, songs: z.array(Song) }).partial().passthrough()",
+              Settings: "z.object({ theme_color: z.string() }).partial().passthrough()",
+              Song: "z.object({ name: z.string(), duration: z.number(), in_playlists: z.array(Playlist) }).partial().passthrough()",
+            },
+          },
+          meta: {
+            parent: [Circular *14],
+            referencedBy: [
+              [Circular *14],
+            ],
+          },
+          ref: undefined,
+          schema: {
+            properties: {
+              mail: {
+                type: "string",
+              },
+              name: {
+                type: "string",
+              },
+              settings: {
+                "\$ref": "#/components/schemas/Settings",
+              },
+            },
+            type: "object",
+          },
+        },
+      ],
+      code: undefined,
+      ctx: {
+        resolver: {
+          getSchemaByRef: [Function: getSchemaByRef],
+          resolveRef: [Function: resolveRef],
+          resolveSchemaName: [Function: resolveSchemaName],
+        },
+        schemaByName: {},
+        zodSchemaByName: {
+          Author: "z.object({ name: z.string(), mail: z.string(), settings: Settings }).partial().passthrough()",
+          Playlist: "z.object({ name: z.string(), author: Author, songs: z.array(Song) }).partial().passthrough()",
+          Settings: "z.object({ theme_color: z.string() }).partial().passthrough()",
+          Song: "z.object({ name: z.string(), duration: z.number(), in_playlists: z.array(Playlist) }).partial().passthrough()",
+        },
+      },
+      meta: {
+        isRequired: true,
+        name: "by_author",
+        parent: [Circular *12],
+        referencedBy: [
+          [Circular *14],
+        ],
+      },
+      ref: "#/components/schemas/Author",
+      schema: {
+        "\$ref": "#/components/schemas/Author",
+      },
+    },
+  ],
+  code: "z.object({ playlist: Playlist, by_author: Author }).partial().passthrough()",
+  ctx: {
+    resolver: {
+      getSchemaByRef: [Function: getSchemaByRef],
+      resolveRef: [Function: resolveRef],
+      resolveSchemaName: [Function: resolveSchemaName],
+    },
+    schemaByName: {},
+    zodSchemaByName: {
+      Author: "z.object({ name: z.string(), mail: z.string(), settings: Settings }).partial().passthrough()",
+      Playlist: "z.object({ name: z.string(), author: Author, songs: z.array(Song) }).partial().passthrough()",
+      Settings: "z.object({ theme_color: z.string() }).partial().passthrough()",
+      Song: "z.object({ name: z.string(), duration: z.number(), in_playlists: z.array(Playlist) }).partial().passthrough()",
+    },
+  },
+  meta: {
+    referencedBy: [],
+  },
+  ref: undefined,
+  schema: {
+    properties: {
+      by_author: {
+        "\$ref": "#/components/schemas/Author",
+      },
+      playlist: {
+        "\$ref": "#/components/schemas/Playlist",
+      },
+    },
+    type: "object",
+  },
+}
+`;
+
+snapshot[`recursive-schema > recursive schema with \$ref to another simple schema should still generate and output that simple schema and its dependencies 2`] = `
+{
+  resolver: {
+    getSchemaByRef: [Function: getSchemaByRef],
+    resolveRef: [Function: resolveRef],
+    resolveSchemaName: [Function: resolveSchemaName],
+  },
+  schemaByName: {},
+  zodSchemaByName: {
+    Author: "z.object({ name: z.string(), mail: z.string(), settings: Settings }).partial().passthrough()",
+    Playlist: "z.object({ name: z.string(), author: Author, songs: z.array(Song) }).partial().passthrough()",
+    Settings: "z.object({ theme_color: z.string() }).partial().passthrough()",
+    Song: "z.object({ name: z.string(), duration: z.number(), in_playlists: z.array(Playlist) }).partial().passthrough()",
+  },
+}
+`;
+
+snapshot[`recursive-schema > recursive schema with \$ref to another simple schema should still generate and output that simple schema and its dependencies 3`] = `
+'import { makeApi, Zodios, type ZodiosOptions } from "@franklin-ai/zodios";
+import { z } from "zod";
+
+type Playlist = Partial<{
+  name: string;
+  author: Author;
+  songs: Array<Song>;
+}>;
+type Author = Partial<{
+  name: string;
+  mail: string;
+  settings: Settings;
+}>;
+type Settings = Partial<{
+  theme_color: string;
+}>;
+type Song = Partial<{
+  name: string;
+  duration: number;
+  in_playlists: Array<Playlist>;
+}>;
+
+const Settings = z.object({ theme_color: z.string() }).partial().passthrough();
+const Author = z
+  .object({ name: z.string(), mail: z.string(), settings: Settings })
+  .partial()
+  .passthrough();
+const Song: z.ZodType<Song> = z.lazy(() =>
+  z
+    .object({
+      name: z.string(),
+      duration: z.number(),
+      in_playlists: z.array(Playlist),
+    })
+    .partial()
+    .passthrough()
+);
+const Playlist: z.ZodType<Playlist> = z.lazy(() =>
+  z
+    .object({ name: z.string(), author: Author, songs: z.array(Song) })
+    .partial()
+    .passthrough()
+);
+
+export const schemas = {
+  Settings,
+  Author,
+  Song,
+  Playlist,
+};
+
+const endpoints = makeApi([
+  {
+    method: "get",
+    path: "/example",
+    requestFormat: "json",
+    response: z
+      .object({ playlist: Playlist, by_author: Author })
+      .partial()
+      .passthrough(),
+  },
+]);
+
+export const api = new Zodios(endpoints);
+
+export function createApiClient(baseUrl: string, options?: ZodiosOptions) {
+  return new Zodios(baseUrl, endpoints, options);
+}
+'
+`;

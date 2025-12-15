@@ -1,0 +1,29 @@
+export const snapshot = {};
+
+snapshot[`is-media-type-allowed 1`] = `
+[
+  {
+    description: undefined,
+    errors: [],
+    method: "get",
+    parameters: [],
+    path: "/unusual-ref-format",
+    requestFormat: "json",
+    response: "z.string()",
+  },
+]
+`;
+
+snapshot[`is-media-type-allowed 2`] = `
+[
+  {
+    description: undefined,
+    errors: [],
+    method: "get",
+    parameters: [],
+    path: "/unusual-ref-format",
+    requestFormat: "json",
+    response: "z.number()",
+  },
+]
+`;

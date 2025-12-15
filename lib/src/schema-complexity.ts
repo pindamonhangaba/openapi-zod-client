@@ -2,9 +2,9 @@ import type { ReferenceObject, SchemaObject } from "openapi3-ts";
 import { getSum } from "pastable/server";
 import { match } from "ts-pattern";
 
-import { isReferenceObject } from "./isReferenceObject";
-import type { PrimitiveType } from "./utils";
-import { isPrimitiveType } from "./utils";
+import { isReferenceObject } from "./isReferenceObject.ts";
+import type { PrimitiveType } from "./utils.ts";
+import { isPrimitiveType } from "./utils.ts";
 
 type CompositeType = "oneOf" | "anyOf" | "allOf" | "enum" | "array" | "empty-object" | "object" | "record";
 const complexityByType = (schema: SchemaObject & { type: PrimitiveType }) => {

@@ -1,0 +1,988 @@
+export const snapshot = {};
+
+snapshot[`validations 1`] = `
+<ref *1> CodeMeta {
+  children: [
+    CodeMeta {
+      children: [],
+      code: "z.string()",
+      ctx: undefined,
+      meta: {
+        isRequired: true,
+        name: "str",
+        parent: [Circular *1],
+        referencedBy: [],
+      },
+      ref: undefined,
+      schema: {
+        type: "string",
+      },
+    },
+    CodeMeta {
+      children: [],
+      code: "z.string()",
+      ctx: undefined,
+      meta: {
+        isRequired: true,
+        name: "strWithLength",
+        parent: [Circular *1],
+        referencedBy: [],
+      },
+      ref: undefined,
+      schema: {
+        maxLength: 3,
+        minLength: 3,
+        type: "string",
+      },
+    },
+    CodeMeta {
+      children: [],
+      code: "z.string()",
+      ctx: undefined,
+      meta: {
+        isRequired: true,
+        name: "strWithMin",
+        parent: [Circular *1],
+        referencedBy: [],
+      },
+      ref: undefined,
+      schema: {
+        minLength: 3,
+        type: "string",
+      },
+    },
+    CodeMeta {
+      children: [],
+      code: "z.string()",
+      ctx: undefined,
+      meta: {
+        isRequired: true,
+        name: "strWithMax",
+        parent: [Circular *1],
+        referencedBy: [],
+      },
+      ref: undefined,
+      schema: {
+        maxLength: 3,
+        type: "string",
+      },
+    },
+    CodeMeta {
+      children: [],
+      code: "z.string()",
+      ctx: undefined,
+      meta: {
+        isRequired: true,
+        name: "strWithPattern",
+        parent: [Circular *1],
+        referencedBy: [],
+      },
+      ref: undefined,
+      schema: {
+        pattern: "/^[a-z]+\$/",
+        type: "string",
+      },
+    },
+    CodeMeta {
+      children: [],
+      code: "z.string()",
+      ctx: undefined,
+      meta: {
+        isRequired: true,
+        name: "strWithPatternWithSlash",
+        parent: [Circular *1],
+        referencedBy: [],
+      },
+      ref: undefined,
+      schema: {
+        pattern: "/abc/def/ghi/",
+        type: "string",
+      },
+    },
+    CodeMeta {
+      children: [],
+      code: "z.string()",
+      ctx: undefined,
+      meta: {
+        isRequired: true,
+        name: "email",
+        parent: [Circular *1],
+        referencedBy: [],
+      },
+      ref: undefined,
+      schema: {
+        format: "email",
+        type: "string",
+      },
+    },
+    CodeMeta {
+      children: [],
+      code: "z.string()",
+      ctx: undefined,
+      meta: {
+        isRequired: true,
+        name: "hostname",
+        parent: [Circular *1],
+        referencedBy: [],
+      },
+      ref: undefined,
+      schema: {
+        format: "hostname",
+        type: "string",
+      },
+    },
+    CodeMeta {
+      children: [],
+      code: "z.string()",
+      ctx: undefined,
+      meta: {
+        isRequired: true,
+        name: "url",
+        parent: [Circular *1],
+        referencedBy: [],
+      },
+      ref: undefined,
+      schema: {
+        format: "uri",
+        type: "string",
+      },
+    },
+    CodeMeta {
+      children: [],
+      code: "z.string()",
+      ctx: undefined,
+      meta: {
+        isRequired: true,
+        name: "uuid",
+        parent: [Circular *1],
+        referencedBy: [],
+      },
+      ref: undefined,
+      schema: {
+        format: "uuid",
+        type: "string",
+      },
+    },
+    CodeMeta {
+      children: [],
+      code: "z.number()",
+      ctx: undefined,
+      meta: {
+        isRequired: true,
+        name: "number",
+        parent: [Circular *1],
+        referencedBy: [],
+      },
+      ref: undefined,
+      schema: {
+        type: "number",
+      },
+    },
+    CodeMeta {
+      children: [],
+      code: "z.number()",
+      ctx: undefined,
+      meta: {
+        isRequired: true,
+        name: "int",
+        parent: [Circular *1],
+        referencedBy: [],
+      },
+      ref: undefined,
+      schema: {
+        type: "integer",
+      },
+    },
+    CodeMeta {
+      children: [],
+      code: "z.number()",
+      ctx: undefined,
+      meta: {
+        isRequired: true,
+        name: "intWithMin",
+        parent: [Circular *1],
+        referencedBy: [],
+      },
+      ref: undefined,
+      schema: {
+        minimum: 3,
+        type: "integer",
+      },
+    },
+    CodeMeta {
+      children: [],
+      code: "z.number()",
+      ctx: undefined,
+      meta: {
+        isRequired: true,
+        name: "intWithMax",
+        parent: [Circular *1],
+        referencedBy: [],
+      },
+      ref: undefined,
+      schema: {
+        maximum: 3,
+        type: "integer",
+      },
+    },
+    CodeMeta {
+      children: [],
+      code: "z.number()",
+      ctx: undefined,
+      meta: {
+        isRequired: true,
+        name: "intWithMinAndMax",
+        parent: [Circular *1],
+        referencedBy: [],
+      },
+      ref: undefined,
+      schema: {
+        maximum: 3,
+        minimum: 3,
+        type: "integer",
+      },
+    },
+    CodeMeta {
+      children: [],
+      code: "z.number()",
+      ctx: undefined,
+      meta: {
+        isRequired: true,
+        name: "intWithExclusiveMinTrue",
+        parent: [Circular *1],
+        referencedBy: [],
+      },
+      ref: undefined,
+      schema: {
+        exclusiveMinimum: true,
+        minimum: 3,
+        type: "integer",
+      },
+    },
+    CodeMeta {
+      children: [],
+      code: "z.number()",
+      ctx: undefined,
+      meta: {
+        isRequired: true,
+        name: "intWithExclusiveMinFalse",
+        parent: [Circular *1],
+        referencedBy: [],
+      },
+      ref: undefined,
+      schema: {
+        exclusiveMinimum: false,
+        minimum: 3,
+        type: "integer",
+      },
+    },
+    CodeMeta {
+      children: [],
+      code: "z.number()",
+      ctx: undefined,
+      meta: {
+        isRequired: true,
+        name: "intWithExclusiveMin",
+        parent: [Circular *1],
+        referencedBy: [],
+      },
+      ref: undefined,
+      schema: {
+        exclusiveMinimum: 3,
+        type: "integer",
+      },
+    },
+    CodeMeta {
+      children: [],
+      code: "z.number()",
+      ctx: undefined,
+      meta: {
+        isRequired: true,
+        name: "intWithExclusiveMaxTrue",
+        parent: [Circular *1],
+        referencedBy: [],
+      },
+      ref: undefined,
+      schema: {
+        exclusiveMaximum: true,
+        maximum: 3,
+        type: "integer",
+      },
+    },
+    CodeMeta {
+      children: [],
+      code: "z.number()",
+      ctx: undefined,
+      meta: {
+        isRequired: true,
+        name: "intWithExclusiveMaxFalse",
+        parent: [Circular *1],
+        referencedBy: [],
+      },
+      ref: undefined,
+      schema: {
+        exclusiveMaximum: false,
+        maximum: 3,
+        type: "integer",
+      },
+    },
+    CodeMeta {
+      children: [],
+      code: "z.number()",
+      ctx: undefined,
+      meta: {
+        isRequired: true,
+        name: "intWithExclusiveMax",
+        parent: [Circular *1],
+        referencedBy: [],
+      },
+      ref: undefined,
+      schema: {
+        exclusiveMaximum: 3,
+        type: "integer",
+      },
+    },
+    CodeMeta {
+      children: [],
+      code: "z.number()",
+      ctx: undefined,
+      meta: {
+        isRequired: true,
+        name: "intWithMultipleOf",
+        parent: [Circular *1],
+        referencedBy: [],
+      },
+      ref: undefined,
+      schema: {
+        multipleOf: 3,
+        type: "integer",
+      },
+    },
+    CodeMeta {
+      children: [],
+      code: "z.boolean()",
+      ctx: undefined,
+      meta: {
+        isRequired: true,
+        name: "bool",
+        parent: [Circular *1],
+        referencedBy: [],
+      },
+      ref: undefined,
+      schema: {
+        type: "boolean",
+      },
+    },
+    <ref *2> CodeMeta {
+      children: [
+        CodeMeta {
+          children: [],
+          code: "z.string()",
+          ctx: undefined,
+          meta: {
+            parent: [Circular *2],
+            referencedBy: [],
+          },
+          ref: undefined,
+          schema: {
+            type: "string",
+          },
+        },
+      ],
+      code: "z.array(z.string())",
+      ctx: undefined,
+      meta: {
+        isRequired: true,
+        name: "array",
+        parent: [Circular *1],
+        referencedBy: [],
+      },
+      ref: undefined,
+      schema: {
+        items: {
+          type: "string",
+        },
+        type: "array",
+      },
+    },
+    <ref *3> CodeMeta {
+      children: [
+        CodeMeta {
+          children: [],
+          code: "z.string()",
+          ctx: undefined,
+          meta: {
+            parent: [Circular *3],
+            referencedBy: [],
+          },
+          ref: undefined,
+          schema: {
+            type: "string",
+          },
+        },
+      ],
+      code: "z.array(z.string())",
+      ctx: undefined,
+      meta: {
+        isRequired: true,
+        name: "arrayWithMin",
+        parent: [Circular *1],
+        referencedBy: [],
+      },
+      ref: undefined,
+      schema: {
+        items: {
+          type: "string",
+        },
+        minItems: 3,
+        type: "array",
+      },
+    },
+    <ref *4> CodeMeta {
+      children: [
+        CodeMeta {
+          children: [],
+          code: "z.string()",
+          ctx: undefined,
+          meta: {
+            parent: [Circular *4],
+            referencedBy: [],
+          },
+          ref: undefined,
+          schema: {
+            type: "string",
+          },
+        },
+      ],
+      code: "z.array(z.string())",
+      ctx: undefined,
+      meta: {
+        isRequired: true,
+        name: "arrayWithMax",
+        parent: [Circular *1],
+        referencedBy: [],
+      },
+      ref: undefined,
+      schema: {
+        items: {
+          type: "string",
+        },
+        maxItems: 3,
+        type: "array",
+      },
+    },
+    <ref *5> CodeMeta {
+      children: [
+        CodeMeta {
+          children: [],
+          code: "z.string()",
+          ctx: undefined,
+          meta: {
+            parent: [Circular *5],
+            referencedBy: [],
+          },
+          ref: undefined,
+          schema: {
+            format: "uuid",
+            type: "string",
+          },
+        },
+      ],
+      code: "z.array(z.string().uuid())",
+      ctx: undefined,
+      meta: {
+        isRequired: true,
+        name: "arrayWithFormat",
+        parent: [Circular *1],
+        referencedBy: [],
+      },
+      ref: undefined,
+      schema: {
+        items: {
+          format: "uuid",
+          type: "string",
+        },
+        type: "array",
+      },
+    },
+    <ref *6> CodeMeta {
+      children: [
+        CodeMeta {
+          children: [],
+          code: "z.string()",
+          ctx: undefined,
+          meta: {
+            isRequired: true,
+            name: "str",
+            parent: [Circular *6],
+            referencedBy: [],
+          },
+          ref: undefined,
+          schema: {
+            type: "string",
+          },
+        },
+      ],
+      code: "z.object({ str: z.string() }).passthrough()",
+      ctx: undefined,
+      meta: {
+        isRequired: true,
+        name: "object",
+        parent: [Circular *1],
+        referencedBy: [],
+      },
+      ref: undefined,
+      schema: {
+        properties: {
+          str: {
+            type: "string",
+          },
+        },
+        type: "object",
+      },
+    },
+    <ref *7> CodeMeta {
+      children: [
+        CodeMeta {
+          children: [],
+          code: "z.string()",
+          ctx: undefined,
+          meta: {
+            isRequired: true,
+            name: "str",
+            parent: [Circular *7],
+            referencedBy: [],
+          },
+          ref: undefined,
+          schema: {
+            type: "string",
+          },
+        },
+      ],
+      code: "z.object({ str: z.string() }).passthrough()",
+      ctx: undefined,
+      meta: {
+        isRequired: true,
+        name: "objectWithRequired",
+        parent: [Circular *1],
+        referencedBy: [],
+      },
+      ref: undefined,
+      schema: {
+        properties: {
+          str: {
+            type: "string",
+          },
+        },
+        required: [
+          "str",
+        ],
+        type: "object",
+      },
+    },
+    <ref *8> CodeMeta {
+      children: [
+        CodeMeta {
+          children: [],
+          code: "z.string()",
+          ctx: undefined,
+          meta: {
+            parent: [Circular *8],
+            referencedBy: [],
+          },
+          ref: undefined,
+          schema: {
+            type: "string",
+          },
+        },
+        CodeMeta {
+          children: [],
+          code: "z.number()",
+          ctx: undefined,
+          meta: {
+            parent: [Circular *8],
+            referencedBy: [],
+          },
+          ref: undefined,
+          schema: {
+            type: "number",
+          },
+        },
+      ],
+      code: "z.union([z.string(), z.number()])",
+      ctx: undefined,
+      meta: {
+        isRequired: true,
+        name: "oneOf",
+        parent: [Circular *1],
+        referencedBy: [],
+      },
+      ref: undefined,
+      schema: {
+        oneOf: [
+          {
+            type: "string",
+          },
+          {
+            type: "number",
+          },
+        ],
+      },
+    },
+    <ref *9> CodeMeta {
+      children: [
+        CodeMeta {
+          children: [],
+          code: "z.string()",
+          ctx: undefined,
+          meta: {
+            parent: [Circular *9],
+            referencedBy: [],
+          },
+          ref: undefined,
+          schema: {
+            type: "string",
+          },
+        },
+        CodeMeta {
+          children: [],
+          code: "z.number()",
+          ctx: undefined,
+          meta: {
+            parent: [Circular *9],
+            referencedBy: [],
+          },
+          ref: undefined,
+          schema: {
+            type: "number",
+          },
+        },
+      ],
+      code: "z.union([z.string(), z.number()])",
+      ctx: undefined,
+      meta: {
+        isRequired: true,
+        name: "anyOf",
+        parent: [Circular *1],
+        referencedBy: [],
+      },
+      ref: undefined,
+      schema: {
+        anyOf: [
+          {
+            type: "string",
+          },
+          {
+            type: "number",
+          },
+        ],
+      },
+    },
+    <ref *10> CodeMeta {
+      children: [
+        CodeMeta {
+          children: [],
+          code: "z.string()",
+          ctx: undefined,
+          meta: {
+            parent: [Circular *10],
+            referencedBy: [],
+          },
+          ref: undefined,
+          schema: {
+            type: "string",
+          },
+        },
+        CodeMeta {
+          children: [],
+          code: "z.number()",
+          ctx: undefined,
+          meta: {
+            parent: [Circular *10],
+            referencedBy: [],
+          },
+          ref: undefined,
+          schema: {
+            type: "number",
+          },
+        },
+      ],
+      code: "z.string().and(z.number())",
+      ctx: undefined,
+      meta: {
+        isRequired: true,
+        name: "allOf",
+        parent: [Circular *1],
+        referencedBy: [],
+      },
+      ref: undefined,
+      schema: {
+        allOf: [
+          {
+            type: "string",
+          },
+          {
+            type: "number",
+          },
+        ],
+      },
+    },
+    <ref *11> CodeMeta {
+      children: [
+        CodeMeta {
+          children: [],
+          code: "z.number()",
+          ctx: undefined,
+          meta: {
+            parent: [Circular *11],
+            referencedBy: [],
+          },
+          ref: undefined,
+          schema: {
+            type: "number",
+          },
+        },
+      ],
+      code: "z.record(z.string(), z.number())",
+      ctx: undefined,
+      meta: {
+        isRequired: true,
+        name: "nested",
+        parent: [Circular *1],
+        referencedBy: [],
+      },
+      ref: undefined,
+      schema: {
+        additionalProperties: {
+          type: "number",
+        },
+      },
+    },
+    <ref *12> CodeMeta {
+      children: [
+        CodeMeta {
+          children: [],
+          code: "z.number()",
+          ctx: undefined,
+          meta: {
+            parent: [Circular *12],
+            referencedBy: [],
+          },
+          ref: undefined,
+          schema: {
+            nullable: true,
+            type: "number",
+          },
+        },
+      ],
+      code: "z.record(z.string(), z.number().nullable())",
+      ctx: undefined,
+      meta: {
+        isRequired: true,
+        name: "nestedNullable",
+        parent: [Circular *1],
+        referencedBy: [],
+      },
+      ref: undefined,
+      schema: {
+        additionalProperties: {
+          nullable: true,
+          type: "number",
+        },
+      },
+    },
+  ],
+  code: "z.object({ str: z.string(), strWithLength: z.string().min(3).max(3), strWithMin: z.string().min(3), strWithMax: z.string().max(3), strWithPattern: z.string().regex(/^[a-z]+\$/), strWithPatternWithSlash: z.string().regex(/abc\\\\/def\\\\/ghi/), email: z.string().email(), hostname: z.string().url(), url: z.string().url(), uuid: z.string().uuid(), number: z.number(), int: z.number().int(), intWithMin: z.number().int().gte(3), intWithMax: z.number().int().lte(3), intWithMinAndMax: z.number().int().gte(3).lte(3), intWithExclusiveMinTrue: z.number().int().gt(3), intWithExclusiveMinFalse: z.number().int().gte(3), intWithExclusiveMin: z.number().int().gt(3), intWithExclusiveMaxTrue: z.number().int().lt(3), intWithExclusiveMaxFalse: z.number().int().lte(3), intWithExclusiveMax: z.number().int().lt(3), intWithMultipleOf: z.number().int().multipleOf(3), bool: z.boolean(), array: z.array(z.string()), arrayWithMin: z.array(z.string()).min(3), arrayWithMax: z.array(z.string()).max(3), arrayWithFormat: z.array(z.string().uuid()), object: z.object({ str: z.string() }).passthrough(), objectWithRequired: z.object({ str: z.string() }).passthrough(), oneOf: z.union([z.string(), z.number()]), anyOf: z.union([z.string(), z.number()]), allOf: z.string().and(z.number()), nested: z.record(z.string(), z.number()), nestedNullable: z.record(z.string(), z.number().nullable()) }).passthrough()",
+  ctx: undefined,
+  meta: {
+    referencedBy: [],
+  },
+  ref: undefined,
+  schema: {
+    properties: {
+      allOf: {
+        allOf: [
+          {
+            type: "string",
+          },
+          {
+            type: "number",
+          },
+        ],
+      },
+      anyOf: {
+        anyOf: [
+          {
+            type: "string",
+          },
+          {
+            type: "number",
+          },
+        ],
+      },
+      array: {
+        items: {
+          type: "string",
+        },
+        type: "array",
+      },
+      arrayWithFormat: {
+        items: {
+          format: "uuid",
+          type: "string",
+        },
+        type: "array",
+      },
+      arrayWithMax: {
+        items: {
+          type: "string",
+        },
+        maxItems: 3,
+        type: "array",
+      },
+      arrayWithMin: {
+        items: {
+          type: "string",
+        },
+        minItems: 3,
+        type: "array",
+      },
+      bool: {
+        type: "boolean",
+      },
+      email: {
+        format: "email",
+        type: "string",
+      },
+      hostname: {
+        format: "hostname",
+        type: "string",
+      },
+      int: {
+        type: "integer",
+      },
+      intWithExclusiveMax: {
+        exclusiveMaximum: 3,
+        type: "integer",
+      },
+      intWithExclusiveMaxFalse: {
+        exclusiveMaximum: false,
+        maximum: 3,
+        type: "integer",
+      },
+      intWithExclusiveMaxTrue: {
+        exclusiveMaximum: true,
+        maximum: 3,
+        type: "integer",
+      },
+      intWithExclusiveMin: {
+        exclusiveMinimum: 3,
+        type: "integer",
+      },
+      intWithExclusiveMinFalse: {
+        exclusiveMinimum: false,
+        minimum: 3,
+        type: "integer",
+      },
+      intWithExclusiveMinTrue: {
+        exclusiveMinimum: true,
+        minimum: 3,
+        type: "integer",
+      },
+      intWithMax: {
+        maximum: 3,
+        type: "integer",
+      },
+      intWithMin: {
+        minimum: 3,
+        type: "integer",
+      },
+      intWithMinAndMax: {
+        maximum: 3,
+        minimum: 3,
+        type: "integer",
+      },
+      intWithMultipleOf: {
+        multipleOf: 3,
+        type: "integer",
+      },
+      nested: {
+        additionalProperties: {
+          type: "number",
+        },
+      },
+      nestedNullable: {
+        additionalProperties: {
+          nullable: true,
+          type: "number",
+        },
+      },
+      number: {
+        type: "number",
+      },
+      object: {
+        properties: {
+          str: {
+            type: "string",
+          },
+        },
+        type: "object",
+      },
+      objectWithRequired: {
+        properties: {
+          str: {
+            type: "string",
+          },
+        },
+        required: [
+          "str",
+        ],
+        type: "object",
+      },
+      oneOf: {
+        oneOf: [
+          {
+            type: "string",
+          },
+          {
+            type: "number",
+          },
+        ],
+      },
+      str: {
+        type: "string",
+      },
+      strWithLength: {
+        maxLength: 3,
+        minLength: 3,
+        type: "string",
+      },
+      strWithMax: {
+        maxLength: 3,
+        type: "string",
+      },
+      strWithMin: {
+        minLength: 3,
+        type: "string",
+      },
+      strWithPattern: {
+        pattern: "/^[a-z]+\$/",
+        type: "string",
+      },
+      strWithPatternWithSlash: {
+        pattern: "/abc/def/ghi/",
+        type: "string",
+      },
+      url: {
+        format: "uri",
+        type: "string",
+      },
+      uuid: {
+        format: "uuid",
+        type: "string",
+      },
+    },
+    type: "object",
+  },
+}
+`;
