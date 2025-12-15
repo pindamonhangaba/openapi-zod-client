@@ -1,4 +1,7 @@
 import type { SchemaObject } from "openapi3-ts";
+import { test } from "jsr:@std/testing/bdd";
+import { expect } from "jsr:@std/expect";
+import { assertSnapshot } from "jsr:@std/testing/snapshot";
 
 import { getZodSchema } from "./openApiToZod.ts";
 import type { CodeMetaData, ConversionTypeContext } from "./CodeMeta.ts";
@@ -9,50 +12,24 @@ const makeSchema = (schema: SchemaObject) => schema;
 const getSchemaAsZodString = (schema: SchemaObject, meta?: CodeMetaData | undefined) =>
     getZodSchema({ schema: makeSchema(schema), meta }).toString();
 
-test("getSchemaAsZodString", () => {
-    expect(getSchemaAsZodString({ type: "null" })).toMatchInlineSnapshot('"z.null()"');
-    expect(getSchemaAsZodString({ type: "null", enum: ["Dogs", "Cats", "Mice"] })).toMatchInlineSnapshot('"z.null()"');
-    expect(getSchemaAsZodString({ type: "boolean" })).toMatchInlineSnapshot('"z.boolean()"');
-    expect(getSchemaAsZodString({ type: "string" })).toMatchInlineSnapshot('"z.string()"');
-    expect(getSchemaAsZodString({ type: "number" })).toMatchInlineSnapshot('"z.number()"');
-    expect(getSchemaAsZodString({ type: "integer" })).toMatchInlineSnapshot('"z.number()"');
-    // expect(getSchemaAsZodString({ type: "string", format: "date-time" })).toMatchInlineSnapshot('"z.string().datetime()"');
-    // expect(getSchemaAsZodString({ type: "number", nullable: true, minimum: 0 })).toMatchInlineSnapshot('"z.number().nullable().gte(0)"');
-
-    expect(getSchemaAsZodString({ type: "array", items: { type: "string" } })).toMatchInlineSnapshot(
-        '"z.array(z.string())"'
-    );
-    expect(getSchemaAsZodString({ type: "object" })).toMatchInlineSnapshot('"z.object({}).partial().passthrough()"');
-    expect(getSchemaAsZodString({ type: "object", properties: { str: { type: "string" } } })).toMatchInlineSnapshot(
-        '"z.object({ str: z.string() }).partial().passthrough()"'
-    );
-
-    expect(getSchemaAsZodString({ type: "object", properties: { str: { type: "string" } } })).toMatchInlineSnapshot(
-        '"z.object({ str: z.string() }).partial().passthrough()"'
-    );
-
-    expect(getSchemaAsZodString({ type: "object", properties: { nb: { type: "integer" } } })).toMatchInlineSnapshot(
-        '"z.object({ nb: z.number().int() }).partial().passthrough()"'
-    );
-
-    expect(
-        getSchemaAsZodString({ type: "object", properties: { pa: { type: "number", minimum: 0 } } })
-    ).toMatchInlineSnapshot('"z.object({ pa: z.number().gte(0) }).partial().passthrough()"');
-
-    expect(
-        getSchemaAsZodString({ type: "object", properties: { pa: { type: "number", minimum: 0, maximum: 100 } } })
-    ).toMatchInlineSnapshot('"z.object({ pa: z.number().gte(0).lte(100) }).partial().passthrough()"');
-
-    expect(
-        getSchemaAsZodString({ type: "object", properties: { ml: { type: "string", minLength: 0 } } })
-    ).toMatchInlineSnapshot('"z.object({ ml: z.string().min(0) }).partial().passthrough()"');
-
-    expect(
-        getSchemaAsZodString({ type: "object", properties: { dt: { type: "string", format: "date-time" } } })
-    ).toMatchInlineSnapshot('"z.object({ dt: z.string().datetime({ offset: true }) }).partial().passthrough()"');
-
-    expect(
-        getSchemaAsZodString({
+test("getSchemaAsZodString", async (t) => {
+    const results = {
+        null: getSchemaAsZodString({ type: "null" }),
+        nullEnum: getSchemaAsZodString({ type: "null", enum: ["Dogs", "Cats", "Mice"] }),
+        boolean: getSchemaAsZodString({ type: "boolean" }),
+        string: getSchemaAsZodString({ type: "string" }),
+        number: getSchemaAsZodString({ type: "number" }),
+        integer: getSchemaAsZodString({ type: "integer" }),
+        arrayString: getSchemaAsZodString({ type: "array", items: { type: "string" } }),
+        object: getSchemaAsZodString({ type: "object" }),
+        objectStr: getSchemaAsZodString({ type: "object", properties: { str: { type: "string" } } }),
+        objectStr2: getSchemaAsZodString({ type: "object", properties: { str: { type: "string" } } }),
+        objectNb: getSchemaAsZodString({ type: "object", properties: { nb: { type: "integer" } } }),
+        objectPaMin: getSchemaAsZodString({ type: "object", properties: { pa: { type: "number", minimum: 0 } } }),
+        objectPaMinMax: getSchemaAsZodString({ type: "object", properties: { pa: { type: "number", minimum: 0, maximum: 100 } } }),
+        objectMl: getSchemaAsZodString({ type: "object", properties: { ml: { type: "string", minLength: 0 } } }),
+        objectDt: getSchemaAsZodString({ type: "object", properties: { dt: { type: "string", format: "date-time" } } }),
+        objectNested: getSchemaAsZodString({
             type: "object",
             properties: {
                 str: { type: "string" },
@@ -64,13 +41,8 @@ test("getSchemaAsZodString", () => {
                     },
                 },
             },
-        })
-    ).toMatchInlineSnapshot(
-        '"z.object({ str: z.string(), nb: z.number(), nested: z.object({ nested_prop: z.boolean() }).partial().passthrough() }).partial().passthrough()"'
-    );
-
-    expect(
-        getSchemaAsZodString({
+        }),
+        arrayObject: getSchemaAsZodString({
             type: "array",
             items: {
                 type: "object",
@@ -78,11 +50,8 @@ test("getSchemaAsZodString", () => {
                     str: { type: "string" },
                 },
             },
-        })
-    ).toMatchInlineSnapshot('"z.array(z.object({ str: z.string() }).partial().passthrough())"');
-
-    expect(
-        getSchemaAsZodString({
+        }),
+        arrayArray: getSchemaAsZodString({
             type: "array",
             items: {
                 type: "array",
@@ -90,20 +59,14 @@ test("getSchemaAsZodString", () => {
                     type: "string",
                 },
             },
-        })
-    ).toMatchInlineSnapshot('"z.array(z.array(z.string()))"');
-
-    expect(
-        getSchemaAsZodString({
+        }),
+        objectUnion: getSchemaAsZodString({
             type: "object",
             properties: {
                 union: { oneOf: [{ type: "string" }, { type: "number" }] },
             },
-        })
-    ).toMatchInlineSnapshot('"z.object({ union: z.union([z.string(), z.number()]) }).partial().passthrough()"');
-
-    expect(
-        getSchemaAsZodString({
+        }),
+        objectOneOfDiscriminator: getSchemaAsZodString({
             type: "object",
             oneOf: [
                 {
@@ -134,16 +97,8 @@ test("getSchemaAsZodString", () => {
                 },
             ],
             discriminator: { propertyName: "type" },
-        })
-    ).toMatchInlineSnapshot(`
-      "
-                      z.discriminatedUnion("type", [z.object({ type: z.literal("a"), a: z.string() }).passthrough(), z.object({ type: z.literal("b"), b: z.string() }).passthrough()])
-                  "
-    `);
-
-    // returns z.discriminatedUnion, when allOf has single object
-    expect(
-        getSchemaAsZodString({
+        }),
+        objectOneOfAllOfSingle: getSchemaAsZodString({
             type: "object",
             oneOf: [
                 {
@@ -185,16 +140,8 @@ test("getSchemaAsZodString", () => {
             ],
             discriminator: { propertyName: "type" },
 
-        })
-    ).toMatchInlineSnapshot(`
-    "
-                    z.discriminatedUnion("type", [z.object({ type: z.literal("a"), a: z.string() }).passthrough(), z.object({ type: z.literal("b"), b: z.string() }).passthrough()])
-                "
-    `);
-
-    // returns z.union, when allOf has multiple objects
-    expect(
-        getSchemaAsZodString({
+        }),
+        objectOneOfAllOfMultiple: getSchemaAsZodString({
             type: "object",
             oneOf: [
                 {
@@ -262,52 +209,38 @@ test("getSchemaAsZodString", () => {
             ],
             discriminator: { propertyName: "type" },
 
-        })
-    ).toMatchInlineSnapshot('"z.union([z.object({ type: z.literal("a"), a: z.string() }).passthrough().and(z.object({ type: z.literal("c"), c: z.string() }).passthrough()), z.object({ type: z.literal("b"), b: z.string() }).passthrough().and(z.object({ type: z.literal("d"), d: z.string() }).passthrough())])"');
-
-    expect(
-        getSchemaAsZodString({
+        }),
+        objectAnyOf: getSchemaAsZodString({
             type: "object",
             properties: {
                 anyOfExample: { anyOf: [{ type: "string" }, { type: "number" }] },
             },
-        })
-    ).toMatchInlineSnapshot(
-        '"z.object({ anyOfExample: z.union([z.string(), z.number()]) }).partial().passthrough()"'
-    );
-
-    expect(
-        getSchemaAsZodString({
+        }),
+        objectIntersection: getSchemaAsZodString({
             type: "object",
             properties: {
                 intersection: { allOf: [{ type: "string" }, { type: "number" }] },
             },
-        })
-    ).toMatchInlineSnapshot('"z.object({ intersection: z.string().and(z.number()) }).partial().passthrough()"');
-
-    expect(getSchemaAsZodString({ type: "string", enum: ["aaa", "bbb", "ccc"] })).toMatchInlineSnapshot(
-        '"z.enum(["aaa", "bbb", "ccc"])"'
-    );
-    expect(getSchemaAsZodString({ type: "number", enum: [1, 2, 3, null] })).toMatchInlineSnapshot(
-        '"z.union([z.literal(1), z.literal(2), z.literal(3), z.literal(null)])"'
-    );
-    expect(getSchemaAsZodString({ type: "number", enum: [1] })).toMatchInlineSnapshot('"z.literal(1)"');
-    expect(getSchemaAsZodString({ type: "string", enum: ["aString"] })).toMatchInlineSnapshot('"z.literal("aString")"');
+        }),
+        stringEnum: getSchemaAsZodString({ type: "string", enum: ["aaa", "bbb", "ccc"] }),
+        numberEnumNull: getSchemaAsZodString({ type: "number", enum: [1, 2, 3, null] }),
+        numberEnumSingle: getSchemaAsZodString({ type: "number", enum: [1] }),
+        stringEnumSingle: getSchemaAsZodString({ type: "string", enum: ["aString"] }),
+    };
+    await assertSnapshot(t, results);
 });
 
-test("getSchemaWithChainableAsZodString", () => {
-    expect(getSchemaAsZodString({ type: "string", nullable: true })).toMatchInlineSnapshot('"z.string()"');
-    expect(getSchemaAsZodString({ type: "string", nullable: false })).toMatchInlineSnapshot('"z.string()"');
-
-    expect(getSchemaAsZodString({ type: "string", nullable: false }, { isRequired: true })).toMatchInlineSnapshot(
-        '"z.string()"'
-    );
-    expect(getSchemaAsZodString({ type: "string", nullable: true }, { isRequired: true })).toMatchInlineSnapshot(
-        '"z.string()"'
-    );
+test("getSchemaWithChainableAsZodString", async (t) => {
+    const results = {
+        nullableTrue: getSchemaAsZodString({ type: "string", nullable: true }),
+        nullableFalse: getSchemaAsZodString({ type: "string", nullable: false }),
+        nullableFalseRequired: getSchemaAsZodString({ type: "string", nullable: false }, { isRequired: true }),
+        nullableTrueRequired: getSchemaAsZodString({ type: "string", nullable: true }, { isRequired: true }),
+    };
+    await assertSnapshot(t, results);
 });
 
-test("CodeMeta with missing ref", () => {
+test("CodeMeta with missing ref", async (t) => {
     const ctx: ConversionTypeContext = {
         resolver: makeSchemaResolver({ components: { schemas: {} } } as any),
         zodSchemaByName: {},
@@ -333,10 +266,10 @@ test("CodeMeta with missing ref", () => {
             }),
             ctx,
         })
-    ).toThrowErrorMatchingInlineSnapshot('"Schema Example not found"');
+    ).toThrow("Schema Example not found");
 });
 
-test("CodeMeta with ref", () => {
+test("CodeMeta with ref", async (t) => {
     const schemas = {
         Example: {
             type: "object",
@@ -371,19 +304,13 @@ test("CodeMeta with ref", () => {
         }),
         ctx,
     });
-    expect(code.toString()).toMatchInlineSnapshot(
-        '"z.object({ str: z.string(), reference: Example, inline: z.object({ nested_prop: z.boolean() }).partial().passthrough() }).partial().passthrough()"'
-    );
-    expect(code.children).toMatchInlineSnapshot(`
-      [
-          "z.string()",
-          "Example",
-          "z.object({ nested_prop: z.boolean() }).partial().passthrough()",
-      ]
-    `);
+    await assertSnapshot(t, {
+        codeString: code.toString(),
+        children: code.children,
+    });
 });
 
-test("CodeMeta with nested refs", () => {
+test("CodeMeta with nested refs", async (t) => {
     const schemas = {
         Basic: { type: "object", properties: { prop: { type: "string" }, second: { type: "number" } } },
         WithNested: {
@@ -429,33 +356,9 @@ test("CodeMeta with nested refs", () => {
         }),
         ctx,
     });
-    expect(code.toString()).toMatchInlineSnapshot(
-        '"z.object({ str: z.string(), reference: ObjectWithArrayOfRef, inline: z.object({ nested_prop: z.boolean() }).partial().passthrough(), another: WithNested, basic: Basic, differentPropSameRef: Basic }).partial().passthrough()"'
-    );
-    expect(code.children).toMatchInlineSnapshot(`
-      [
-          "z.string()",
-          "ObjectWithArrayOfRef",
-          "z.object({ nested_prop: z.boolean() }).partial().passthrough()",
-          "WithNested",
-          "Basic",
-          "Basic",
-      ]
-    `);
-    expect(ctx).toMatchInlineSnapshot(`
-      {
-          "resolver": {
-              "getSchemaByRef": [Function],
-              "resolveRef": [Function],
-              "resolveSchemaName": [Function],
-          },
-          "schemaByName": {},
-          "zodSchemaByName": {
-              "Basic": "z.object({ prop: z.string(), second: z.number() }).partial().passthrough()",
-              "DeepNested": "z.object({ deep: z.boolean() }).partial().passthrough()",
-              "ObjectWithArrayOfRef": "z.object({ exampleProp: z.string(), another: z.number(), link: z.array(WithNested), someReference: Basic }).partial().passthrough()",
-              "WithNested": "z.object({ nested: z.string(), nestedRef: DeepNested }).partial().passthrough()",
-          },
-      }
-    `);
+    await assertSnapshot(t, {
+        codeString: code.toString(),
+        children: code.children,
+        ctx,
+    });
 });

@@ -1,7 +1,7 @@
 export const snapshot = {};
 
 snapshot[`includes errors-responses 1`] = `
-'import { makeApi, Zodios, type ZodiosOptions } from "@franklin-ai/zodios";
+'import { makeApi, Zodios, type ZodiosOptions } from "@zodios/core";
 import { z } from "zod";
 
 const endpoints = makeApi([
@@ -34,7 +34,7 @@ export function createApiClient(baseUrl: string, options?: ZodiosOptions) {
 `;
 
 snapshot[`determines which status are considered errors-responses 1`] = `
-'import { makeApi, Zodios, type ZodiosOptions } from "@franklin-ai/zodios";
+'import { makeApi, Zodios, type ZodiosOptions } from "@zodios/core";
 import { z } from "zod";
 
 const VeryDeeplyNested = z.enum(["aaa", "bbb", "ccc"]);
@@ -89,7 +89,7 @@ export function createApiClient(baseUrl: string, options?: ZodiosOptions) {
 `;
 
 snapshot[`determines which status are considered errors-responses 2`] = `
-'import { makeApi, Zodios, type ZodiosOptions } from "@franklin-ai/zodios";
+'import { makeApi, Zodios, type ZodiosOptions } from "@zodios/core";
 import { z } from "zod";
 
 const VeryDeeplyNested = z.enum(["aaa", "bbb", "ccc"]);

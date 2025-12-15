@@ -583,7 +583,7 @@ snapshot[`anyOf behavior > handles an array of types 1`] = `
 `;
 
 snapshot[`anyOf behavior > handles \$refs 1`] = `
-'import { makeApi, Zodios, type ZodiosOptions } from "@franklin-ai/zodios";
+'import { makeApi, Zodios, type ZodiosOptions } from "@zodios/core";
 import { z } from "zod";
 
 const PetByAge = z

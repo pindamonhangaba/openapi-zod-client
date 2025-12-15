@@ -1,0 +1,58 @@
+export const snapshot = {};
+
+snapshot[`getSchemaComplexity 1`] = `
+{
+  arrayWithStringItems: 2,
+  arrayWithoutItems: 1,
+  boolean: 1,
+  integer: 1,
+  null: 1,
+  number: 1,
+  objectEmpty: 1,
+  objectWithAdditionalPropertiesString: 2,
+  objectWithAdditionalPropertiesTrue: 1,
+  objectWithComplexAdditionalProperties: 4,
+  objectWithMoreComplexAdditionalProperties: 5,
+  objectWithRefArrayProperty: 5,
+  objectWithRefProperty: 4,
+  objectWithStringProperty: 3,
+  objectWithTwoProperties: 4,
+  string: 1,
+}
+`;
+
+snapshot[`getSchemaComplexity 2`] = `7`;
+
+snapshot[`getSchemaComplexity 3`] = `4`;
+
+snapshot[`getSchemaComplexity 4`] = `3`;
+
+snapshot[`getSchemaComplexity 5`] = `5`;
+
+snapshot[`getSchemaComplexity 6`] = `6`;
+
+snapshot[`getSchemaComplexity 7`] = `6`;
+
+snapshot[`getSchemaComplexity 8`] = `7`;
+
+snapshot[`getSchemaComplexity 9`] = `5`;
+
+snapshot[`getSchemaComplexity 10`] = `6`;
+
+snapshot[`getSchemaComplexity 11`] = `7`;
+
+snapshot[`getSchemaComplexity 12`] = `8`;
+
+snapshot[`getSchemaComplexity 13`] = `9`;
+
+snapshot[`getSchemaComplexity 14`] = `10`;
+
+snapshot[`getSchemaComplexity 15`] = `11`;
+
+snapshot[`getSchemaComplexity 16`] = `13`;
+
+snapshot[`getSchemaComplexity 17`] = `14`;
+
+snapshot[`getSchemaComplexity 18`] = `2`;
+
+snapshot[`getSchemaComplexity 19`] = `2`;

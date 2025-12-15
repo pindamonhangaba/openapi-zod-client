@@ -51,7 +51,7 @@ snapshot[`handle-refs-with-dots-in-name 1`] = `
 `;
 
 snapshot[`handle-refs-with-dots-in-name 2`] = `
-'import { makeApi, Zodios, type ZodiosOptions } from "@franklin-ai/zodios";
+'import { makeApi, Zodios, type ZodiosOptions } from "@zodios/core";
 import { z } from "zod";
 
 const Basic = z.string();

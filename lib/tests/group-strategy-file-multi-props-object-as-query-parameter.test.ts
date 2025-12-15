@@ -49,7 +49,7 @@ describe("file group strategy with multi-props object as query parameter", () =>
 
         const expectedIndex = `    "__index": "export { ${groupStrategy === "method-file" ? "PostApi" : "DefaultApi"} } from "./${groupStrategy === "method-file" ? "post" : "Default"}";\n",`;
 
-        const expectedApi = `    "${groupStrategy === "method-file" ? "post" : "Default"}": "import { makeApi, Zodios, type ZodiosOptions } from "@franklin-ai/zodios";
+        const expectedApi = `    "${groupStrategy === "method-file" ? "post" : "Default"}": "import { makeApi, Zodios, type ZodiosOptions } from "@zodios/core";
 import { z } from "zod";
 
 const req = z

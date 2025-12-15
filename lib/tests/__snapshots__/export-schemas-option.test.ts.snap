@@ -28,7 +28,7 @@ snapshot[`export-schemas-option 3`] = `
 `;
 
 snapshot[`export-schemas-option 4`] = `
-'import { makeApi, Zodios, type ZodiosOptions } from "@franklin-ai/zodios";
+'import { makeApi, Zodios, type ZodiosOptions } from "@zodios/core";
 import { z } from "zod";
 
 const Basic = z.string();

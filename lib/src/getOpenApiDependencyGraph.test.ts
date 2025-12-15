@@ -1,61 +1,30 @@
 import SwaggerParser from "@apidevtools/swagger-parser";
 import type { OpenAPIObject, SchemaObject } from "openapi3-ts";
 import { get } from "pastable/server";
+import { test } from "jsr:@std/testing/bdd";
+import { expect } from "jsr:@std/expect";
+import { assertSnapshot } from "jsr:@std/testing/snapshot";
 
 import { getOpenApiDependencyGraph } from "./getOpenApiDependencyGraph.ts";
 import { topologicalSort } from "./topologicalSort.ts";
 import { asComponentSchema } from "./utils.ts";
 
-test("petstore.yaml", async () => {
-    const openApiDoc = (await SwaggerParser.parse("./tests/petstore.yaml")) as OpenAPIObject;
+test("petstore.yaml", async (t) => {
+    const openApiDoc = (await SwaggerParser.parse("./samples/v3.0/petstore.yaml")) as OpenAPIObject;
     const getSchemaByRef = (ref: string) => get(openApiDoc, ref.replace("#/", "").replaceAll("/", ".")) as SchemaObject;
     const { refsDependencyGraph: result, deepDependencyGraph } = getOpenApiDependencyGraph(
         Object.keys(openApiDoc.components?.schemas || {}).map((name) => asComponentSchema(name)),
         getSchemaByRef
     );
-    expect(result).toMatchInlineSnapshot(`
-      {
-          "#/components/schemas/Customer": Set {
-              "#/components/schemas/Address",
-          },
-          "#/components/schemas/Pet": Set {
-              "#/components/schemas/Category",
-              "#/components/schemas/Tag",
-          },
-      }
-    `);
-    expect(topologicalSort(result)).toMatchInlineSnapshot(`
-      [
-          "#/components/schemas/Address",
-          "#/components/schemas/Customer",
-          "#/components/schemas/Category",
-          "#/components/schemas/Tag",
-          "#/components/schemas/Pet",
-      ]
-    `);
-    expect(deepDependencyGraph).toMatchInlineSnapshot(`
-      {
-          "#/components/schemas/Customer": Set {
-              "#/components/schemas/Address",
-          },
-          "#/components/schemas/Pet": Set {
-              "#/components/schemas/Category",
-              "#/components/schemas/Tag",
-          },
-      }
-    `);
-    expect(topologicalSort(deepDependencyGraph)).toMatchInlineSnapshot(`
-      [
-          "#/components/schemas/Address",
-          "#/components/schemas/Customer",
-          "#/components/schemas/Category",
-          "#/components/schemas/Tag",
-          "#/components/schemas/Pet",
-      ]
-    `);
+    await assertSnapshot(t, {
+        refsDependencyGraph: result,
+        topologicalSortRefs: topologicalSort(result),
+        deepDependencyGraph,
+        topologicalSortDeep: topologicalSort(deepDependencyGraph),
+    });
 });
 
-test("complex relations", () => {
+test("complex relations", async (t) => {
     const schemas = {
         Basic: { type: "object", properties: { prop: { type: "string" }, second: { type: "number" } } },
         WithNested: { type: "object", properties: { nested: { type: "string" }, nestedRef: { $ref: "DeepNested" } } },
@@ -94,61 +63,15 @@ test("complex relations", () => {
         Object.keys(schemas),
         getSchemaByRef
     );
-    expect(result).toMatchInlineSnapshot(`
-      {
-          "ObjectWithArrayOfRef": Set {
-              "WithNested",
-              "Basic",
-          },
-          "Root": Set {
-              "ObjectWithArrayOfRef",
-              "WithNested",
-              "Basic",
-          },
-          "WithNested": Set {
-              "DeepNested",
-          },
-      }
-    `);
-    expect(topologicalSort(result)).toMatchInlineSnapshot(`
-      [
-          "DeepNested",
-          "WithNested",
-          "Basic",
-          "ObjectWithArrayOfRef",
-          "Root",
-      ]
-    `);
-    expect(deepDependencyGraph).toMatchInlineSnapshot(`
-      {
-          "ObjectWithArrayOfRef": Set {
-              "WithNested",
-              "DeepNested",
-              "Basic",
-          },
-          "Root": Set {
-              "ObjectWithArrayOfRef",
-              "WithNested",
-              "DeepNested",
-              "Basic",
-          },
-          "WithNested": Set {
-              "DeepNested",
-          },
-      }
-    `);
-    expect(topologicalSort(deepDependencyGraph)).toMatchInlineSnapshot(`
-      [
-          "DeepNested",
-          "WithNested",
-          "Basic",
-          "ObjectWithArrayOfRef",
-          "Root",
-      ]
-    `);
+    await assertSnapshot(t, {
+        refsDependencyGraph: result,
+        topologicalSortRefs: topologicalSort(result),
+        deepDependencyGraph,
+        topologicalSortDeep: topologicalSort(deepDependencyGraph),
+    });
 });
 
-test("recursive relations", () => {
+test("recursive relations", async (t) => {
     const UserWithFriends = {
         type: "object",
         properties: {
@@ -174,45 +97,15 @@ test("recursive relations", () => {
         Object.keys(schemas),
         getSchemaByRef
     );
-    expect(result).toMatchInlineSnapshot(`
-      {
-          "Friend": Set {
-              "UserWithFriends",
-              "Friend",
-          },
-          "UserWithFriends": Set {
-              "UserWithFriends",
-              "Friend",
-          },
-      }
-    `);
-    expect(topologicalSort(result)).toMatchInlineSnapshot(`
-      [
-          "Friend",
-          "UserWithFriends",
-      ]
-    `);
-    expect(deepDependencyGraph).toMatchInlineSnapshot(`
-      {
-          "Friend": Set {
-              "UserWithFriends",
-              "Friend",
-          },
-          "UserWithFriends": Set {
-              "UserWithFriends",
-              "Friend",
-          },
-      }
-    `);
-    expect(topologicalSort(deepDependencyGraph)).toMatchInlineSnapshot(`
-      [
-          "Friend",
-          "UserWithFriends",
-      ]
-    `);
+    await assertSnapshot(t, {
+        refsDependencyGraph: result,
+        topologicalSortRefs: topologicalSort(result),
+        deepDependencyGraph,
+        topologicalSortDeep: topologicalSort(deepDependencyGraph),
+    });
 });
 
-test("recursive relations along with some basics schemas", () => {
+test("recursive relations along with some basics schemas", async (t) => {
     const schemas = {
         UserWithFriends: {
             type: "object",
@@ -270,84 +163,10 @@ test("recursive relations along with some basics schemas", () => {
         Object.keys(schemas),
         getSchemaByRef
     );
-    expect(result).toMatchInlineSnapshot(`
-      {
-          "Friend": Set {
-              "UserWithFriends",
-              "Friend",
-              "Basic",
-          },
-          "ObjectWithArrayOfRef": Set {
-              "WithNested",
-              "Basic",
-          },
-          "Root": Set {
-              "ObjectWithArrayOfRef",
-              "WithNested",
-              "Basic",
-          },
-          "UserWithFriends": Set {
-              "UserWithFriends",
-              "Friend",
-              "WithNested",
-          },
-          "WithNested": Set {
-              "DeepNested",
-          },
-      }
-    `);
-    expect(topologicalSort(result)).toMatchInlineSnapshot(`
-      [
-          "Basic",
-          "Friend",
-          "DeepNested",
-          "WithNested",
-          "UserWithFriends",
-          "ObjectWithArrayOfRef",
-          "Root",
-      ]
-    `);
-    expect(deepDependencyGraph).toMatchInlineSnapshot(`
-      {
-          "Friend": Set {
-              "UserWithFriends",
-              "Friend",
-              "WithNested",
-              "DeepNested",
-              "Basic",
-          },
-          "ObjectWithArrayOfRef": Set {
-              "WithNested",
-              "DeepNested",
-              "Basic",
-          },
-          "Root": Set {
-              "ObjectWithArrayOfRef",
-              "WithNested",
-              "DeepNested",
-              "Basic",
-          },
-          "UserWithFriends": Set {
-              "UserWithFriends",
-              "Friend",
-              "Basic",
-              "WithNested",
-              "DeepNested",
-          },
-          "WithNested": Set {
-              "DeepNested",
-          },
-      }
-    `);
-    expect(topologicalSort(deepDependencyGraph)).toMatchInlineSnapshot(`
-      [
-          "DeepNested",
-          "WithNested",
-          "Basic",
-          "Friend",
-          "UserWithFriends",
-          "ObjectWithArrayOfRef",
-          "Root",
-      ]
-    `);
+    await assertSnapshot(t, {
+        refsDependencyGraph: result,
+        topologicalSortRefs: topologicalSort(result),
+        deepDependencyGraph,
+        topologicalSortDeep: topologicalSort(deepDependencyGraph),
+    });
 });

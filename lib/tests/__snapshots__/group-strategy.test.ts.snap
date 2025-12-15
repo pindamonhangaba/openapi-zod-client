@@ -138,7 +138,7 @@ snapshot[`group-strategy 1`] = `
 `;
 
 snapshot[`group-strategy 2`] = `
-'import { makeApi, Zodios } from "@franklin-ai/zodios";
+'import { makeApi, Zodios } from "@zodios/core";
 import { z } from "zod";
 
 const petEndpoints = makeApi([
@@ -365,7 +365,7 @@ snapshot[`group-strategy 3`] = `
 `;
 
 snapshot[`group-strategy 4`] = `
-'import { makeApi, Zodios } from "@franklin-ai/zodios";
+'import { makeApi, Zodios } from "@zodios/core";
 import { z } from "zod";
 
 const getEndpoints = makeApi([
@@ -460,7 +460,7 @@ snapshot[`group-strategy: tag-file with modified petstore schema 1`] = `
 {
   __index: 'export { PetsApi } from "./pets";
 ',
-  pets: 'import { makeApi, Zodios, type ZodiosOptions } from "@franklin-ai/zodios";
+  pets: 'import { makeApi, Zodios, type ZodiosOptions } from "@zodios/core";
 import { z } from "zod";
 
 const Pet = z
@@ -649,7 +649,7 @@ snapshot[`group-strategy with complex schemas + split files 1`] = `
 
 snapshot[`group-strategy with complex schemas + split files 2`] = `
 {
-  Default: 'import { makeApi, Zodios, type ZodiosOptions } from "@franklin-ai/zodios";
+  Default: 'import { makeApi, Zodios, type ZodiosOptions } from "@zodios/core";
 import { z } from "zod";
 
 import { Country } from "./common";
@@ -735,7 +735,7 @@ export { UserApi } from "./user";
 export { StoreApi } from "./store";
 export { DefaultApi } from "./Default";
 ',
-  pet: 'import { makeApi, Zodios, type ZodiosOptions } from "@franklin-ai/zodios";
+  pet: 'import { makeApi, Zodios, type ZodiosOptions } from "@zodios/core";
 import { z } from "zod";
 
 import { User } from "./common";
@@ -782,7 +782,7 @@ export function createApiClient(baseUrl: string, options?: ZodiosOptions) {
   return new Zodios(baseUrl, endpoints, options);
 }
 ',
-  store: 'import { makeApi, Zodios, type ZodiosOptions } from "@franklin-ai/zodios";
+  store: 'import { makeApi, Zodios, type ZodiosOptions } from "@zodios/core";
 import { z } from "zod";
 
 import { Store } from "./common";
@@ -810,7 +810,7 @@ export function createApiClient(baseUrl: string, options?: ZodiosOptions) {
   return new Zodios(baseUrl, endpoints, options);
 }
 ',
-  user: 'import { makeApi, Zodios, type ZodiosOptions } from "@franklin-ai/zodios";
+  user: 'import { makeApi, Zodios, type ZodiosOptions } from "@zodios/core";
 import { z } from "zod";
 
 import { User } from "./common";

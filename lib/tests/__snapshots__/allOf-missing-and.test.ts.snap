@@ -1,7 +1,7 @@
 export const snapshot = {};
 
 snapshot[`allOf-missing-and 1`] = `
-'import { makeApi, Zodios, type ZodiosOptions } from "@franklin-ai/zodios";
+'import { makeApi, Zodios, type ZodiosOptions } from "@zodios/core";
 import { z } from "zod";
 
 const test1 = z.object({ text1: z.string() }).partial().passthrough();

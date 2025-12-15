@@ -87,7 +87,7 @@ snapshot[`export-all-named-schemas 1`] = `
 `;
 
 snapshot[`export-all-named-schemas 2`] = `
-'import { makeApi, Zodios, type ZodiosOptions } from "@franklin-ai/zodios";
+'import { makeApi, Zodios, type ZodiosOptions } from "@zodios/core";
 import { z } from "zod";
 
 const sameSchemaSameName = z.enum(["xxx", "yyy", "zzz"]).optional();

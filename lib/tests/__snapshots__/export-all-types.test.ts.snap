@@ -1,7 +1,7 @@
 export const snapshot = {};
 
 snapshot[`export-all-types > shouldExportAllTypes option, non-circular types are exported 1`] = `
-'import { makeApi, Zodios, type ZodiosOptions } from "@franklin-ai/zodios";
+'import { makeApi, Zodios, type ZodiosOptions } from "@zodios/core";
 import { z } from "zod";
 
 type Playlist = Partial<{

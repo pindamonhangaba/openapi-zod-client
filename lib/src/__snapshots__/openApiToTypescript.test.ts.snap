@@ -1,0 +1,229 @@
+export const snapshot = {};
+
+snapshot[`getSchemaAsTsString 1`] = `
+{
+  allOfInline: "string & number",
+  allPropertiesRequired: "export type AllPropertiesRequired = {
+    str: string;
+    nb: number;
+};",
+  arrayArray: "Array<Array<string>>",
+  arrayObject: "Array<Partial<{
+    str: string;
+}>>",
+  arrayString: "Array<string>",
+  basicObject2: "export type BasicObject2 = Partial<{
+    str: string;
+    nb: number;
+}>;",
+  basicObject: "export type BasicObject = Partial<{
+    str: string;
+}>;",
+  boolean: "boolean",
+  booleanType: "export type booleanType = boolean;",
+  category: "export type Category = {
+    propNumber: number | null;
+    propString: string | null;
+    propBoolean: boolean | null;
+};",
+  emptyObject: "export type EmptyObject = {};",
+  integer: "number",
+  integerType: "export type integerType = number;",
+  null: "null",
+  nullType: "export type nullType = null;",
+  nullableAllOf: "(string & number) | null",
+  nullableAllOfNamed: "export type StringAndNumber = (string & number) | null;",
+  nullableAnyOf2: "(string | number) | Array<string | number> | null",
+  nullableAnyOf: "(string | number) | Array<string | number> | null",
+  nullableOneOf: "string | number | null",
+  nullableOneOfNamed: "export type StringOrNumber = string | number | null;",
+  number: "number",
+  numberEnum: "1 | 2 | 3",
+  numberType: "export type numberType = number;",
+  objectWithAdditionalPropsNb: "export type ObjectWithAdditionalPropsNb = Partial<{
+    str: string;
+} & {
+    [key: string]: number;
+}>;",
+  objectWithArrayUnion: "export type ObjectWithArrayUnion = Partial<{
+    unionOrArrayOfUnion: (string | number) | Array<string | number>;
+}>;",
+  objectWithEnum: 'export type ObjectWithEnum = Partial<{
+    enumprop: "aaa" | "bbb" | "ccc";
+}>;',
+  objectWithIntersection: "export type ObjectWithIntersection = Partial<{
+    intersection: string & number;
+}>;",
+  objectWithNestedProp: "export type ObjectWithNestedProp = Partial<{
+    str: string;
+    nb: number;
+    nested: Partial<{
+        nested_prop: boolean;
+    }>;
+}>;",
+  objectWithNestedRecordBoolean: "export type ObjectWithNestedRecordBoolean = Partial<{
+    str: string;
+} & {
+    [key: string]: Partial<{
+        prop: boolean;
+    }>;
+}>;",
+  objectWithUnion: "export type ObjectWithUnion = Partial<{
+    union: string | number;
+}>;",
+  oneOfInline: "string | number",
+  someOptionalProps: "export type SomeOptionalProps = {
+    str: string;
+    nb?: number | undefined;
+};",
+  string: "string",
+  stringAndNumber: "export type StringAndNumber = string & number;",
+  stringAndNumberMaybeMultiple: "export type StringAndNumberMaybeMultiple = (string | number) | Array<string | number>;",
+  stringEnum: 'export type StringENum = "aaa" | "bbb" | "ccc";',
+  stringEnumInline2: '"aaa" | "bbb" | "ccc"',
+  stringEnumInline: '"aaa" | "bbb" | "ccc"',
+  stringOrNumber: "export type StringOrNumber = string | number;",
+  stringType: "export type stringType = string;",
+  unknown: "unknown",
+  unknownType: "export type unknownType = unknown;",
+}
+`;
+
+snapshot[`getSchemaAsTsString with context > with ref 1`] = `
+"export type Root = Partial<{
+    str: string;
+    nb: number;
+    nested: Nested;
+}>;"
+`;
+
+snapshot[`getSchemaAsTsString with context > with multiple nested refs 1`] = `
+"export type Root2 = Partial<{
+    str: string;
+    nb: number;
+    nested: Nested2;
+}>;"
+`;
+
+snapshot[`getSchemaAsTsString with context > with indirect recursive ref 1`] = `
+"export type Root3 = Partial<{
+    str: string;
+    nb: number;
+    nested: Nested3;
+    arrayOfNested: Array<Nested3>;
+}>;"
+`;
+
+snapshot[`getSchemaAsTsString with context > with direct (self) recursive ref 1`] = `
+"export type Root4 = Partial<{
+    str: string;
+    nb: number;
+    self: Root4;
+    nested: Nested4;
+    arrayOfSelf: Array<Root4>;
+}>;"
+`;
+
+snapshot[`getSchemaAsTsString with context > same schemas as openApiToZod 1`] = `
+"export type Root = Partial<{
+    recursive: User;
+    basic: number;
+}>;"
+`;
+
+snapshot[`getSchemaAsTsString with context > anyOf with refs 1`] = `
+"export type Root = Partial<{
+    user: User | Member;
+    users: Array<(User | Member) | Array<User | Member>>;
+    basic: number;
+}>;"
+`;
+
+snapshot[`getSchemaAsTsString with readonly 1`] = `
+{
+  allOfInline: "string & number",
+  allPropertiesRequired: "export type AllPropertiesRequired = Readonly<{
+    str: string;
+    nb: number;
+}>;",
+  arrayArray: "Readonly<Array<Readonly<Array<string>>>>",
+  arrayObject: "Readonly<Array<Partial<Readonly<{
+    str: string;
+}>>>>",
+  arrayString: "Readonly<Array<string>>",
+  basicObject2: "export type BasicObject2 = Partial<Readonly<{
+    str: string;
+    nb: number;
+}>>;",
+  basicObject: "export type BasicObject = Partial<Readonly<{
+    str: string;
+}>>;",
+  boolean: "boolean",
+  booleanType: "export type booleanType = boolean;",
+  category: "export type Category = Readonly<{
+    propNumber: number | null;
+    propString: string | null;
+    propBoolean: boolean | null;
+}>;",
+  emptyObject: "export type EmptyObject = {};",
+  integer: "number",
+  integerType: "export type integerType = number;",
+  null: "null",
+  nullType: "export type nullType = null;",
+  nullableAllOf: "(string & number) | null",
+  nullableAllOfNamed: "export type StringAndNumber = (string & number) | null;",
+  nullableAnyOf2: "(string | number) | Readonly<Array<string | number>> | null",
+  nullableAnyOf: "(string | number) | Readonly<Array<string | number>> | null",
+  nullableOneOf: "string | number | null",
+  nullableOneOfNamed: "export type StringOrNumber = string | number | null;",
+  number: "number",
+  numberEnum: "1 | 2 | 3",
+  numberType: "export type numberType = number;",
+  objectWithAdditionalPropsNb: "export type ObjectWithAdditionalPropsNb = Partial<Readonly<{
+    str: string;
+} & {
+    [key: string]: number;
+}>>;",
+  objectWithArrayUnion: "export type ObjectWithArrayUnion = Partial<Readonly<{
+    unionOrArrayOfUnion: (string | number) | Readonly<Array<string | number>>;
+}>>;",
+  objectWithEnum: 'export type ObjectWithEnum = Partial<Readonly<{
+    enumprop: "aaa" | "bbb" | "ccc";
+}>>;',
+  objectWithIntersection: "export type ObjectWithIntersection = Partial<Readonly<{
+    intersection: string & number;
+}>>;",
+  objectWithNestedProp: "export type ObjectWithNestedProp = Partial<Readonly<{
+    str: string;
+    nb: number;
+    nested: Partial<Readonly<{
+        nested_prop: boolean;
+    }>>;
+}>>;",
+  objectWithNestedRecordBoolean: "export type ObjectWithNestedRecordBoolean = Partial<Readonly<{
+    str: string;
+} & {
+    [key: string]: Partial<Readonly<{
+        prop: boolean;
+    }>>;
+}>>;",
+  objectWithUnion: "export type ObjectWithUnion = Partial<Readonly<{
+    union: string | number;
+}>>;",
+  oneOfInline: "string | number",
+  someOptionalProps: "export type SomeOptionalProps = Readonly<{
+    str: string;
+    nb?: number | undefined;
+}>;",
+  string: "string",
+  stringAndNumber: "export type StringAndNumber = string & number;",
+  stringAndNumberMaybeMultiple: "export type StringAndNumberMaybeMultiple = (string | number) | Readonly<Array<string | number>>;",
+  stringEnum: 'export type StringENum = "aaa" | "bbb" | "ccc";',
+  stringEnumInline2: '"aaa" | "bbb" | "ccc"',
+  stringEnumInline: '"aaa" | "bbb" | "ccc"',
+  stringOrNumber: "export type StringOrNumber = string | number;",
+  stringType: "export type stringType = string;",
+  unknown: "unknown",
+  unknownType: "export type unknownType = unknown;",
+}
+`;

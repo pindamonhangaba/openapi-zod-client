@@ -2,7 +2,7 @@ export const snapshot = {};
 
 snapshot[`file group strategy with multi-props object as query parameter > tag file 1`] = `
 {
-  Default: 'import { makeApi, Zodios, type ZodiosOptions } from "@franklin-ai/zodios";
+  Default: 'import { makeApi, Zodios, type ZodiosOptions } from "@zodios/core";
 import { z } from "zod";
 
 const req = z
@@ -44,7 +44,7 @@ snapshot[`file group strategy with multi-props object as query parameter > metho
 {
   __index: 'export { PostApi } from "./post";
 ',
-  post: 'import { makeApi, Zodios, type ZodiosOptions } from "@franklin-ai/zodios";
+  post: 'import { makeApi, Zodios, type ZodiosOptions } from "@zodios/core";
 import { z } from "zod";
 
 const req = z

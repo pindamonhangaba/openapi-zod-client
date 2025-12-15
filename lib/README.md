@@ -218,7 +218,7 @@ components:
 output:
 
 ```ts
-import { makeApi, Zodios } from "@franklin-ai/zodios";
+import { makeApi, Zodios } from "@zodios/core";
 import { z } from "zod";
 
 const Pet = z.object({ id: z.number().int(), name: z.string(), tag: z.string().optional() });

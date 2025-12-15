@@ -1,0 +1,459 @@
+export const snapshot = {};
+
+snapshot[`getZodiosEndpointDefinitionList /store/order 1`] = `
+{
+  deepDependencyGraph: {},
+  endpoints: [
+    {
+      description: "Place a new order in the store",
+      errors: [
+        {
+          description: "Invalid input",
+          schema: "z.void()",
+          status: 405,
+        },
+      ],
+      method: "post",
+      parameters: [
+        {
+          description: undefined,
+          name: "body",
+          schema: "Order",
+          type: "Body",
+        },
+      ],
+      path: "/store/order",
+      requestFormat: "json",
+      response: "Order",
+    },
+  ],
+  issues: {
+    ignoredFallbackResponse: [],
+    ignoredGenericError: [],
+  },
+  refsDependencyGraph: {},
+  resolver: {
+    getSchemaByRef: [Function: getSchemaByRef],
+    resolveRef: [Function: resolveRef],
+    resolveSchemaName: [Function: resolveSchemaName],
+  },
+  schemaByName: {},
+  zodSchemaByName: {
+    Order: 'z.object({ id: z.number().int(), petId: z.number().int(), quantity: z.number().int(), shipDate: z.string().datetime({ offset: true }), status: z.enum(["placed", "approved", "delivered"]), complete: z.boolean() }).partial().passthrough()',
+  },
+}
+`;
+
+snapshot[`getZodiosEndpointDefinitionList /pet 1`] = `
+{
+  deepDependencyGraph: {
+    "#/components/schemas/Pet": Set(2) {
+      "#/components/schemas/Category",
+      "#/components/schemas/Tag",
+    },
+  },
+  endpoints: [
+    {
+      description: "Update an existing pet by Id",
+      errors: [
+        {
+          description: "Invalid ID supplied",
+          schema: "z.void()",
+          status: 400,
+        },
+        {
+          description: "Pet not found",
+          schema: "z.void()",
+          status: 404,
+        },
+        {
+          description: "Validation exception",
+          schema: "z.void()",
+          status: 405,
+        },
+      ],
+      method: "put",
+      parameters: [
+        {
+          description: "Update an existent pet in the store",
+          name: "body",
+          schema: "Pet",
+          type: "Body",
+        },
+      ],
+      path: "/pet",
+      requestFormat: "json",
+      response: "Pet",
+    },
+    {
+      description: "Add a new pet to the store",
+      errors: [
+        {
+          description: "Invalid input",
+          schema: "z.void()",
+          status: 405,
+        },
+      ],
+      method: "post",
+      parameters: [
+        {
+          description: "Create a new pet in the store",
+          name: "body",
+          schema: "Pet",
+          type: "Body",
+        },
+      ],
+      path: "/pet",
+      requestFormat: "json",
+      response: "Pet",
+    },
+  ],
+  issues: {
+    ignoredFallbackResponse: [],
+    ignoredGenericError: [],
+  },
+  refsDependencyGraph: {
+    "#/components/schemas/Pet": Set(2) {
+      "#/components/schemas/Category",
+      "#/components/schemas/Tag",
+    },
+  },
+  resolver: {
+    getSchemaByRef: [Function: getSchemaByRef],
+    resolveRef: [Function: resolveRef],
+    resolveSchemaName: [Function: resolveSchemaName],
+  },
+  schemaByName: {},
+  zodSchemaByName: {
+    Category: "z.object({ id: z.number().int(), name: z.string() }).partial().passthrough()",
+    Pet: 'z.object({ id: z.number().int().optional(), name: z.string(), category: Category.optional(), photoUrls: z.array(z.string()), tags: z.array(Tag).optional(), status: z.enum(["available", "pending", "sold"]).optional() }).passthrough()',
+    Tag: "z.object({ id: z.number().int(), name: z.string() }).partial().passthrough()",
+  },
+}
+`;
+
+snapshot[`getZodiosEndpointDefinitionList /pet without schema ref 1`] = `
+{
+  deepDependencyGraph: {
+    "#/components/schemas/Pet": Set(2) {
+      "#/components/schemas/Category",
+      "#/components/schemas/Tag",
+    },
+    "#/components/schemas/Reason": Set(1) {
+      "#/components/schemas/ReasonDetails",
+    },
+  },
+  endpoints: [
+    {
+      description: "Update an existing pet by Id",
+      errors: [
+        {
+          description: "Invalid ID supplied",
+          schema: "z.void()",
+          status: 400,
+        },
+        {
+          description: "Pet not found",
+          schema: "z.void()",
+          status: 404,
+        },
+        {
+          description: "Validation exception",
+          schema: "z.void()",
+          status: 405,
+        },
+      ],
+      method: "put",
+      parameters: [
+        {
+          description: "Update an existent pet in the store",
+          name: "body",
+          schema: "updatePet_Body",
+          type: "Body",
+        },
+      ],
+      path: "/pet",
+      requestFormat: "json",
+      response: "Pet",
+    },
+  ],
+  issues: {
+    ignoredFallbackResponse: [],
+    ignoredGenericError: [],
+  },
+  refsDependencyGraph: {
+    "#/components/schemas/Pet": Set(2) {
+      "#/components/schemas/Category",
+      "#/components/schemas/Tag",
+    },
+    "#/components/schemas/Reason": Set(1) {
+      "#/components/schemas/ReasonDetails",
+    },
+  },
+  resolver: {
+    getSchemaByRef: [Function: getSchemaByRef],
+    resolveRef: [Function: resolveRef],
+    resolveSchemaName: [Function: resolveSchemaName],
+  },
+  schemaByName: {
+    "Pet.and(Reason)": "updatePet_Body",
+  },
+  zodSchemaByName: {
+    Category: "z.object({ id: z.number().int(), name: z.string() }).partial().passthrough()",
+    Pet: 'z.object({ id: z.number().int().optional(), name: z.string(), category: Category.optional(), photoUrls: z.array(z.string()), tags: z.array(Tag).optional(), status: z.enum(["available", "pending", "sold"]).optional() }).passthrough()',
+    Reason: "z.object({ reason: ReasonDetails }).passthrough()",
+    ReasonDetails: "z.object({ details: z.string() }).passthrough()",
+    Tag: "z.object({ id: z.number().int(), name: z.string() }).partial().passthrough()",
+    updatePet_Body: "Pet.and(Reason)",
+  },
+}
+`;
+
+snapshot[`getZodiosEndpointDefinitionList /pet/findXXX 1`] = `
+{
+  deepDependencyGraph: {
+    "#/components/schemas/Pet": Set(2) {
+      "#/components/schemas/Category",
+      "#/components/schemas/Tag",
+    },
+  },
+  endpoints: [
+    {
+      description: "Multiple status values can be provided with comma separated strings",
+      errors: [
+        {
+          description: "Invalid status value",
+          schema: "z.void()",
+          status: 400,
+        },
+      ],
+      method: "get",
+      parameters: [
+        {
+          name: "status",
+          schema: 'z.enum(["available", "pending", "sold"]).optional().default("available")',
+          type: "Query",
+        },
+      ],
+      path: "/pet/findByStatus",
+      requestFormat: "json",
+      response: "z.array(Pet)",
+    },
+    {
+      description: "Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.",
+      errors: [
+        {
+          description: "Invalid tag value",
+          schema: "z.void()",
+          status: 400,
+        },
+      ],
+      method: "get",
+      parameters: [
+        {
+          name: "tags",
+          schema: "z.array(z.string()).optional()",
+          type: "Query",
+        },
+      ],
+      path: "/pet/findByTags",
+      requestFormat: "json",
+      response: "z.array(Pet)",
+    },
+  ],
+  issues: {
+    ignoredFallbackResponse: [],
+    ignoredGenericError: [],
+  },
+  refsDependencyGraph: {
+    "#/components/schemas/Pet": Set(2) {
+      "#/components/schemas/Category",
+      "#/components/schemas/Tag",
+    },
+  },
+  resolver: {
+    getSchemaByRef: [Function: getSchemaByRef],
+    resolveRef: [Function: resolveRef],
+    resolveSchemaName: [Function: resolveSchemaName],
+  },
+  schemaByName: {},
+  zodSchemaByName: {
+    Category: "z.object({ id: z.number().int(), name: z.string() }).partial().passthrough()",
+    Pet: 'z.object({ id: z.number().int().optional(), name: z.string(), category: Category.optional(), photoUrls: z.array(z.string()), tags: z.array(Tag).optional(), status: z.enum(["available", "pending", "sold"]).optional() }).passthrough()',
+    Tag: "z.object({ id: z.number().int(), name: z.string() }).partial().passthrough()",
+  },
+}
+`;
+
+snapshot[`petstore.yaml 1`] = `
+{
+  deepDependencyGraph: {
+    "#/components/schemas/Pets": Set(1) {
+      "#/components/schemas/Pet",
+    },
+  },
+  endpoints: [
+    {
+      description: undefined,
+      errors: [],
+      method: "get",
+      parameters: [
+        {
+          name: "limit",
+          schema: "z.number().int().optional()",
+          type: "Query",
+        },
+      ],
+      path: "/pets",
+      requestFormat: "json",
+      response: "z.array(Pet)",
+    },
+    {
+      description: undefined,
+      errors: [],
+      method: "post",
+      parameters: [],
+      path: "/pets",
+      requestFormat: "json",
+      response: "z.void()",
+    },
+    {
+      description: undefined,
+      errors: [],
+      method: "get",
+      parameters: [
+        {
+          name: "petId",
+          schema: "z.string()",
+          type: "Path",
+        },
+      ],
+      path: "/pets/:petId",
+      requestFormat: "json",
+      response: "Pet",
+    },
+  ],
+  issues: {
+    ignoredFallbackResponse: [
+      "listPets",
+      "createPets",
+      "showPetById",
+    ],
+    ignoredGenericError: [],
+  },
+  refsDependencyGraph: {
+    "#/components/schemas/Pets": Set(1) {
+      "#/components/schemas/Pet",
+    },
+  },
+  resolver: {
+    getSchemaByRef: [Function: getSchemaByRef],
+    resolveRef: [Function: resolveRef],
+    resolveSchemaName: [Function: resolveSchemaName],
+  },
+  schemaByName: {},
+  zodSchemaByName: {
+    Error: "z.object({ code: z.number().int(), message: z.string() }).passthrough()",
+    Pet: "z.object({ id: z.number().int(), name: z.string(), tag: z.string().optional() }).passthrough()",
+    Pets: "z.array(Pet)",
+  },
+}
+`;
+
+snapshot[`getZodiosEndpointDefinitionList should return responses if options.withAllResponses is true 1`] = `
+{
+  deepDependencyGraph: {
+    "#/components/schemas/Pet": Set(2) {
+      "#/components/schemas/Category",
+      "#/components/schemas/Tag",
+    },
+  },
+  endpoints: [
+    {
+      description: "Multiple status values can be provided with comma separated strings",
+      errors: [
+        {
+          description: "Invalid status value",
+          schema: "z.string()",
+          status: 400,
+        },
+        {
+          description: "Network error",
+          schema: "z.void()",
+          status: 500,
+        },
+      ],
+      method: "get",
+      parameters: [],
+      path: "/pet/findByStatus",
+      requestFormat: "json",
+      response: "z.array(Pet)",
+      responses: [
+        {
+          description: "successful operation",
+          schema: "z.array(Pet)",
+          statusCode: "200",
+        },
+        {
+          description: "Invalid status value",
+          schema: "z.string()",
+          statusCode: "400",
+        },
+        {
+          description: "Network error",
+          schema: "z.void()",
+          statusCode: "500",
+        },
+      ],
+    },
+    {
+      description: "Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.",
+      errors: [
+        {
+          description: "Invalid tag value",
+          schema: "z.void()",
+          status: 400,
+        },
+      ],
+      method: "get",
+      parameters: [],
+      path: "/pet/findByTags",
+      requestFormat: "json",
+      response: "z.array(Pet)",
+      responses: [
+        {
+          description: "successful operation",
+          schema: "z.array(Pet)",
+          statusCode: "200",
+        },
+        {
+          description: "Invalid tag value",
+          schema: "z.void()",
+          statusCode: "400",
+        },
+      ],
+    },
+  ],
+  issues: {
+    ignoredFallbackResponse: [],
+    ignoredGenericError: [],
+  },
+  refsDependencyGraph: {
+    "#/components/schemas/Pet": Set(2) {
+      "#/components/schemas/Category",
+      "#/components/schemas/Tag",
+    },
+  },
+  resolver: {
+    getSchemaByRef: [Function: getSchemaByRef],
+    resolveRef: [Function: resolveRef],
+    resolveSchemaName: [Function: resolveSchemaName],
+  },
+  schemaByName: {},
+  zodSchemaByName: {
+    Category: "z.object({ id: z.number().int(), name: z.string() }).partial().passthrough()",
+    Pet: 'z.object({ id: z.number().int().optional(), name: z.string(), category: Category.optional(), photoUrls: z.array(z.string()), tags: z.array(Tag).optional(), status: z.enum(["available", "pending", "sold"]).optional() }).passthrough()',
+    Tag: "z.object({ id: z.number().int(), name: z.string() }).partial().passthrough()",
+  },
+}
+`;

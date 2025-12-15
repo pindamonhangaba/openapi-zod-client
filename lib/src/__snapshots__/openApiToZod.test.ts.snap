@@ -1,0 +1,1724 @@
+export const snapshot = {};
+
+snapshot[`getSchemaAsZodString 1`] = `
+{
+  arrayArray: "z.array(z.array(z.string()))",
+  arrayObject: "z.array(z.object({ str: z.string() }).partial().passthrough())",
+  arrayString: "z.array(z.string())",
+  boolean: "z.boolean()",
+  integer: "z.number()",
+  null: "z.null()",
+  nullEnum: "z.null()",
+  number: "z.number()",
+  numberEnumNull: "z.union([z.literal(1), z.literal(2), z.literal(3), z.literal(null)])",
+  numberEnumSingle: "z.literal(1)",
+  object: "z.object({}).partial().passthrough()",
+  objectAnyOf: "z.object({ anyOfExample: z.union([z.string(), z.number()]) }).partial().passthrough()",
+  objectDt: "z.object({ dt: z.string().datetime({ offset: true }) }).partial().passthrough()",
+  objectIntersection: "z.object({ intersection: z.string().and(z.number()) }).partial().passthrough()",
+  objectMl: "z.object({ ml: z.string().min(0) }).partial().passthrough()",
+  objectNb: "z.object({ nb: z.number().int() }).partial().passthrough()",
+  objectNested: "z.object({ str: z.string(), nb: z.number(), nested: z.object({ nested_prop: z.boolean() }).partial().passthrough() }).partial().passthrough()",
+  objectOneOfAllOfMultiple: 'z.union([z.object({ type: z.literal("a"), a: z.string() }).passthrough().and(z.object({ type: z.literal("c"), c: z.string() }).passthrough()), z.object({ type: z.literal("b"), b: z.string() }).passthrough().and(z.object({ type: z.literal("d"), d: z.string() }).passthrough())])',
+  objectOneOfAllOfSingle: '
+                z.discriminatedUnion("type", [z.object({ type: z.literal("a"), a: z.string() }).passthrough(), z.object({ type: z.literal("b"), b: z.string() }).passthrough()])
+            ',
+  objectOneOfDiscriminator: '
+                z.discriminatedUnion("type", [z.object({ type: z.literal("a"), a: z.string() }).passthrough(), z.object({ type: z.literal("b"), b: z.string() }).passthrough()])
+            ',
+  objectPaMin: "z.object({ pa: z.number().gte(0) }).partial().passthrough()",
+  objectPaMinMax: "z.object({ pa: z.number().gte(0).lte(100) }).partial().passthrough()",
+  objectStr2: "z.object({ str: z.string() }).partial().passthrough()",
+  objectStr: "z.object({ str: z.string() }).partial().passthrough()",
+  objectUnion: "z.object({ union: z.union([z.string(), z.number()]) }).partial().passthrough()",
+  string: "z.string()",
+  stringEnum: 'z.enum(["aaa", "bbb", "ccc"])',
+  stringEnumSingle: 'z.literal("aString")',
+}
+`;
+
+snapshot[`getSchemaWithChainableAsZodString 1`] = `
+{
+  nullableFalse: "z.string()",
+  nullableFalseRequired: "z.string()",
+  nullableTrue: "z.string()",
+  nullableTrueRequired: "z.string()",
+}
+`;
+
+snapshot[`CodeMeta with ref 1`] = `
+{
+  children: <ref *1> [
+    CodeMeta {
+      children: [],
+      code: "z.string()",
+      ctx: {
+        resolver: {
+          getSchemaByRef: [Function: getSchemaByRef],
+          resolveRef: [Function: resolveRef],
+          resolveSchemaName: [Function: resolveSchemaName],
+        },
+        schemaByName: {},
+        zodSchemaByName: {
+          Example: "z.object({ exampleProp: z.string(), another: z.number() }).partial().passthrough()",
+        },
+      },
+      meta: {
+        isRequired: true,
+        name: "str",
+        parent: CodeMeta {
+          children: [Circular *1],
+          code: "z.object({ str: z.string(), reference: Example, inline: z.object({ nested_prop: z.boolean() }).partial().passthrough() }).partial().passthrough()",
+          ctx: {
+            resolver: {
+              getSchemaByRef: [Function: getSchemaByRef],
+              resolveRef: [Function: resolveRef],
+              resolveSchemaName: [Function: resolveSchemaName],
+            },
+            schemaByName: {},
+            zodSchemaByName: {
+              Example: "z.object({ exampleProp: z.string(), another: z.number() }).partial().passthrough()",
+            },
+          },
+          meta: {
+            referencedBy: [],
+          },
+          ref: undefined,
+          schema: {
+            properties: {
+              inline: {
+                properties: {
+                  nested_prop: {
+                    type: "boolean",
+                  },
+                },
+                type: "object",
+              },
+              reference: {
+                "\$ref": "#/components/schemas/Example",
+              },
+              str: {
+                type: "string",
+              },
+            },
+            type: "object",
+          },
+        },
+        referencedBy: [],
+      },
+      ref: undefined,
+      schema: {
+        type: "string",
+      },
+    },
+    <ref *3> CodeMeta {
+      children: [
+        <ref *2> CodeMeta {
+          children: [
+            CodeMeta {
+              children: [],
+              code: "z.string()",
+              ctx: {
+                resolver: {
+                  getSchemaByRef: [Function: getSchemaByRef],
+                  resolveRef: [Function: resolveRef],
+                  resolveSchemaName: [Function: resolveSchemaName],
+                },
+                schemaByName: {},
+                zodSchemaByName: {
+                  Example: "z.object({ exampleProp: z.string(), another: z.number() }).partial().passthrough()",
+                },
+              },
+              meta: {
+                isRequired: true,
+                name: "exampleProp",
+                parent: [Circular *2],
+                referencedBy: [
+                  [Circular *3],
+                ],
+              },
+              ref: undefined,
+              schema: {
+                type: "string",
+              },
+            },
+            CodeMeta {
+              children: [],
+              code: "z.number()",
+              ctx: {
+                resolver: {
+                  getSchemaByRef: [Function: getSchemaByRef],
+                  resolveRef: [Function: resolveRef],
+                  resolveSchemaName: [Function: resolveSchemaName],
+                },
+                schemaByName: {},
+                zodSchemaByName: {
+                  Example: "z.object({ exampleProp: z.string(), another: z.number() }).partial().passthrough()",
+                },
+              },
+              meta: {
+                isRequired: true,
+                name: "another",
+                parent: [Circular *2],
+                referencedBy: [
+                  [Circular *3],
+                ],
+              },
+              ref: undefined,
+              schema: {
+                type: "number",
+              },
+            },
+          ],
+          code: "z.object({ exampleProp: z.string(), another: z.number() }).partial().passthrough()",
+          ctx: {
+            resolver: {
+              getSchemaByRef: [Function: getSchemaByRef],
+              resolveRef: [Function: resolveRef],
+              resolveSchemaName: [Function: resolveSchemaName],
+            },
+            schemaByName: {},
+            zodSchemaByName: {
+              Example: "z.object({ exampleProp: z.string(), another: z.number() }).partial().passthrough()",
+            },
+          },
+          meta: {
+            parent: [Circular *3],
+            referencedBy: [
+              [Circular *3],
+            ],
+          },
+          ref: undefined,
+          schema: {
+            properties: {
+              another: {
+                type: "number",
+              },
+              exampleProp: {
+                type: "string",
+              },
+            },
+            type: "object",
+          },
+        },
+      ],
+      code: undefined,
+      ctx: {
+        resolver: {
+          getSchemaByRef: [Function: getSchemaByRef],
+          resolveRef: [Function: resolveRef],
+          resolveSchemaName: [Function: resolveSchemaName],
+        },
+        schemaByName: {},
+        zodSchemaByName: {
+          Example: "z.object({ exampleProp: z.string(), another: z.number() }).partial().passthrough()",
+        },
+      },
+      meta: {
+        isRequired: true,
+        name: "reference",
+        parent: CodeMeta {
+          children: [Circular *1],
+          code: "z.object({ str: z.string(), reference: Example, inline: z.object({ nested_prop: z.boolean() }).partial().passthrough() }).partial().passthrough()",
+          ctx: {
+            resolver: {
+              getSchemaByRef: [Function: getSchemaByRef],
+              resolveRef: [Function: resolveRef],
+              resolveSchemaName: [Function: resolveSchemaName],
+            },
+            schemaByName: {},
+            zodSchemaByName: {
+              Example: "z.object({ exampleProp: z.string(), another: z.number() }).partial().passthrough()",
+            },
+          },
+          meta: {
+            referencedBy: [],
+          },
+          ref: undefined,
+          schema: {
+            properties: {
+              inline: {
+                properties: {
+                  nested_prop: {
+                    type: "boolean",
+                  },
+                },
+                type: "object",
+              },
+              reference: {
+                "\$ref": "#/components/schemas/Example",
+              },
+              str: {
+                type: "string",
+              },
+            },
+            type: "object",
+          },
+        },
+        referencedBy: [
+          [Circular *3],
+        ],
+      },
+      ref: "#/components/schemas/Example",
+      schema: {
+        "\$ref": "#/components/schemas/Example",
+      },
+    },
+    <ref *4> CodeMeta {
+      children: [
+        CodeMeta {
+          children: [],
+          code: "z.boolean()",
+          ctx: {
+            resolver: {
+              getSchemaByRef: [Function: getSchemaByRef],
+              resolveRef: [Function: resolveRef],
+              resolveSchemaName: [Function: resolveSchemaName],
+            },
+            schemaByName: {},
+            zodSchemaByName: {
+              Example: "z.object({ exampleProp: z.string(), another: z.number() }).partial().passthrough()",
+            },
+          },
+          meta: {
+            isRequired: true,
+            name: "nested_prop",
+            parent: [Circular *4],
+            referencedBy: [],
+          },
+          ref: undefined,
+          schema: {
+            type: "boolean",
+          },
+        },
+      ],
+      code: "z.object({ nested_prop: z.boolean() }).partial().passthrough()",
+      ctx: {
+        resolver: {
+          getSchemaByRef: [Function: getSchemaByRef],
+          resolveRef: [Function: resolveRef],
+          resolveSchemaName: [Function: resolveSchemaName],
+        },
+        schemaByName: {},
+        zodSchemaByName: {
+          Example: "z.object({ exampleProp: z.string(), another: z.number() }).partial().passthrough()",
+        },
+      },
+      meta: {
+        isRequired: true,
+        name: "inline",
+        parent: CodeMeta {
+          children: [Circular *1],
+          code: "z.object({ str: z.string(), reference: Example, inline: z.object({ nested_prop: z.boolean() }).partial().passthrough() }).partial().passthrough()",
+          ctx: {
+            resolver: {
+              getSchemaByRef: [Function: getSchemaByRef],
+              resolveRef: [Function: resolveRef],
+              resolveSchemaName: [Function: resolveSchemaName],
+            },
+            schemaByName: {},
+            zodSchemaByName: {
+              Example: "z.object({ exampleProp: z.string(), another: z.number() }).partial().passthrough()",
+            },
+          },
+          meta: {
+            referencedBy: [],
+          },
+          ref: undefined,
+          schema: {
+            properties: {
+              inline: {
+                properties: {
+                  nested_prop: {
+                    type: "boolean",
+                  },
+                },
+                type: "object",
+              },
+              reference: {
+                "\$ref": "#/components/schemas/Example",
+              },
+              str: {
+                type: "string",
+              },
+            },
+            type: "object",
+          },
+        },
+        referencedBy: [],
+      },
+      ref: undefined,
+      schema: {
+        properties: {
+          nested_prop: {
+            type: "boolean",
+          },
+        },
+        type: "object",
+      },
+    },
+  ],
+  codeString: "z.object({ str: z.string(), reference: Example, inline: z.object({ nested_prop: z.boolean() }).partial().passthrough() }).partial().passthrough()",
+}
+`;
+
+snapshot[`CodeMeta with nested refs 1`] = `
+{
+  children: <ref *1> [
+    CodeMeta {
+      children: [],
+      code: "z.string()",
+      ctx: {
+        resolver: {
+          getSchemaByRef: [Function: getSchemaByRef],
+          resolveRef: [Function: resolveRef],
+          resolveSchemaName: [Function: resolveSchemaName],
+        },
+        schemaByName: {},
+        zodSchemaByName: {
+          Basic: "z.object({ prop: z.string(), second: z.number() }).partial().passthrough()",
+          DeepNested: "z.object({ deep: z.boolean() }).partial().passthrough()",
+          ObjectWithArrayOfRef: "z.object({ exampleProp: z.string(), another: z.number(), link: z.array(WithNested), someReference: Basic }).partial().passthrough()",
+          WithNested: "z.object({ nested: z.string(), nestedRef: DeepNested }).partial().passthrough()",
+        },
+      },
+      meta: {
+        isRequired: true,
+        name: "str",
+        parent: CodeMeta {
+          children: [Circular *1],
+          code: "z.object({ str: z.string(), reference: ObjectWithArrayOfRef, inline: z.object({ nested_prop: z.boolean() }).partial().passthrough(), another: WithNested, basic: Basic, differentPropSameRef: Basic }).partial().passthrough()",
+          ctx: {
+            resolver: {
+              getSchemaByRef: [Function: getSchemaByRef],
+              resolveRef: [Function: resolveRef],
+              resolveSchemaName: [Function: resolveSchemaName],
+            },
+            schemaByName: {},
+            zodSchemaByName: {
+              Basic: "z.object({ prop: z.string(), second: z.number() }).partial().passthrough()",
+              DeepNested: "z.object({ deep: z.boolean() }).partial().passthrough()",
+              ObjectWithArrayOfRef: "z.object({ exampleProp: z.string(), another: z.number(), link: z.array(WithNested), someReference: Basic }).partial().passthrough()",
+              WithNested: "z.object({ nested: z.string(), nestedRef: DeepNested }).partial().passthrough()",
+            },
+          },
+          meta: {
+            referencedBy: [],
+          },
+          ref: undefined,
+          schema: {
+            properties: {
+              another: {
+                "\$ref": "#components/schemas/WithNested",
+              },
+              basic: {
+                "\$ref": "#/components/schemas/Basic",
+              },
+              differentPropSameRef: {
+                "\$ref": "#/components/schemas/Basic",
+              },
+              inline: {
+                properties: {
+                  nested_prop: {
+                    type: "boolean",
+                  },
+                },
+                type: "object",
+              },
+              reference: {
+                "\$ref": "#/components/schemas/ObjectWithArrayOfRef",
+              },
+              str: {
+                type: "string",
+              },
+            },
+            type: "object",
+          },
+        },
+        referencedBy: [],
+      },
+      ref: undefined,
+      schema: {
+        type: "string",
+      },
+    },
+    <ref *3> CodeMeta {
+      children: [
+        <ref *2> CodeMeta {
+          children: [
+            CodeMeta {
+              children: [],
+              code: "z.string()",
+              ctx: {
+                resolver: {
+                  getSchemaByRef: [Function: getSchemaByRef],
+                  resolveRef: [Function: resolveRef],
+                  resolveSchemaName: [Function: resolveSchemaName],
+                },
+                schemaByName: {},
+                zodSchemaByName: {
+                  Basic: "z.object({ prop: z.string(), second: z.number() }).partial().passthrough()",
+                  DeepNested: "z.object({ deep: z.boolean() }).partial().passthrough()",
+                  ObjectWithArrayOfRef: "z.object({ exampleProp: z.string(), another: z.number(), link: z.array(WithNested), someReference: Basic }).partial().passthrough()",
+                  WithNested: "z.object({ nested: z.string(), nestedRef: DeepNested }).partial().passthrough()",
+                },
+              },
+              meta: {
+                isRequired: true,
+                name: "exampleProp",
+                parent: [Circular *2],
+                referencedBy: [
+                  [Circular *3],
+                ],
+              },
+              ref: undefined,
+              schema: {
+                type: "string",
+              },
+            },
+            CodeMeta {
+              children: [],
+              code: "z.number()",
+              ctx: {
+                resolver: {
+                  getSchemaByRef: [Function: getSchemaByRef],
+                  resolveRef: [Function: resolveRef],
+                  resolveSchemaName: [Function: resolveSchemaName],
+                },
+                schemaByName: {},
+                zodSchemaByName: {
+                  Basic: "z.object({ prop: z.string(), second: z.number() }).partial().passthrough()",
+                  DeepNested: "z.object({ deep: z.boolean() }).partial().passthrough()",
+                  ObjectWithArrayOfRef: "z.object({ exampleProp: z.string(), another: z.number(), link: z.array(WithNested), someReference: Basic }).partial().passthrough()",
+                  WithNested: "z.object({ nested: z.string(), nestedRef: DeepNested }).partial().passthrough()",
+                },
+              },
+              meta: {
+                isRequired: true,
+                name: "another",
+                parent: [Circular *2],
+                referencedBy: [
+                  [Circular *3],
+                ],
+              },
+              ref: undefined,
+              schema: {
+                type: "number",
+              },
+            },
+            <ref *8> CodeMeta {
+              children: [
+                <ref *5> CodeMeta {
+                  children: [
+                    <ref *4> CodeMeta {
+                      children: [
+                        CodeMeta {
+                          children: [],
+                          code: "z.string()",
+                          ctx: {
+                            resolver: {
+                              getSchemaByRef: [Function: getSchemaByRef],
+                              resolveRef: [Function: resolveRef],
+                              resolveSchemaName: [Function: resolveSchemaName],
+                            },
+                            schemaByName: {},
+                            zodSchemaByName: {
+                              Basic: "z.object({ prop: z.string(), second: z.number() }).partial().passthrough()",
+                              DeepNested: "z.object({ deep: z.boolean() }).partial().passthrough()",
+                              ObjectWithArrayOfRef: "z.object({ exampleProp: z.string(), another: z.number(), link: z.array(WithNested), someReference: Basic }).partial().passthrough()",
+                              WithNested: "z.object({ nested: z.string(), nestedRef: DeepNested }).partial().passthrough()",
+                            },
+                          },
+                          meta: {
+                            isRequired: true,
+                            name: "nested",
+                            parent: [Circular *4],
+                            referencedBy: [
+                              [Circular *3],
+                              [Circular *5],
+                            ],
+                          },
+                          ref: undefined,
+                          schema: {
+                            type: "string",
+                          },
+                        },
+                        <ref *7> CodeMeta {
+                          children: [
+                            <ref *6> CodeMeta {
+                              children: [
+                                CodeMeta {
+                                  children: [],
+                                  code: "z.boolean()",
+                                  ctx: {
+                                    resolver: {
+                                      getSchemaByRef: [Function: getSchemaByRef],
+                                      resolveRef: [Function: resolveRef],
+                                      resolveSchemaName: [Function: resolveSchemaName],
+                                    },
+                                    schemaByName: {},
+                                    zodSchemaByName: {
+                                      Basic: "z.object({ prop: z.string(), second: z.number() }).partial().passthrough()",
+                                      DeepNested: "z.object({ deep: z.boolean() }).partial().passthrough()",
+                                      ObjectWithArrayOfRef: "z.object({ exampleProp: z.string(), another: z.number(), link: z.array(WithNested), someReference: Basic }).partial().passthrough()",
+                                      WithNested: "z.object({ nested: z.string(), nestedRef: DeepNested }).partial().passthrough()",
+                                    },
+                                  },
+                                  meta: {
+                                    isRequired: true,
+                                    name: "deep",
+                                    parent: [Circular *6],
+                                    referencedBy: [
+                                      [Circular *3],
+                                      [Circular *5],
+                                      [Circular *7],
+                                    ],
+                                  },
+                                  ref: undefined,
+                                  schema: {
+                                    type: "boolean",
+                                  },
+                                },
+                              ],
+                              code: "z.object({ deep: z.boolean() }).partial().passthrough()",
+                              ctx: {
+                                resolver: {
+                                  getSchemaByRef: [Function: getSchemaByRef],
+                                  resolveRef: [Function: resolveRef],
+                                  resolveSchemaName: [Function: resolveSchemaName],
+                                },
+                                schemaByName: {},
+                                zodSchemaByName: {
+                                  Basic: "z.object({ prop: z.string(), second: z.number() }).partial().passthrough()",
+                                  DeepNested: "z.object({ deep: z.boolean() }).partial().passthrough()",
+                                  ObjectWithArrayOfRef: "z.object({ exampleProp: z.string(), another: z.number(), link: z.array(WithNested), someReference: Basic }).partial().passthrough()",
+                                  WithNested: "z.object({ nested: z.string(), nestedRef: DeepNested }).partial().passthrough()",
+                                },
+                              },
+                              meta: {
+                                parent: [Circular *7],
+                                referencedBy: [
+                                  [Circular *3],
+                                  [Circular *5],
+                                  [Circular *7],
+                                ],
+                              },
+                              ref: undefined,
+                              schema: {
+                                properties: {
+                                  deep: {
+                                    type: "boolean",
+                                  },
+                                },
+                                type: "object",
+                              },
+                            },
+                          ],
+                          code: undefined,
+                          ctx: {
+                            resolver: {
+                              getSchemaByRef: [Function: getSchemaByRef],
+                              resolveRef: [Function: resolveRef],
+                              resolveSchemaName: [Function: resolveSchemaName],
+                            },
+                            schemaByName: {},
+                            zodSchemaByName: {
+                              Basic: "z.object({ prop: z.string(), second: z.number() }).partial().passthrough()",
+                              DeepNested: "z.object({ deep: z.boolean() }).partial().passthrough()",
+                              ObjectWithArrayOfRef: "z.object({ exampleProp: z.string(), another: z.number(), link: z.array(WithNested), someReference: Basic }).partial().passthrough()",
+                              WithNested: "z.object({ nested: z.string(), nestedRef: DeepNested }).partial().passthrough()",
+                            },
+                          },
+                          meta: {
+                            isRequired: true,
+                            name: "nestedRef",
+                            parent: [Circular *4],
+                            referencedBy: [
+                              [Circular *3],
+                              [Circular *5],
+                              [Circular *7],
+                            ],
+                          },
+                          ref: "#/components/schemas/DeepNested",
+                          schema: {
+                            "\$ref": "#/components/schemas/DeepNested",
+                          },
+                        },
+                      ],
+                      code: "z.object({ nested: z.string(), nestedRef: DeepNested }).partial().passthrough()",
+                      ctx: {
+                        resolver: {
+                          getSchemaByRef: [Function: getSchemaByRef],
+                          resolveRef: [Function: resolveRef],
+                          resolveSchemaName: [Function: resolveSchemaName],
+                        },
+                        schemaByName: {},
+                        zodSchemaByName: {
+                          Basic: "z.object({ prop: z.string(), second: z.number() }).partial().passthrough()",
+                          DeepNested: "z.object({ deep: z.boolean() }).partial().passthrough()",
+                          ObjectWithArrayOfRef: "z.object({ exampleProp: z.string(), another: z.number(), link: z.array(WithNested), someReference: Basic }).partial().passthrough()",
+                          WithNested: "z.object({ nested: z.string(), nestedRef: DeepNested }).partial().passthrough()",
+                        },
+                      },
+                      meta: {
+                        parent: [Circular *5],
+                        referencedBy: [
+                          [Circular *3],
+                          [Circular *5],
+                        ],
+                      },
+                      ref: undefined,
+                      schema: {
+                        properties: {
+                          nested: {
+                            type: "string",
+                          },
+                          nestedRef: {
+                            "\$ref": "#/components/schemas/DeepNested",
+                          },
+                        },
+                        type: "object",
+                      },
+                    },
+                  ],
+                  code: undefined,
+                  ctx: {
+                    resolver: {
+                      getSchemaByRef: [Function: getSchemaByRef],
+                      resolveRef: [Function: resolveRef],
+                      resolveSchemaName: [Function: resolveSchemaName],
+                    },
+                    schemaByName: {},
+                    zodSchemaByName: {
+                      Basic: "z.object({ prop: z.string(), second: z.number() }).partial().passthrough()",
+                      DeepNested: "z.object({ deep: z.boolean() }).partial().passthrough()",
+                      ObjectWithArrayOfRef: "z.object({ exampleProp: z.string(), another: z.number(), link: z.array(WithNested), someReference: Basic }).partial().passthrough()",
+                      WithNested: "z.object({ nested: z.string(), nestedRef: DeepNested }).partial().passthrough()",
+                    },
+                  },
+                  meta: {
+                    parent: [Circular *8],
+                    referencedBy: [
+                      [Circular *3],
+                      [Circular *5],
+                    ],
+                  },
+                  ref: "#/components/schemas/WithNested",
+                  schema: {
+                    "\$ref": "#/components/schemas/WithNested",
+                  },
+                },
+              ],
+              code: "z.array(WithNested)",
+              ctx: {
+                resolver: {
+                  getSchemaByRef: [Function: getSchemaByRef],
+                  resolveRef: [Function: resolveRef],
+                  resolveSchemaName: [Function: resolveSchemaName],
+                },
+                schemaByName: {},
+                zodSchemaByName: {
+                  Basic: "z.object({ prop: z.string(), second: z.number() }).partial().passthrough()",
+                  DeepNested: "z.object({ deep: z.boolean() }).partial().passthrough()",
+                  ObjectWithArrayOfRef: "z.object({ exampleProp: z.string(), another: z.number(), link: z.array(WithNested), someReference: Basic }).partial().passthrough()",
+                  WithNested: "z.object({ nested: z.string(), nestedRef: DeepNested }).partial().passthrough()",
+                },
+              },
+              meta: {
+                isRequired: true,
+                name: "link",
+                parent: [Circular *2],
+                referencedBy: [
+                  [Circular *3],
+                ],
+              },
+              ref: undefined,
+              schema: {
+                items: {
+                  "\$ref": "#/components/schemas/WithNested",
+                },
+                type: "array",
+              },
+            },
+            <ref *10> CodeMeta {
+              children: [
+                <ref *9> CodeMeta {
+                  children: [
+                    CodeMeta {
+                      children: [],
+                      code: "z.string()",
+                      ctx: {
+                        resolver: {
+                          getSchemaByRef: [Function: getSchemaByRef],
+                          resolveRef: [Function: resolveRef],
+                          resolveSchemaName: [Function: resolveSchemaName],
+                        },
+                        schemaByName: {},
+                        zodSchemaByName: {
+                          Basic: "z.object({ prop: z.string(), second: z.number() }).partial().passthrough()",
+                          DeepNested: "z.object({ deep: z.boolean() }).partial().passthrough()",
+                          ObjectWithArrayOfRef: "z.object({ exampleProp: z.string(), another: z.number(), link: z.array(WithNested), someReference: Basic }).partial().passthrough()",
+                          WithNested: "z.object({ nested: z.string(), nestedRef: DeepNested }).partial().passthrough()",
+                        },
+                      },
+                      meta: {
+                        isRequired: true,
+                        name: "prop",
+                        parent: [Circular *9],
+                        referencedBy: [
+                          [Circular *3],
+                          [Circular *10],
+                        ],
+                      },
+                      ref: undefined,
+                      schema: {
+                        type: "string",
+                      },
+                    },
+                    CodeMeta {
+                      children: [],
+                      code: "z.number()",
+                      ctx: {
+                        resolver: {
+                          getSchemaByRef: [Function: getSchemaByRef],
+                          resolveRef: [Function: resolveRef],
+                          resolveSchemaName: [Function: resolveSchemaName],
+                        },
+                        schemaByName: {},
+                        zodSchemaByName: {
+                          Basic: "z.object({ prop: z.string(), second: z.number() }).partial().passthrough()",
+                          DeepNested: "z.object({ deep: z.boolean() }).partial().passthrough()",
+                          ObjectWithArrayOfRef: "z.object({ exampleProp: z.string(), another: z.number(), link: z.array(WithNested), someReference: Basic }).partial().passthrough()",
+                          WithNested: "z.object({ nested: z.string(), nestedRef: DeepNested }).partial().passthrough()",
+                        },
+                      },
+                      meta: {
+                        isRequired: true,
+                        name: "second",
+                        parent: [Circular *9],
+                        referencedBy: [
+                          [Circular *3],
+                          [Circular *10],
+                        ],
+                      },
+                      ref: undefined,
+                      schema: {
+                        type: "number",
+                      },
+                    },
+                  ],
+                  code: "z.object({ prop: z.string(), second: z.number() }).partial().passthrough()",
+                  ctx: {
+                    resolver: {
+                      getSchemaByRef: [Function: getSchemaByRef],
+                      resolveRef: [Function: resolveRef],
+                      resolveSchemaName: [Function: resolveSchemaName],
+                    },
+                    schemaByName: {},
+                    zodSchemaByName: {
+                      Basic: "z.object({ prop: z.string(), second: z.number() }).partial().passthrough()",
+                      DeepNested: "z.object({ deep: z.boolean() }).partial().passthrough()",
+                      ObjectWithArrayOfRef: "z.object({ exampleProp: z.string(), another: z.number(), link: z.array(WithNested), someReference: Basic }).partial().passthrough()",
+                      WithNested: "z.object({ nested: z.string(), nestedRef: DeepNested }).partial().passthrough()",
+                    },
+                  },
+                  meta: {
+                    parent: [Circular *10],
+                    referencedBy: [
+                      [Circular *3],
+                      [Circular *10],
+                    ],
+                  },
+                  ref: undefined,
+                  schema: {
+                    properties: {
+                      prop: {
+                        type: "string",
+                      },
+                      second: {
+                        type: "number",
+                      },
+                    },
+                    type: "object",
+                  },
+                },
+              ],
+              code: undefined,
+              ctx: {
+                resolver: {
+                  getSchemaByRef: [Function: getSchemaByRef],
+                  resolveRef: [Function: resolveRef],
+                  resolveSchemaName: [Function: resolveSchemaName],
+                },
+                schemaByName: {},
+                zodSchemaByName: {
+                  Basic: "z.object({ prop: z.string(), second: z.number() }).partial().passthrough()",
+                  DeepNested: "z.object({ deep: z.boolean() }).partial().passthrough()",
+                  ObjectWithArrayOfRef: "z.object({ exampleProp: z.string(), another: z.number(), link: z.array(WithNested), someReference: Basic }).partial().passthrough()",
+                  WithNested: "z.object({ nested: z.string(), nestedRef: DeepNested }).partial().passthrough()",
+                },
+              },
+              meta: {
+                isRequired: true,
+                name: "someReference",
+                parent: [Circular *2],
+                referencedBy: [
+                  [Circular *3],
+                  [Circular *10],
+                ],
+              },
+              ref: "#/components/schemas/Basic",
+              schema: {
+                "\$ref": "#/components/schemas/Basic",
+              },
+            },
+          ],
+          code: "z.object({ exampleProp: z.string(), another: z.number(), link: z.array(WithNested), someReference: Basic }).partial().passthrough()",
+          ctx: {
+            resolver: {
+              getSchemaByRef: [Function: getSchemaByRef],
+              resolveRef: [Function: resolveRef],
+              resolveSchemaName: [Function: resolveSchemaName],
+            },
+            schemaByName: {},
+            zodSchemaByName: {
+              Basic: "z.object({ prop: z.string(), second: z.number() }).partial().passthrough()",
+              DeepNested: "z.object({ deep: z.boolean() }).partial().passthrough()",
+              ObjectWithArrayOfRef: "z.object({ exampleProp: z.string(), another: z.number(), link: z.array(WithNested), someReference: Basic }).partial().passthrough()",
+              WithNested: "z.object({ nested: z.string(), nestedRef: DeepNested }).partial().passthrough()",
+            },
+          },
+          meta: {
+            parent: [Circular *3],
+            referencedBy: [
+              [Circular *3],
+            ],
+          },
+          ref: undefined,
+          schema: {
+            properties: {
+              another: {
+                type: "number",
+              },
+              exampleProp: {
+                type: "string",
+              },
+              link: {
+                items: {
+                  "\$ref": "#/components/schemas/WithNested",
+                },
+                type: "array",
+              },
+              someReference: {
+                "\$ref": "#/components/schemas/Basic",
+              },
+            },
+            type: "object",
+          },
+        },
+      ],
+      code: undefined,
+      ctx: {
+        resolver: {
+          getSchemaByRef: [Function: getSchemaByRef],
+          resolveRef: [Function: resolveRef],
+          resolveSchemaName: [Function: resolveSchemaName],
+        },
+        schemaByName: {},
+        zodSchemaByName: {
+          Basic: "z.object({ prop: z.string(), second: z.number() }).partial().passthrough()",
+          DeepNested: "z.object({ deep: z.boolean() }).partial().passthrough()",
+          ObjectWithArrayOfRef: "z.object({ exampleProp: z.string(), another: z.number(), link: z.array(WithNested), someReference: Basic }).partial().passthrough()",
+          WithNested: "z.object({ nested: z.string(), nestedRef: DeepNested }).partial().passthrough()",
+        },
+      },
+      meta: {
+        isRequired: true,
+        name: "reference",
+        parent: CodeMeta {
+          children: [Circular *1],
+          code: "z.object({ str: z.string(), reference: ObjectWithArrayOfRef, inline: z.object({ nested_prop: z.boolean() }).partial().passthrough(), another: WithNested, basic: Basic, differentPropSameRef: Basic }).partial().passthrough()",
+          ctx: {
+            resolver: {
+              getSchemaByRef: [Function: getSchemaByRef],
+              resolveRef: [Function: resolveRef],
+              resolveSchemaName: [Function: resolveSchemaName],
+            },
+            schemaByName: {},
+            zodSchemaByName: {
+              Basic: "z.object({ prop: z.string(), second: z.number() }).partial().passthrough()",
+              DeepNested: "z.object({ deep: z.boolean() }).partial().passthrough()",
+              ObjectWithArrayOfRef: "z.object({ exampleProp: z.string(), another: z.number(), link: z.array(WithNested), someReference: Basic }).partial().passthrough()",
+              WithNested: "z.object({ nested: z.string(), nestedRef: DeepNested }).partial().passthrough()",
+            },
+          },
+          meta: {
+            referencedBy: [],
+          },
+          ref: undefined,
+          schema: {
+            properties: {
+              another: {
+                "\$ref": "#components/schemas/WithNested",
+              },
+              basic: {
+                "\$ref": "#/components/schemas/Basic",
+              },
+              differentPropSameRef: {
+                "\$ref": "#/components/schemas/Basic",
+              },
+              inline: {
+                properties: {
+                  nested_prop: {
+                    type: "boolean",
+                  },
+                },
+                type: "object",
+              },
+              reference: {
+                "\$ref": "#/components/schemas/ObjectWithArrayOfRef",
+              },
+              str: {
+                type: "string",
+              },
+            },
+            type: "object",
+          },
+        },
+        referencedBy: [
+          [Circular *3],
+        ],
+      },
+      ref: "#/components/schemas/ObjectWithArrayOfRef",
+      schema: {
+        "\$ref": "#/components/schemas/ObjectWithArrayOfRef",
+      },
+    },
+    <ref *11> CodeMeta {
+      children: [
+        CodeMeta {
+          children: [],
+          code: "z.boolean()",
+          ctx: {
+            resolver: {
+              getSchemaByRef: [Function: getSchemaByRef],
+              resolveRef: [Function: resolveRef],
+              resolveSchemaName: [Function: resolveSchemaName],
+            },
+            schemaByName: {},
+            zodSchemaByName: {
+              Basic: "z.object({ prop: z.string(), second: z.number() }).partial().passthrough()",
+              DeepNested: "z.object({ deep: z.boolean() }).partial().passthrough()",
+              ObjectWithArrayOfRef: "z.object({ exampleProp: z.string(), another: z.number(), link: z.array(WithNested), someReference: Basic }).partial().passthrough()",
+              WithNested: "z.object({ nested: z.string(), nestedRef: DeepNested }).partial().passthrough()",
+            },
+          },
+          meta: {
+            isRequired: true,
+            name: "nested_prop",
+            parent: [Circular *11],
+            referencedBy: [],
+          },
+          ref: undefined,
+          schema: {
+            type: "boolean",
+          },
+        },
+      ],
+      code: "z.object({ nested_prop: z.boolean() }).partial().passthrough()",
+      ctx: {
+        resolver: {
+          getSchemaByRef: [Function: getSchemaByRef],
+          resolveRef: [Function: resolveRef],
+          resolveSchemaName: [Function: resolveSchemaName],
+        },
+        schemaByName: {},
+        zodSchemaByName: {
+          Basic: "z.object({ prop: z.string(), second: z.number() }).partial().passthrough()",
+          DeepNested: "z.object({ deep: z.boolean() }).partial().passthrough()",
+          ObjectWithArrayOfRef: "z.object({ exampleProp: z.string(), another: z.number(), link: z.array(WithNested), someReference: Basic }).partial().passthrough()",
+          WithNested: "z.object({ nested: z.string(), nestedRef: DeepNested }).partial().passthrough()",
+        },
+      },
+      meta: {
+        isRequired: true,
+        name: "inline",
+        parent: CodeMeta {
+          children: [Circular *1],
+          code: "z.object({ str: z.string(), reference: ObjectWithArrayOfRef, inline: z.object({ nested_prop: z.boolean() }).partial().passthrough(), another: WithNested, basic: Basic, differentPropSameRef: Basic }).partial().passthrough()",
+          ctx: {
+            resolver: {
+              getSchemaByRef: [Function: getSchemaByRef],
+              resolveRef: [Function: resolveRef],
+              resolveSchemaName: [Function: resolveSchemaName],
+            },
+            schemaByName: {},
+            zodSchemaByName: {
+              Basic: "z.object({ prop: z.string(), second: z.number() }).partial().passthrough()",
+              DeepNested: "z.object({ deep: z.boolean() }).partial().passthrough()",
+              ObjectWithArrayOfRef: "z.object({ exampleProp: z.string(), another: z.number(), link: z.array(WithNested), someReference: Basic }).partial().passthrough()",
+              WithNested: "z.object({ nested: z.string(), nestedRef: DeepNested }).partial().passthrough()",
+            },
+          },
+          meta: {
+            referencedBy: [],
+          },
+          ref: undefined,
+          schema: {
+            properties: {
+              another: {
+                "\$ref": "#components/schemas/WithNested",
+              },
+              basic: {
+                "\$ref": "#/components/schemas/Basic",
+              },
+              differentPropSameRef: {
+                "\$ref": "#/components/schemas/Basic",
+              },
+              inline: {
+                properties: {
+                  nested_prop: {
+                    type: "boolean",
+                  },
+                },
+                type: "object",
+              },
+              reference: {
+                "\$ref": "#/components/schemas/ObjectWithArrayOfRef",
+              },
+              str: {
+                type: "string",
+              },
+            },
+            type: "object",
+          },
+        },
+        referencedBy: [],
+      },
+      ref: undefined,
+      schema: {
+        properties: {
+          nested_prop: {
+            type: "boolean",
+          },
+        },
+        type: "object",
+      },
+    },
+    <ref *13> CodeMeta {
+      children: [
+        <ref *12> CodeMeta {
+          children: [
+            CodeMeta {
+              children: [],
+              code: "z.string()",
+              ctx: {
+                resolver: {
+                  getSchemaByRef: [Function: getSchemaByRef],
+                  resolveRef: [Function: resolveRef],
+                  resolveSchemaName: [Function: resolveSchemaName],
+                },
+                schemaByName: {},
+                zodSchemaByName: {
+                  Basic: "z.object({ prop: z.string(), second: z.number() }).partial().passthrough()",
+                  DeepNested: "z.object({ deep: z.boolean() }).partial().passthrough()",
+                  ObjectWithArrayOfRef: "z.object({ exampleProp: z.string(), another: z.number(), link: z.array(WithNested), someReference: Basic }).partial().passthrough()",
+                  WithNested: "z.object({ nested: z.string(), nestedRef: DeepNested }).partial().passthrough()",
+                },
+              },
+              meta: {
+                isRequired: true,
+                name: "nested",
+                parent: [Circular *12],
+                referencedBy: [
+                  [Circular *13],
+                ],
+              },
+              ref: undefined,
+              schema: {
+                type: "string",
+              },
+            },
+            <ref *15> CodeMeta {
+              children: [
+                <ref *14> CodeMeta {
+                  children: [
+                    CodeMeta {
+                      children: [],
+                      code: "z.boolean()",
+                      ctx: {
+                        resolver: {
+                          getSchemaByRef: [Function: getSchemaByRef],
+                          resolveRef: [Function: resolveRef],
+                          resolveSchemaName: [Function: resolveSchemaName],
+                        },
+                        schemaByName: {},
+                        zodSchemaByName: {
+                          Basic: "z.object({ prop: z.string(), second: z.number() }).partial().passthrough()",
+                          DeepNested: "z.object({ deep: z.boolean() }).partial().passthrough()",
+                          ObjectWithArrayOfRef: "z.object({ exampleProp: z.string(), another: z.number(), link: z.array(WithNested), someReference: Basic }).partial().passthrough()",
+                          WithNested: "z.object({ nested: z.string(), nestedRef: DeepNested }).partial().passthrough()",
+                        },
+                      },
+                      meta: {
+                        isRequired: true,
+                        name: "deep",
+                        parent: [Circular *14],
+                        referencedBy: [
+                          [Circular *13],
+                          [Circular *15],
+                        ],
+                      },
+                      ref: undefined,
+                      schema: {
+                        type: "boolean",
+                      },
+                    },
+                  ],
+                  code: "z.object({ deep: z.boolean() }).partial().passthrough()",
+                  ctx: {
+                    resolver: {
+                      getSchemaByRef: [Function: getSchemaByRef],
+                      resolveRef: [Function: resolveRef],
+                      resolveSchemaName: [Function: resolveSchemaName],
+                    },
+                    schemaByName: {},
+                    zodSchemaByName: {
+                      Basic: "z.object({ prop: z.string(), second: z.number() }).partial().passthrough()",
+                      DeepNested: "z.object({ deep: z.boolean() }).partial().passthrough()",
+                      ObjectWithArrayOfRef: "z.object({ exampleProp: z.string(), another: z.number(), link: z.array(WithNested), someReference: Basic }).partial().passthrough()",
+                      WithNested: "z.object({ nested: z.string(), nestedRef: DeepNested }).partial().passthrough()",
+                    },
+                  },
+                  meta: {
+                    parent: [Circular *15],
+                    referencedBy: [
+                      [Circular *13],
+                      [Circular *15],
+                    ],
+                  },
+                  ref: undefined,
+                  schema: {
+                    properties: {
+                      deep: {
+                        type: "boolean",
+                      },
+                    },
+                    type: "object",
+                  },
+                },
+              ],
+              code: undefined,
+              ctx: {
+                resolver: {
+                  getSchemaByRef: [Function: getSchemaByRef],
+                  resolveRef: [Function: resolveRef],
+                  resolveSchemaName: [Function: resolveSchemaName],
+                },
+                schemaByName: {},
+                zodSchemaByName: {
+                  Basic: "z.object({ prop: z.string(), second: z.number() }).partial().passthrough()",
+                  DeepNested: "z.object({ deep: z.boolean() }).partial().passthrough()",
+                  ObjectWithArrayOfRef: "z.object({ exampleProp: z.string(), another: z.number(), link: z.array(WithNested), someReference: Basic }).partial().passthrough()",
+                  WithNested: "z.object({ nested: z.string(), nestedRef: DeepNested }).partial().passthrough()",
+                },
+              },
+              meta: {
+                isRequired: true,
+                name: "nestedRef",
+                parent: [Circular *12],
+                referencedBy: [
+                  [Circular *13],
+                  [Circular *15],
+                ],
+              },
+              ref: "#/components/schemas/DeepNested",
+              schema: {
+                "\$ref": "#/components/schemas/DeepNested",
+              },
+            },
+          ],
+          code: "z.object({ nested: z.string(), nestedRef: DeepNested }).partial().passthrough()",
+          ctx: {
+            resolver: {
+              getSchemaByRef: [Function: getSchemaByRef],
+              resolveRef: [Function: resolveRef],
+              resolveSchemaName: [Function: resolveSchemaName],
+            },
+            schemaByName: {},
+            zodSchemaByName: {
+              Basic: "z.object({ prop: z.string(), second: z.number() }).partial().passthrough()",
+              DeepNested: "z.object({ deep: z.boolean() }).partial().passthrough()",
+              ObjectWithArrayOfRef: "z.object({ exampleProp: z.string(), another: z.number(), link: z.array(WithNested), someReference: Basic }).partial().passthrough()",
+              WithNested: "z.object({ nested: z.string(), nestedRef: DeepNested }).partial().passthrough()",
+            },
+          },
+          meta: {
+            parent: [Circular *13],
+            referencedBy: [
+              [Circular *13],
+            ],
+          },
+          ref: undefined,
+          schema: {
+            properties: {
+              nested: {
+                type: "string",
+              },
+              nestedRef: {
+                "\$ref": "#/components/schemas/DeepNested",
+              },
+            },
+            type: "object",
+          },
+        },
+      ],
+      code: undefined,
+      ctx: {
+        resolver: {
+          getSchemaByRef: [Function: getSchemaByRef],
+          resolveRef: [Function: resolveRef],
+          resolveSchemaName: [Function: resolveSchemaName],
+        },
+        schemaByName: {},
+        zodSchemaByName: {
+          Basic: "z.object({ prop: z.string(), second: z.number() }).partial().passthrough()",
+          DeepNested: "z.object({ deep: z.boolean() }).partial().passthrough()",
+          ObjectWithArrayOfRef: "z.object({ exampleProp: z.string(), another: z.number(), link: z.array(WithNested), someReference: Basic }).partial().passthrough()",
+          WithNested: "z.object({ nested: z.string(), nestedRef: DeepNested }).partial().passthrough()",
+        },
+      },
+      meta: {
+        isRequired: true,
+        name: "another",
+        parent: CodeMeta {
+          children: [Circular *1],
+          code: "z.object({ str: z.string(), reference: ObjectWithArrayOfRef, inline: z.object({ nested_prop: z.boolean() }).partial().passthrough(), another: WithNested, basic: Basic, differentPropSameRef: Basic }).partial().passthrough()",
+          ctx: {
+            resolver: {
+              getSchemaByRef: [Function: getSchemaByRef],
+              resolveRef: [Function: resolveRef],
+              resolveSchemaName: [Function: resolveSchemaName],
+            },
+            schemaByName: {},
+            zodSchemaByName: {
+              Basic: "z.object({ prop: z.string(), second: z.number() }).partial().passthrough()",
+              DeepNested: "z.object({ deep: z.boolean() }).partial().passthrough()",
+              ObjectWithArrayOfRef: "z.object({ exampleProp: z.string(), another: z.number(), link: z.array(WithNested), someReference: Basic }).partial().passthrough()",
+              WithNested: "z.object({ nested: z.string(), nestedRef: DeepNested }).partial().passthrough()",
+            },
+          },
+          meta: {
+            referencedBy: [],
+          },
+          ref: undefined,
+          schema: {
+            properties: {
+              another: {
+                "\$ref": "#components/schemas/WithNested",
+              },
+              basic: {
+                "\$ref": "#/components/schemas/Basic",
+              },
+              differentPropSameRef: {
+                "\$ref": "#/components/schemas/Basic",
+              },
+              inline: {
+                properties: {
+                  nested_prop: {
+                    type: "boolean",
+                  },
+                },
+                type: "object",
+              },
+              reference: {
+                "\$ref": "#/components/schemas/ObjectWithArrayOfRef",
+              },
+              str: {
+                type: "string",
+              },
+            },
+            type: "object",
+          },
+        },
+        referencedBy: [
+          [Circular *13],
+        ],
+      },
+      ref: "#components/schemas/WithNested",
+      schema: {
+        "\$ref": "#components/schemas/WithNested",
+      },
+    },
+    <ref *17> CodeMeta {
+      children: [
+        <ref *16> CodeMeta {
+          children: [
+            CodeMeta {
+              children: [],
+              code: "z.string()",
+              ctx: {
+                resolver: {
+                  getSchemaByRef: [Function: getSchemaByRef],
+                  resolveRef: [Function: resolveRef],
+                  resolveSchemaName: [Function: resolveSchemaName],
+                },
+                schemaByName: {},
+                zodSchemaByName: {
+                  Basic: "z.object({ prop: z.string(), second: z.number() }).partial().passthrough()",
+                  DeepNested: "z.object({ deep: z.boolean() }).partial().passthrough()",
+                  ObjectWithArrayOfRef: "z.object({ exampleProp: z.string(), another: z.number(), link: z.array(WithNested), someReference: Basic }).partial().passthrough()",
+                  WithNested: "z.object({ nested: z.string(), nestedRef: DeepNested }).partial().passthrough()",
+                },
+              },
+              meta: {
+                isRequired: true,
+                name: "prop",
+                parent: [Circular *16],
+                referencedBy: [
+                  [Circular *17],
+                ],
+              },
+              ref: undefined,
+              schema: {
+                type: "string",
+              },
+            },
+            CodeMeta {
+              children: [],
+              code: "z.number()",
+              ctx: {
+                resolver: {
+                  getSchemaByRef: [Function: getSchemaByRef],
+                  resolveRef: [Function: resolveRef],
+                  resolveSchemaName: [Function: resolveSchemaName],
+                },
+                schemaByName: {},
+                zodSchemaByName: {
+                  Basic: "z.object({ prop: z.string(), second: z.number() }).partial().passthrough()",
+                  DeepNested: "z.object({ deep: z.boolean() }).partial().passthrough()",
+                  ObjectWithArrayOfRef: "z.object({ exampleProp: z.string(), another: z.number(), link: z.array(WithNested), someReference: Basic }).partial().passthrough()",
+                  WithNested: "z.object({ nested: z.string(), nestedRef: DeepNested }).partial().passthrough()",
+                },
+              },
+              meta: {
+                isRequired: true,
+                name: "second",
+                parent: [Circular *16],
+                referencedBy: [
+                  [Circular *17],
+                ],
+              },
+              ref: undefined,
+              schema: {
+                type: "number",
+              },
+            },
+          ],
+          code: "z.object({ prop: z.string(), second: z.number() }).partial().passthrough()",
+          ctx: {
+            resolver: {
+              getSchemaByRef: [Function: getSchemaByRef],
+              resolveRef: [Function: resolveRef],
+              resolveSchemaName: [Function: resolveSchemaName],
+            },
+            schemaByName: {},
+            zodSchemaByName: {
+              Basic: "z.object({ prop: z.string(), second: z.number() }).partial().passthrough()",
+              DeepNested: "z.object({ deep: z.boolean() }).partial().passthrough()",
+              ObjectWithArrayOfRef: "z.object({ exampleProp: z.string(), another: z.number(), link: z.array(WithNested), someReference: Basic }).partial().passthrough()",
+              WithNested: "z.object({ nested: z.string(), nestedRef: DeepNested }).partial().passthrough()",
+            },
+          },
+          meta: {
+            parent: [Circular *17],
+            referencedBy: [
+              [Circular *17],
+            ],
+          },
+          ref: undefined,
+          schema: {
+            properties: {
+              prop: {
+                type: "string",
+              },
+              second: {
+                type: "number",
+              },
+            },
+            type: "object",
+          },
+        },
+      ],
+      code: undefined,
+      ctx: {
+        resolver: {
+          getSchemaByRef: [Function: getSchemaByRef],
+          resolveRef: [Function: resolveRef],
+          resolveSchemaName: [Function: resolveSchemaName],
+        },
+        schemaByName: {},
+        zodSchemaByName: {
+          Basic: "z.object({ prop: z.string(), second: z.number() }).partial().passthrough()",
+          DeepNested: "z.object({ deep: z.boolean() }).partial().passthrough()",
+          ObjectWithArrayOfRef: "z.object({ exampleProp: z.string(), another: z.number(), link: z.array(WithNested), someReference: Basic }).partial().passthrough()",
+          WithNested: "z.object({ nested: z.string(), nestedRef: DeepNested }).partial().passthrough()",
+        },
+      },
+      meta: {
+        isRequired: true,
+        name: "basic",
+        parent: CodeMeta {
+          children: [Circular *1],
+          code: "z.object({ str: z.string(), reference: ObjectWithArrayOfRef, inline: z.object({ nested_prop: z.boolean() }).partial().passthrough(), another: WithNested, basic: Basic, differentPropSameRef: Basic }).partial().passthrough()",
+          ctx: {
+            resolver: {
+              getSchemaByRef: [Function: getSchemaByRef],
+              resolveRef: [Function: resolveRef],
+              resolveSchemaName: [Function: resolveSchemaName],
+            },
+            schemaByName: {},
+            zodSchemaByName: {
+              Basic: "z.object({ prop: z.string(), second: z.number() }).partial().passthrough()",
+              DeepNested: "z.object({ deep: z.boolean() }).partial().passthrough()",
+              ObjectWithArrayOfRef: "z.object({ exampleProp: z.string(), another: z.number(), link: z.array(WithNested), someReference: Basic }).partial().passthrough()",
+              WithNested: "z.object({ nested: z.string(), nestedRef: DeepNested }).partial().passthrough()",
+            },
+          },
+          meta: {
+            referencedBy: [],
+          },
+          ref: undefined,
+          schema: {
+            properties: {
+              another: {
+                "\$ref": "#components/schemas/WithNested",
+              },
+              basic: {
+                "\$ref": "#/components/schemas/Basic",
+              },
+              differentPropSameRef: {
+                "\$ref": "#/components/schemas/Basic",
+              },
+              inline: {
+                properties: {
+                  nested_prop: {
+                    type: "boolean",
+                  },
+                },
+                type: "object",
+              },
+              reference: {
+                "\$ref": "#/components/schemas/ObjectWithArrayOfRef",
+              },
+              str: {
+                type: "string",
+              },
+            },
+            type: "object",
+          },
+        },
+        referencedBy: [
+          [Circular *17],
+        ],
+      },
+      ref: "#/components/schemas/Basic",
+      schema: {
+        "\$ref": "#/components/schemas/Basic",
+      },
+    },
+    <ref *19> CodeMeta {
+      children: [
+        <ref *18> CodeMeta {
+          children: [
+            CodeMeta {
+              children: [],
+              code: "z.string()",
+              ctx: {
+                resolver: {
+                  getSchemaByRef: [Function: getSchemaByRef],
+                  resolveRef: [Function: resolveRef],
+                  resolveSchemaName: [Function: resolveSchemaName],
+                },
+                schemaByName: {},
+                zodSchemaByName: {
+                  Basic: "z.object({ prop: z.string(), second: z.number() }).partial().passthrough()",
+                  DeepNested: "z.object({ deep: z.boolean() }).partial().passthrough()",
+                  ObjectWithArrayOfRef: "z.object({ exampleProp: z.string(), another: z.number(), link: z.array(WithNested), someReference: Basic }).partial().passthrough()",
+                  WithNested: "z.object({ nested: z.string(), nestedRef: DeepNested }).partial().passthrough()",
+                },
+              },
+              meta: {
+                isRequired: true,
+                name: "prop",
+                parent: [Circular *18],
+                referencedBy: [
+                  [Circular *19],
+                ],
+              },
+              ref: undefined,
+              schema: {
+                type: "string",
+              },
+            },
+            CodeMeta {
+              children: [],
+              code: "z.number()",
+              ctx: {
+                resolver: {
+                  getSchemaByRef: [Function: getSchemaByRef],
+                  resolveRef: [Function: resolveRef],
+                  resolveSchemaName: [Function: resolveSchemaName],
+                },
+                schemaByName: {},
+                zodSchemaByName: {
+                  Basic: "z.object({ prop: z.string(), second: z.number() }).partial().passthrough()",
+                  DeepNested: "z.object({ deep: z.boolean() }).partial().passthrough()",
+                  ObjectWithArrayOfRef: "z.object({ exampleProp: z.string(), another: z.number(), link: z.array(WithNested), someReference: Basic }).partial().passthrough()",
+                  WithNested: "z.object({ nested: z.string(), nestedRef: DeepNested }).partial().passthrough()",
+                },
+              },
+              meta: {
+                isRequired: true,
+                name: "second",
+                parent: [Circular *18],
+                referencedBy: [
+                  [Circular *19],
+                ],
+              },
+              ref: undefined,
+              schema: {
+                type: "number",
+              },
+            },
+          ],
+          code: "z.object({ prop: z.string(), second: z.number() }).partial().passthrough()",
+          ctx: {
+            resolver: {
+              getSchemaByRef: [Function: getSchemaByRef],
+              resolveRef: [Function: resolveRef],
+              resolveSchemaName: [Function: resolveSchemaName],
+            },
+            schemaByName: {},
+            zodSchemaByName: {
+              Basic: "z.object({ prop: z.string(), second: z.number() }).partial().passthrough()",
+              DeepNested: "z.object({ deep: z.boolean() }).partial().passthrough()",
+              ObjectWithArrayOfRef: "z.object({ exampleProp: z.string(), another: z.number(), link: z.array(WithNested), someReference: Basic }).partial().passthrough()",
+              WithNested: "z.object({ nested: z.string(), nestedRef: DeepNested }).partial().passthrough()",
+            },
+          },
+          meta: {
+            parent: [Circular *19],
+            referencedBy: [
+              [Circular *19],
+            ],
+          },
+          ref: undefined,
+          schema: {
+            properties: {
+              prop: {
+                type: "string",
+              },
+              second: {
+                type: "number",
+              },
+            },
+            type: "object",
+          },
+        },
+      ],
+      code: undefined,
+      ctx: {
+        resolver: {
+          getSchemaByRef: [Function: getSchemaByRef],
+          resolveRef: [Function: resolveRef],
+          resolveSchemaName: [Function: resolveSchemaName],
+        },
+        schemaByName: {},
+        zodSchemaByName: {
+          Basic: "z.object({ prop: z.string(), second: z.number() }).partial().passthrough()",
+          DeepNested: "z.object({ deep: z.boolean() }).partial().passthrough()",
+          ObjectWithArrayOfRef: "z.object({ exampleProp: z.string(), another: z.number(), link: z.array(WithNested), someReference: Basic }).partial().passthrough()",
+          WithNested: "z.object({ nested: z.string(), nestedRef: DeepNested }).partial().passthrough()",
+        },
+      },
+      meta: {
+        isRequired: true,
+        name: "differentPropSameRef",
+        parent: CodeMeta {
+          children: [Circular *1],
+          code: "z.object({ str: z.string(), reference: ObjectWithArrayOfRef, inline: z.object({ nested_prop: z.boolean() }).partial().passthrough(), another: WithNested, basic: Basic, differentPropSameRef: Basic }).partial().passthrough()",
+          ctx: {
+            resolver: {
+              getSchemaByRef: [Function: getSchemaByRef],
+              resolveRef: [Function: resolveRef],
+              resolveSchemaName: [Function: resolveSchemaName],
+            },
+            schemaByName: {},
+            zodSchemaByName: {
+              Basic: "z.object({ prop: z.string(), second: z.number() }).partial().passthrough()",
+              DeepNested: "z.object({ deep: z.boolean() }).partial().passthrough()",
+              ObjectWithArrayOfRef: "z.object({ exampleProp: z.string(), another: z.number(), link: z.array(WithNested), someReference: Basic }).partial().passthrough()",
+              WithNested: "z.object({ nested: z.string(), nestedRef: DeepNested }).partial().passthrough()",
+            },
+          },
+          meta: {
+            referencedBy: [],
+          },
+          ref: undefined,
+          schema: {
+            properties: {
+              another: {
+                "\$ref": "#components/schemas/WithNested",
+              },
+              basic: {
+                "\$ref": "#/components/schemas/Basic",
+              },
+              differentPropSameRef: {
+                "\$ref": "#/components/schemas/Basic",
+              },
+              inline: {
+                properties: {
+                  nested_prop: {
+                    type: "boolean",
+                  },
+                },
+                type: "object",
+              },
+              reference: {
+                "\$ref": "#/components/schemas/ObjectWithArrayOfRef",
+              },
+              str: {
+                type: "string",
+              },
+            },
+            type: "object",
+          },
+        },
+        referencedBy: [
+          [Circular *19],
+        ],
+      },
+      ref: "#/components/schemas/Basic",
+      schema: {
+        "\$ref": "#/components/schemas/Basic",
+      },
+    },
+  ],
+  codeString: "z.object({ str: z.string(), reference: ObjectWithArrayOfRef, inline: z.object({ nested_prop: z.boolean() }).partial().passthrough(), another: WithNested, basic: Basic, differentPropSameRef: Basic }).partial().passthrough()",
+  ctx: {
+    resolver: {
+      getSchemaByRef: [Function: getSchemaByRef],
+      resolveRef: [Function: resolveRef],
+      resolveSchemaName: [Function: resolveSchemaName],
+    },
+    schemaByName: {},
+    zodSchemaByName: {
+      Basic: "z.object({ prop: z.string(), second: z.number() }).partial().passthrough()",
+      DeepNested: "z.object({ deep: z.boolean() }).partial().passthrough()",
+      ObjectWithArrayOfRef: "z.object({ exampleProp: z.string(), another: z.number(), link: z.array(WithNested), someReference: Basic }).partial().passthrough()",
+      WithNested: "z.object({ nested: z.string(), nestedRef: DeepNested }).partial().passthrough()",
+    },
+  },
+}
+`;

@@ -4,6 +4,7 @@ import type {SchemaObject, SchemasObject} from "openapi3-ts";
 import {ts} from "tanu";
 import {describe, test} from "jsr:@std/testing/bdd";
 import {expect} from "jsr:@std/expect";
+import {assertSnapshot} from "jsr:@std/testing/snapshot";
 import {makeSchemaResolver} from "./makeSchemaResolver.ts";
 import {asComponentSchema} from "./utils.ts";
 import type {TemplateContext} from "./template-context.ts";
@@ -17,84 +18,40 @@ const file = ts.createSourceFile("", "", ts.ScriptTarget.ESNext, true);
 const printer = ts.createPrinter({ newLine: ts.NewLineKind.LineFeed });
 const printTs = (node: ts.Node) => printer.printNode(ts.EmitHint.Unspecified, node, file);
 
-test("getSchemaAsTsString", () => {
-    expect(getSchemaAsTsString({ type: "null" })).toMatchInlineSnapshot('"null"');
-    expect(getSchemaAsTsString({ type: "boolean" })).toMatchInlineSnapshot('"boolean"');
-    expect(getSchemaAsTsString({ type: "string" })).toMatchInlineSnapshot('"string"');
-    expect(getSchemaAsTsString({ type: "number" })).toMatchInlineSnapshot('"number"');
-    expect(getSchemaAsTsString({ type: "integer" })).toMatchInlineSnapshot('"number"');
-    expect(getSchemaAsTsString({})).toMatchInlineSnapshot('"unknown"');
-
-    expect(getSchemaAsTsString({ type: "null" }, { name: "nullType" })).toMatchInlineSnapshot(
-        '"export type nullType = null;"'
-    );
-    expect(getSchemaAsTsString({ type: "boolean" }, { name: "booleanType" })).toMatchInlineSnapshot(
-        '"export type booleanType = boolean;"'
-    );
-    expect(getSchemaAsTsString({ type: "string" }, { name: "stringType" })).toMatchInlineSnapshot(
-        '"export type stringType = string;"'
-    );
-    expect(getSchemaAsTsString({ type: "number" }, { name: "numberType" })).toMatchInlineSnapshot(
-        '"export type numberType = number;"'
-    );
-    expect(getSchemaAsTsString({ type: "integer" }, { name: "integerType" })).toMatchInlineSnapshot(
-        '"export type integerType = number;"'
-    );
-    expect(getSchemaAsTsString({}, { name: "unknownType" })).toMatchInlineSnapshot(
-        '"export type unknownType = unknown;"'
-    );
-
-    expect(getSchemaAsTsString({ type: "array", items: { type: "string" } })).toMatchInlineSnapshot('"Array<string>"');
-    expect(getSchemaAsTsString({ type: "object" }, { name: "EmptyObject" })).toMatchInlineSnapshot(
-        '"export type EmptyObject = {};"'
-    );
-    expect(getSchemaAsTsString({ type: "object", properties: { str: { type: "string" } } }, { name: "BasicObject" }))
-        .toMatchInlineSnapshot(`
-          "export type BasicObject = Partial<{
-              str: string;
-          }>;"
-        `);
-    expect(
-        getSchemaAsTsString(
+test("getSchemaAsTsString", async (t) => {
+    const results = {
+        null: getSchemaAsTsString({ type: "null" }),
+        boolean: getSchemaAsTsString({ type: "boolean" }),
+        string: getSchemaAsTsString({ type: "string" }),
+        number: getSchemaAsTsString({ type: "number" }),
+        integer: getSchemaAsTsString({ type: "integer" }),
+        unknown: getSchemaAsTsString({}),
+        nullType: getSchemaAsTsString({ type: "null" }, { name: "nullType" }),
+        booleanType: getSchemaAsTsString({ type: "boolean" }, { name: "booleanType" }),
+        stringType: getSchemaAsTsString({ type: "string" }, { name: "stringType" }),
+        numberType: getSchemaAsTsString({ type: "number" }, { name: "numberType" }),
+        integerType: getSchemaAsTsString({ type: "integer" }, { name: "integerType" }),
+        unknownType: getSchemaAsTsString({}, { name: "unknownType" }),
+        arrayString: getSchemaAsTsString({ type: "array", items: { type: "string" } }),
+        emptyObject: getSchemaAsTsString({ type: "object" }, { name: "EmptyObject" }),
+        basicObject: getSchemaAsTsString({ type: "object", properties: { str: { type: "string" } } }, { name: "BasicObject" }),
+        basicObject2: getSchemaAsTsString(
             { type: "object", properties: { str: { type: "string" }, nb: { type: "number" } } },
             { name: "BasicObject2" }
-        )
-    ).toMatchInlineSnapshot(`
-      "export type BasicObject2 = Partial<{
-          str: string;
-          nb: number;
-      }>;"
-    `);
-
-    expect(
-        getSchemaAsTsString(
+        ),
+        allPropertiesRequired: getSchemaAsTsString(
             {
                 type: "object",
                 properties: { str: { type: "string" }, nb: { type: "number" } },
                 required: ["str", "nb"],
             },
             { name: "AllPropertiesRequired" }
-        )
-    ).toMatchInlineSnapshot(`
-      "export type AllPropertiesRequired = {
-          str: string;
-          nb: number;
-      };"
-    `);
-    expect(
-        getSchemaAsTsString(
+        ),
+        someOptionalProps: getSchemaAsTsString(
             { type: "object", properties: { str: { type: "string" }, nb: { type: "number" } }, required: ["str"] },
             { name: "SomeOptionalProps" }
-        )
-    ).toMatchInlineSnapshot(`
-      "export type SomeOptionalProps = {
-          str: string;
-          nb?: number | undefined;
-      };"
-    `);
-
-    expect(
-        getSchemaAsTsString(
+        ),
+        objectWithNestedProp: getSchemaAsTsString(
             {
                 type: "object",
                 properties: {
@@ -109,51 +66,20 @@ test("getSchemaAsTsString", () => {
                 },
             },
             { name: "ObjectWithNestedProp" }
-        )
-    ).toMatchInlineSnapshot(`
-      "export type ObjectWithNestedProp = Partial<{
-          str: string;
-          nb: number;
-          nested: Partial<{
-              nested_prop: boolean;
-          }>;
-      }>;"
-    `);
-
-    expect(
-        getSchemaAsTsString(
+        ),
+        objectWithAdditionalPropsNb: getSchemaAsTsString(
             { type: "object", properties: { str: { type: "string" } }, additionalProperties: { type: "number" } },
             { name: "ObjectWithAdditionalPropsNb" }
-        )
-    ).toMatchInlineSnapshot(`
-      "export type ObjectWithAdditionalPropsNb = Partial<{
-          str: string;
-      } & {
-          [key: string]: number;
-      }>;"
-    `);
-
-    expect(
-        getSchemaAsTsString(
+        ),
+        objectWithNestedRecordBoolean: getSchemaAsTsString(
             {
                 type: "object",
                 properties: { str: { type: "string" } },
                 additionalProperties: { type: "object", properties: { prop: { type: "boolean" } } },
             },
             { name: "ObjectWithNestedRecordBoolean" }
-        )
-    ).toMatchInlineSnapshot(`
-      "export type ObjectWithNestedRecordBoolean = Partial<{
-          str: string;
-      } & {
-          [key: string]: Partial<{
-              prop: boolean;
-          }>;
-      }>;"
-    `);
-
-    expect(
-        getSchemaAsTsString({
+        ),
+        arrayObject: getSchemaAsTsString({
             type: "array",
             items: {
                 type: "object",
@@ -161,15 +87,8 @@ test("getSchemaAsTsString", () => {
                     str: { type: "string" },
                 },
             },
-        })
-    ).toMatchInlineSnapshot(`
-      "Array<Partial<{
-          str: string;
-      }>>"
-    `);
-
-    expect(
-        getSchemaAsTsString({
+        }),
+        arrayArray: getSchemaAsTsString({
             type: "array",
             items: {
                 type: "array",
@@ -177,11 +96,8 @@ test("getSchemaAsTsString", () => {
                     type: "string",
                 },
             },
-        })
-    ).toMatchInlineSnapshot('"Array<Array<string>>"');
-
-    expect(
-        getSchemaAsTsString(
+        }),
+        objectWithEnum: getSchemaAsTsString(
             {
                 type: "object",
                 properties: {
@@ -189,22 +105,10 @@ test("getSchemaAsTsString", () => {
                 },
             },
             { name: "ObjectWithEnum" }
-        )
-    ).toMatchInlineSnapshot(`
-      "export type ObjectWithEnum = Partial<{
-          enumprop: "aaa" | "bbb" | "ccc";
-      }>;"
-    `);
-
-    expect(getSchemaAsTsString({ type: "string", enum: ["aaa", "bbb", "ccc"] })).toMatchInlineSnapshot(
-        '""aaa" | "bbb" | "ccc""'
-    );
-    expect(
-        getSchemaAsTsString({ type: "string", enum: ["aaa", "bbb", "ccc"] }, { name: "StringENum" })
-    ).toMatchInlineSnapshot('"export type StringENum = "aaa" | "bbb" | "ccc";"');
-
-    expect(
-        getSchemaAsTsString(
+        ),
+        stringEnumInline: getSchemaAsTsString({ type: "string", enum: ["aaa", "bbb", "ccc"] }),
+        stringEnum: getSchemaAsTsString({ type: "string", enum: ["aaa", "bbb", "ccc"] }, { name: "StringENum" }),
+        objectWithUnion: getSchemaAsTsString(
             {
                 type: "object",
                 properties: {
@@ -212,54 +116,22 @@ test("getSchemaAsTsString", () => {
                 },
             },
             { name: "ObjectWithUnion" }
-        )
-    ).toMatchInlineSnapshot(`
-      "export type ObjectWithUnion = Partial<{
-          union: string | number;
-      }>;"
-    `);
-    expect(getSchemaAsTsString({ oneOf: [{ type: "string" }, { type: "number" }] })).toMatchInlineSnapshot(
-        '"string | number"'
-    );
-    expect(
-        getSchemaAsTsString({ oneOf: [{ type: "string" }, { type: "number" }] }, { name: "StringOrNumber" })
-    ).toMatchInlineSnapshot('"export type StringOrNumber = string | number;"');
-
-    expect(getSchemaAsTsString({ allOf: [{ type: "string" }, { type: "number" }] })).toMatchInlineSnapshot(
-        '"string & number"'
-    );
-    expect(
-        getSchemaAsTsString({ allOf: [{ type: "string" }, { type: "number" }] }, { name: "StringAndNumber" })
-    ).toMatchInlineSnapshot('"export type StringAndNumber = string & number;"');
-
-    expect(getSchemaAsTsString({ nullable: true, anyOf: [{ type: "string" }, { type: "number" }] })).toMatchInlineSnapshot(
-        '"(string | number) | Array<string | number> | null"'
-    );
-    expect(getSchemaAsTsString({ nullable: true, oneOf: [{ type: "string" }, { type: "number" }] })).toMatchInlineSnapshot(
-        '"string | number | null"'
-    );
-    expect(
-        getSchemaAsTsString({ nullable: true, oneOf: [{ type: "string" }, { type: "number" }] }, { name: "StringOrNumber" })
-    ).toMatchInlineSnapshot('"export type StringOrNumber = string | number | null;"');
-
-    expect(getSchemaAsTsString({ nullable: true, allOf: [{ type: "string" }, { type: "number" }] })).toMatchInlineSnapshot(
-        '"(string & number) | null"'
-    );
-    expect(
-        getSchemaAsTsString({ nullable: true, allOf: [{ type: "string" }, { type: "number" }] }, { name: "StringAndNumber" })
-    ).toMatchInlineSnapshot('"export type StringAndNumber = (string & number) | null;"');
-    expect(getSchemaAsTsString({ nullable: true, anyOf: [{ type: "string" }, { type: "number" }] })).toMatchInlineSnapshot(
-        '"(string | number) | Array<string | number> | null"'
-    );
-    expect(
-        getSchemaAsTsString(
+        ),
+        oneOfInline: getSchemaAsTsString({ oneOf: [{ type: "string" }, { type: "number" }] }),
+        stringOrNumber: getSchemaAsTsString({ oneOf: [{ type: "string" }, { type: "number" }] }, { name: "StringOrNumber" }),
+        allOfInline: getSchemaAsTsString({ allOf: [{ type: "string" }, { type: "number" }] }),
+        stringAndNumber: getSchemaAsTsString({ allOf: [{ type: "string" }, { type: "number" }] }, { name: "StringAndNumber" }),
+        nullableAnyOf: getSchemaAsTsString({ nullable: true, anyOf: [{ type: "string" }, { type: "number" }] }),
+        nullableOneOf: getSchemaAsTsString({ nullable: true, oneOf: [{ type: "string" }, { type: "number" }] }),
+        nullableOneOfNamed: getSchemaAsTsString({ nullable: true, oneOf: [{ type: "string" }, { type: "number" }] }, { name: "StringOrNumber" }),
+        nullableAllOf: getSchemaAsTsString({ nullable: true, allOf: [{ type: "string" }, { type: "number" }] }),
+        nullableAllOfNamed: getSchemaAsTsString({ nullable: true, allOf: [{ type: "string" }, { type: "number" }] }, { name: "StringAndNumber" }),
+        nullableAnyOf2: getSchemaAsTsString({ nullable: true, anyOf: [{ type: "string" }, { type: "number" }] }),
+        stringAndNumberMaybeMultiple: getSchemaAsTsString(
             { anyOf: [{ type: "string" }, { type: "number" }] },
             { name: "StringAndNumberMaybeMultiple" }
-        )
-    ).toMatchInlineSnapshot('"export type StringAndNumberMaybeMultiple = (string | number) | Array<string | number>;"');
-
-    expect(
-        getSchemaAsTsString(
+        ),
+        objectWithArrayUnion: getSchemaAsTsString(
             {
                 type: "object",
                 properties: {
@@ -267,15 +139,8 @@ test("getSchemaAsTsString", () => {
                 },
             },
             { name: "ObjectWithArrayUnion" }
-        )
-    ).toMatchInlineSnapshot(`
-      "export type ObjectWithArrayUnion = Partial<{
-          unionOrArrayOfUnion: (string | number) | Array<string | number>;
-      }>;"
-    `);
-
-    expect(
-        getSchemaAsTsString(
+        ),
+        objectWithIntersection: getSchemaAsTsString(
             {
                 type: "object",
                 properties: {
@@ -283,20 +148,10 @@ test("getSchemaAsTsString", () => {
                 },
             },
             { name: "ObjectWithIntersection" }
-        )
-    ).toMatchInlineSnapshot(`
-      "export type ObjectWithIntersection = Partial<{
-          intersection: string & number;
-      }>;"
-    `);
-
-    expect(getSchemaAsTsString({ type: "string", enum: ["aaa", "bbb", "ccc"] })).toMatchInlineSnapshot(
-        '""aaa" | "bbb" | "ccc""'
-    );
-    expect(getSchemaAsTsString({ type: "number", enum: [1, 2, 3] })).toMatchInlineSnapshot('"1 | 2 | 3"');
-
-    expect(
-        getSchemaAsTsString(
+        ),
+        stringEnumInline2: getSchemaAsTsString({ type: "string", enum: ["aaa", "bbb", "ccc"] }),
+        numberEnum: getSchemaAsTsString({ type: "number", enum: [1, 2, 3] }),
+        category: getSchemaAsTsString(
             {
                 type: "object",
                 required: ["propNumber", "propString", "propBoolean"],
@@ -316,18 +171,13 @@ test("getSchemaAsTsString", () => {
                 },
             },
             { name: "Category" }
-        )
-    ).toMatchInlineSnapshot(`
-      "export type Category = {
-    propNumber: number | null;
-    propString: string | null;
-    propBoolean: boolean | null;
-      };"
-    `);
+        ),
+    };
+    await assertSnapshot(t, results);
 });
 
 describe("getSchemaAsTsString with context", () => {
-    test("with ref", () => {
+    test("with ref", async (t) => {
         const schemas = {
             Root: {
                 type: "object",
@@ -351,17 +201,10 @@ describe("getSchemaAsTsString with context", () => {
             resolver: makeSchemaResolver({ components: { schemas } } as any),
         };
         Object.keys(schemas).forEach((key) => ctx.resolver.getSchemaByRef(asComponentSchema(key)));
-        expect(printTs(getTypescriptFromOpenApi({ schema: schemas["Root"]!, meta: { name: "Root" }, ctx }) as ts.Node))
-            .toMatchInlineSnapshot(`
-              "export type Root = Partial<{
-                  str: string;
-                  nb: number;
-                  nested: Nested;
-              }>;"
-            `);
+        await assertSnapshot(t, printTs(getTypescriptFromOpenApi({ schema: schemas["Root"]!, meta: { name: "Root" }, ctx }) as ts.Node));
     });
 
-    test("with multiple nested refs", () => {
+    test("with multiple nested refs", async (t) => {
         const schemas = {
             Root2: {
                 type: "object",
@@ -394,18 +237,12 @@ describe("getSchemaAsTsString with context", () => {
             resolver: makeSchemaResolver({ components: { schemas } } as any),
         };
         Object.keys(schemas).forEach((key) => ctx.resolver.getSchemaByRef(asComponentSchema(key)));
-        expect(
+        await assertSnapshot(t,
             printTs(getTypescriptFromOpenApi({ schema: schemas["Root2"]!, meta: { name: "Root2" }, ctx }) as ts.Node)
-        ).toMatchInlineSnapshot(`
-          "export type Root2 = Partial<{
-              str: string;
-              nb: number;
-              nested: Nested2;
-          }>;"
-        `);
+        );
     });
 
-    test("with indirect recursive ref", async () => {
+    test("with indirect recursive ref", async (t) => {
         const schemas = {
             Root3: {
                 type: "object",
@@ -432,7 +269,7 @@ describe("getSchemaAsTsString with context", () => {
         };
         Object.keys(schemas).forEach((key) => ctx.resolver.getSchemaByRef(asComponentSchema(key)));
 
-        expect(
+        await assertSnapshot(t,
             printTs(
                 getTypescriptFromOpenApi({
                     schema: schemas["Root3"]!,
@@ -440,17 +277,10 @@ describe("getSchemaAsTsString with context", () => {
                     ctx,
                 }) as ts.Node
             )
-        ).toMatchInlineSnapshot(`
-          "export type Root3 = Partial<{
-              str: string;
-              nb: number;
-              nested: Nested3;
-              arrayOfNested: Array<Nested3>;
-          }>;"
-        `);
+        );
     });
 
-    test("with direct (self) recursive ref", async () => {
+    test("with direct (self) recursive ref", async (t) => {
         const schemas = {
             Root4: {
                 type: "object",
@@ -483,18 +313,10 @@ describe("getSchemaAsTsString with context", () => {
             ctx,
         }) as ts.Node;
 
-        expect(printTs(result)).toMatchInlineSnapshot(`
-          "export type Root4 = Partial<{
-              str: string;
-              nb: number;
-              self: Root4;
-              nested: Nested4;
-              arrayOfSelf: Array<Root4>;
-          }>;"
-        `);
+        await assertSnapshot(t, printTs(result));
     });
 
-    test("same schemas as openApiToZod", () => {
+    test("same schemas as openApiToZod", async (t) => {
         const schemas = {
             User: {
                 type: "object",
@@ -532,15 +354,10 @@ describe("getSchemaAsTsString with context", () => {
             ctx,
         }) as ts.Node;
 
-        expect(printTs(result)).toMatchInlineSnapshot(`
-          "export type Root = Partial<{
-              recursive: User;
-              basic: number;
-          }>;"
-        `);
+        await assertSnapshot(t, printTs(result));
     });
 
-    test("anyOf with refs", () => {
+    test("anyOf with refs", async (t) => {
         const schemas = {
             User: {
                 type: "object",
@@ -581,71 +398,36 @@ describe("getSchemaAsTsString with context", () => {
             ctx,
         }) as ts.Node;
 
-        expect(printTs(result)).toMatchInlineSnapshot(`
-          "export type Root = Partial<{
-              user: User | Member;
-              users: Array<(User | Member) | Array<User | Member>>;
-              basic: number;
-          }>;"
-        `);
+        await assertSnapshot(t, printTs(result));
     });
 });
 
-test("getSchemaAsTsString with readonly", () => {
+test("getSchemaAsTsString with readonly", async (t) => {
     const options: TemplateContext['options'] = {
         allReadonly: true
     };
-    expect(getSchemaAsTsString({ type: "null" }, undefined, options)).toMatchInlineSnapshot('"null"');
-    expect(getSchemaAsTsString({ type: "boolean" }, undefined, options)).toMatchInlineSnapshot('"boolean"');
-    expect(getSchemaAsTsString({ type: "string" }, undefined, options)).toMatchInlineSnapshot('"string"');
-    expect(getSchemaAsTsString({ type: "number" }, undefined, options)).toMatchInlineSnapshot('"number"');
-    expect(getSchemaAsTsString({ type: "integer" }, undefined, options)).toMatchInlineSnapshot('"number"');
-    expect(getSchemaAsTsString({}, undefined, options)).toMatchInlineSnapshot('"unknown"');
-
-    expect(getSchemaAsTsString({ type: "null" }, { name: "nullType" }, options)).toMatchInlineSnapshot(
-        '"export type nullType = null;"'
-    );
-    expect(getSchemaAsTsString({ type: "boolean" }, { name: "booleanType" }, options)).toMatchInlineSnapshot(
-        '"export type booleanType = boolean;"'
-    );
-    expect(getSchemaAsTsString({ type: "string" }, { name: "stringType" }, options)).toMatchInlineSnapshot(
-        '"export type stringType = string;"'
-    );
-    expect(getSchemaAsTsString({ type: "number" }, { name: "numberType" }, options)).toMatchInlineSnapshot(
-        '"export type numberType = number;"'
-    );
-    expect(getSchemaAsTsString({ type: "integer" }, { name: "integerType" }, options)).toMatchInlineSnapshot(
-        '"export type integerType = number;"'
-    );
-    expect(getSchemaAsTsString({}, { name: "unknownType" }, options)).toMatchInlineSnapshot(
-        '"export type unknownType = unknown;"'
-    );
-
-    expect(getSchemaAsTsString({ type: "array", items: { type: "string" } }, undefined, options)).toMatchInlineSnapshot('"Readonly<Array<string>>"');
-    expect(getSchemaAsTsString({ type: "object" }, { name: "EmptyObject" }, options)).toMatchInlineSnapshot(
-        '"export type EmptyObject = {};"'
-    );
-    expect(getSchemaAsTsString({ type: "object", properties: { str: { type: "string" } } }, { name: "BasicObject" }, options))
-        .toMatchInlineSnapshot(`
-          "export type BasicObject = Partial<Readonly<{
-              str: string;
-          }>>;"
-        `);
-    expect(
-        getSchemaAsTsString(
+    const results = {
+        null: getSchemaAsTsString({ type: "null" }, undefined, options),
+        boolean: getSchemaAsTsString({ type: "boolean" }, undefined, options),
+        string: getSchemaAsTsString({ type: "string" }, undefined, options),
+        number: getSchemaAsTsString({ type: "number" }, undefined, options),
+        integer: getSchemaAsTsString({ type: "integer" }, undefined, options),
+        unknown: getSchemaAsTsString({}, undefined, options),
+        nullType: getSchemaAsTsString({ type: "null" }, { name: "nullType" }, options),
+        booleanType: getSchemaAsTsString({ type: "boolean" }, { name: "booleanType" }, options),
+        stringType: getSchemaAsTsString({ type: "string" }, { name: "stringType" }, options),
+        numberType: getSchemaAsTsString({ type: "number" }, { name: "numberType" }, options),
+        integerType: getSchemaAsTsString({ type: "integer" }, { name: "integerType" }, options),
+        unknownType: getSchemaAsTsString({}, { name: "unknownType" }, options),
+        arrayString: getSchemaAsTsString({ type: "array", items: { type: "string" } }, undefined, options),
+        emptyObject: getSchemaAsTsString({ type: "object" }, { name: "EmptyObject" }, options),
+        basicObject: getSchemaAsTsString({ type: "object", properties: { str: { type: "string" } } }, { name: "BasicObject" }, options),
+        basicObject2: getSchemaAsTsString(
             { type: "object", properties: { str: { type: "string" }, nb: { type: "number" } } },
             { name: "BasicObject2" },
             options
-        )
-    ).toMatchInlineSnapshot(`
-      "export type BasicObject2 = Partial<Readonly<{
-          str: string;
-          nb: number;
-      }>>;"
-    `);
-
-    expect(
-        getSchemaAsTsString(
+        ),
+        allPropertiesRequired: getSchemaAsTsString(
             {
                 type: "object",
                 properties: { str: { type: "string" }, nb: { type: "number" } },
@@ -653,28 +435,13 @@ test("getSchemaAsTsString with readonly", () => {
             },
             { name: "AllPropertiesRequired" },
             options
-        )
-    ).toMatchInlineSnapshot(`
-      "export type AllPropertiesRequired = Readonly<{
-          str: string;
-          nb: number;
-      }>;"
-    `);
-    expect(
-        getSchemaAsTsString(
+        ),
+        someOptionalProps: getSchemaAsTsString(
             { type: "object", properties: { str: { type: "string" }, nb: { type: "number" } }, required: ["str"] },
             { name: "SomeOptionalProps" },
             options
-        )
-    ).toMatchInlineSnapshot(`
-      "export type SomeOptionalProps = Readonly<{
-          str: string;
-          nb?: number | undefined;
-      }>;"
-    `);
-
-    expect(
-        getSchemaAsTsString(
+        ),
+        objectWithNestedProp: getSchemaAsTsString(
             {
                 type: "object",
                 properties: {
@@ -690,33 +457,13 @@ test("getSchemaAsTsString with readonly", () => {
             },
             { name: "ObjectWithNestedProp" },
             options
-        )
-    ).toMatchInlineSnapshot(`
-      "export type ObjectWithNestedProp = Partial<Readonly<{
-          str: string;
-          nb: number;
-          nested: Partial<Readonly<{
-              nested_prop: boolean;
-          }>>;
-      }>>;"
-    `);
-
-    expect(
-        getSchemaAsTsString(
+        ),
+        objectWithAdditionalPropsNb: getSchemaAsTsString(
             { type: "object", properties: { str: { type: "string" } }, additionalProperties: { type: "number" } },
             { name: "ObjectWithAdditionalPropsNb" },
             options
-        )
-    ).toMatchInlineSnapshot(`
-      "export type ObjectWithAdditionalPropsNb = Partial<Readonly<{
-          str: string;
-      } & {
-          [key: string]: number;
-      }>>;"
-    `);
-
-    expect(
-        getSchemaAsTsString(
+        ),
+        objectWithNestedRecordBoolean: getSchemaAsTsString(
             {
                 type: "object",
                 properties: { str: { type: "string" } },
@@ -724,19 +471,8 @@ test("getSchemaAsTsString with readonly", () => {
             },
             { name: "ObjectWithNestedRecordBoolean" },
             options
-        )
-    ).toMatchInlineSnapshot(`
-      "export type ObjectWithNestedRecordBoolean = Partial<Readonly<{
-          str: string;
-      } & {
-          [key: string]: Partial<Readonly<{
-              prop: boolean;
-          }>>;
-      }>>;"
-    `);
-
-    expect(
-        getSchemaAsTsString({
+        ),
+        arrayObject: getSchemaAsTsString({
             type: "array",
             items: {
                 type: "object",
@@ -744,15 +480,8 @@ test("getSchemaAsTsString with readonly", () => {
                     str: { type: "string" },
                 },
             },
-        }, undefined, options)
-    ).toMatchInlineSnapshot(`
-      "Readonly<Array<Partial<Readonly<{
-          str: string;
-      }>>>>"
-    `);
-
-    expect(
-        getSchemaAsTsString({
+        }, undefined, options),
+        arrayArray: getSchemaAsTsString({
             type: "array",
             items: {
                 type: "array",
@@ -760,11 +489,8 @@ test("getSchemaAsTsString with readonly", () => {
                     type: "string",
                 },
             },
-        }, undefined, options)
-    ).toMatchInlineSnapshot('"Readonly<Array<Readonly<Array<string>>>>"');
-
-    expect(
-        getSchemaAsTsString(
+        }, undefined, options),
+        objectWithEnum: getSchemaAsTsString(
             {
                 type: "object",
                 properties: {
@@ -773,22 +499,10 @@ test("getSchemaAsTsString with readonly", () => {
             },
             { name: "ObjectWithEnum" },
             options
-        )
-    ).toMatchInlineSnapshot(`
-      "export type ObjectWithEnum = Partial<Readonly<{
-          enumprop: "aaa" | "bbb" | "ccc";
-      }>>;"
-    `);
-
-    expect(getSchemaAsTsString({ type: "string", enum: ["aaa", "bbb", "ccc"] }, undefined, options)).toMatchInlineSnapshot(
-        '""aaa" | "bbb" | "ccc""'
-    );
-    expect(
-        getSchemaAsTsString({ type: "string", enum: ["aaa", "bbb", "ccc"] }, { name: "StringENum" }, options)
-    ).toMatchInlineSnapshot('"export type StringENum = "aaa" | "bbb" | "ccc";"');
-
-    expect(
-        getSchemaAsTsString(
+        ),
+        stringEnumInline: getSchemaAsTsString({ type: "string", enum: ["aaa", "bbb", "ccc"] }, undefined, options),
+        stringEnum: getSchemaAsTsString({ type: "string", enum: ["aaa", "bbb", "ccc"] }, { name: "StringENum" }, options),
+        objectWithUnion: getSchemaAsTsString(
             {
                 type: "object",
                 properties: {
@@ -797,55 +511,23 @@ test("getSchemaAsTsString with readonly", () => {
             },
             { name: "ObjectWithUnion" },
             options
-        )
-    ).toMatchInlineSnapshot(`
-      "export type ObjectWithUnion = Partial<Readonly<{
-          union: string | number;
-      }>>;"
-    `);
-    expect(getSchemaAsTsString({ oneOf: [{ type: "string" }, { type: "number" }] }, undefined, options)).toMatchInlineSnapshot(
-        '"string | number"'
-    );
-    expect(
-        getSchemaAsTsString({ oneOf: [{ type: "string" }, { type: "number" }] }, { name: "StringOrNumber" }, options)
-    ).toMatchInlineSnapshot('"export type StringOrNumber = string | number;"');
-
-    expect(getSchemaAsTsString({ allOf: [{ type: "string" }, { type: "number" }] }, undefined, options)).toMatchInlineSnapshot(
-        '"string & number"'
-    );
-    expect(
-        getSchemaAsTsString({ allOf: [{ type: "string" }, { type: "number" }] }, { name: "StringAndNumber" }, options)
-    ).toMatchInlineSnapshot('"export type StringAndNumber = string & number;"');
-
-    expect(getSchemaAsTsString({ nullable: true, anyOf: [{ type: "string" }, { type: "number" }] }, undefined, options)).toMatchInlineSnapshot(
-        '"(string | number) | Readonly<Array<string | number>> | null"'
-    );
-    expect(getSchemaAsTsString({ nullable: true, oneOf: [{ type: "string" }, { type: "number" }] }, undefined, options)).toMatchInlineSnapshot(
-        '"string | number | null"'
-    );
-    expect(
-        getSchemaAsTsString({ nullable: true, oneOf: [{ type: "string" }, { type: "number" }] }, { name: "StringOrNumber" }, options)
-    ).toMatchInlineSnapshot('"export type StringOrNumber = string | number | null;"');
-
-    expect(getSchemaAsTsString({ nullable: true, allOf: [{ type: "string" }, { type: "number" }] }, undefined, options)).toMatchInlineSnapshot(
-        '"(string & number) | null"'
-    );
-    expect(
-        getSchemaAsTsString({ nullable: true, allOf: [{ type: "string" }, { type: "number" }] }, { name: "StringAndNumber" }, options)
-    ).toMatchInlineSnapshot('"export type StringAndNumber = (string & number) | null;"');
-    expect(getSchemaAsTsString({ nullable: true, anyOf: [{ type: "string" }, { type: "number" }] }, undefined, options)).toMatchInlineSnapshot(
-        '"(string | number) | Readonly<Array<string | number>> | null"'
-    );
-    expect(
-        getSchemaAsTsString(
+        ),
+        oneOfInline: getSchemaAsTsString({ oneOf: [{ type: "string" }, { type: "number" }] }, undefined, options),
+        stringOrNumber: getSchemaAsTsString({ oneOf: [{ type: "string" }, { type: "number" }] }, { name: "StringOrNumber" }, options),
+        allOfInline: getSchemaAsTsString({ allOf: [{ type: "string" }, { type: "number" }] }, undefined, options),
+        stringAndNumber: getSchemaAsTsString({ allOf: [{ type: "string" }, { type: "number" }] }, { name: "StringAndNumber" }, options),
+        nullableAnyOf: getSchemaAsTsString({ nullable: true, anyOf: [{ type: "string" }, { type: "number" }] }, undefined, options),
+        nullableOneOf: getSchemaAsTsString({ nullable: true, oneOf: [{ type: "string" }, { type: "number" }] }, undefined, options),
+        nullableOneOfNamed: getSchemaAsTsString({ nullable: true, oneOf: [{ type: "string" }, { type: "number" }] }, { name: "StringOrNumber" }, options),
+        nullableAllOf: getSchemaAsTsString({ nullable: true, allOf: [{ type: "string" }, { type: "number" }] }, undefined, options),
+        nullableAllOfNamed: getSchemaAsTsString({ nullable: true, allOf: [{ type: "string" }, { type: "number" }] }, { name: "StringAndNumber" }, options),
+        nullableAnyOf2: getSchemaAsTsString({ nullable: true, anyOf: [{ type: "string" }, { type: "number" }] }, undefined, options),
+        stringAndNumberMaybeMultiple: getSchemaAsTsString(
             { anyOf: [{ type: "string" }, { type: "number" }] },
             { name: "StringAndNumberMaybeMultiple" },
             options
-        )
-    ).toMatchInlineSnapshot('"export type StringAndNumberMaybeMultiple = (string | number) | Readonly<Array<string | number>>;"');
-
-    expect(
-        getSchemaAsTsString(
+        ),
+        objectWithArrayUnion: getSchemaAsTsString(
             {
                 type: "object",
                 properties: {
@@ -854,15 +536,8 @@ test("getSchemaAsTsString with readonly", () => {
             },
             { name: "ObjectWithArrayUnion" },
             options
-        )
-    ).toMatchInlineSnapshot(`
-      "export type ObjectWithArrayUnion = Partial<Readonly<{
-          unionOrArrayOfUnion: (string | number) | Readonly<Array<string | number>>;
-      }>>;"
-    `);
-
-    expect(
-        getSchemaAsTsString(
+        ),
+        objectWithIntersection: getSchemaAsTsString(
             {
                 type: "object",
                 properties: {
@@ -871,20 +546,10 @@ test("getSchemaAsTsString with readonly", () => {
             },
             { name: "ObjectWithIntersection" },
             options
-        )
-    ).toMatchInlineSnapshot(`
-      "export type ObjectWithIntersection = Partial<Readonly<{
-          intersection: string & number;
-      }>>;"
-    `);
-
-    expect(getSchemaAsTsString({ type: "string", enum: ["aaa", "bbb", "ccc"] }, undefined, options)).toMatchInlineSnapshot(
-        '""aaa" | "bbb" | "ccc""'
-    );
-    expect(getSchemaAsTsString({ type: "number", enum: [1, 2, 3] }, undefined, options)).toMatchInlineSnapshot('"1 | 2 | 3"');
-
-    expect(
-        getSchemaAsTsString(
+        ),
+        stringEnumInline2: getSchemaAsTsString({ type: "string", enum: ["aaa", "bbb", "ccc"] }, undefined, options),
+        numberEnum: getSchemaAsTsString({ type: "number", enum: [1, 2, 3] }, undefined, options),
+        category: getSchemaAsTsString(
             {
                 type: "object",
                 required: ["propNumber", "propString", "propBoolean"],
@@ -905,12 +570,7 @@ test("getSchemaAsTsString with readonly", () => {
             },
             { name: "Category" },
             options
-        )
-    ).toMatchInlineSnapshot(`
-      "export type Category = Readonly<{
-    propNumber: number | null;
-    propString: string | null;
-    propBoolean: boolean | null;
-      }>;"
-    `);
+        ),
+    };
+    await assertSnapshot(t, results);
 });

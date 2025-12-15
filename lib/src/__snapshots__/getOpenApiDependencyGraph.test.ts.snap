@@ -1,0 +1,183 @@
+export const snapshot = {};
+
+snapshot[`petstore.yaml 1`] = `
+{
+  deepDependencyGraph: {
+    "#/components/schemas/Pets": Set(1) {
+      "#/components/schemas/Pet",
+    },
+  },
+  refsDependencyGraph: {
+    "#/components/schemas/Pets": Set(1) {
+      "#/components/schemas/Pet",
+    },
+  },
+  topologicalSortDeep: [
+    "#/components/schemas/Pet",
+    "#/components/schemas/Pets",
+  ],
+  topologicalSortRefs: [
+    "#/components/schemas/Pet",
+    "#/components/schemas/Pets",
+  ],
+}
+`;
+
+snapshot[`complex relations 1`] = `
+{
+  deepDependencyGraph: {
+    ObjectWithArrayOfRef: Set(3) {
+      "Basic",
+      "DeepNested",
+      "WithNested",
+    },
+    Root: Set(4) {
+      "Basic",
+      "DeepNested",
+      "ObjectWithArrayOfRef",
+      "WithNested",
+    },
+    WithNested: Set(1) {
+      "DeepNested",
+    },
+  },
+  refsDependencyGraph: {
+    ObjectWithArrayOfRef: Set(2) {
+      "Basic",
+      "WithNested",
+    },
+    Root: Set(3) {
+      "Basic",
+      "ObjectWithArrayOfRef",
+      "WithNested",
+    },
+    WithNested: Set(1) {
+      "DeepNested",
+    },
+  },
+  topologicalSortDeep: [
+    "DeepNested",
+    "WithNested",
+    "Basic",
+    "ObjectWithArrayOfRef",
+    "Root",
+  ],
+  topologicalSortRefs: [
+    "DeepNested",
+    "WithNested",
+    "Basic",
+    "ObjectWithArrayOfRef",
+    "Root",
+  ],
+}
+`;
+
+snapshot[`recursive relations 1`] = `
+{
+  deepDependencyGraph: {
+    Friend: Set(2) {
+      "Friend",
+      "UserWithFriends",
+    },
+    UserWithFriends: Set(2) {
+      "Friend",
+      "UserWithFriends",
+    },
+  },
+  refsDependencyGraph: {
+    Friend: Set(2) {
+      "Friend",
+      "UserWithFriends",
+    },
+    UserWithFriends: Set(2) {
+      "Friend",
+      "UserWithFriends",
+    },
+  },
+  topologicalSortDeep: [
+    "Friend",
+    "UserWithFriends",
+  ],
+  topologicalSortRefs: [
+    "Friend",
+    "UserWithFriends",
+  ],
+}
+`;
+
+snapshot[`recursive relations along with some basics schemas 1`] = `
+{
+  deepDependencyGraph: {
+    Friend: Set(5) {
+      "Basic",
+      "DeepNested",
+      "Friend",
+      "UserWithFriends",
+      "WithNested",
+    },
+    ObjectWithArrayOfRef: Set(3) {
+      "Basic",
+      "DeepNested",
+      "WithNested",
+    },
+    Root: Set(4) {
+      "Basic",
+      "DeepNested",
+      "ObjectWithArrayOfRef",
+      "WithNested",
+    },
+    UserWithFriends: Set(5) {
+      "Basic",
+      "DeepNested",
+      "Friend",
+      "UserWithFriends",
+      "WithNested",
+    },
+    WithNested: Set(1) {
+      "DeepNested",
+    },
+  },
+  refsDependencyGraph: {
+    Friend: Set(3) {
+      "Basic",
+      "Friend",
+      "UserWithFriends",
+    },
+    ObjectWithArrayOfRef: Set(2) {
+      "Basic",
+      "WithNested",
+    },
+    Root: Set(3) {
+      "Basic",
+      "ObjectWithArrayOfRef",
+      "WithNested",
+    },
+    UserWithFriends: Set(3) {
+      "Friend",
+      "UserWithFriends",
+      "WithNested",
+    },
+    WithNested: Set(1) {
+      "DeepNested",
+    },
+  },
+  topologicalSortDeep: [
+    "DeepNested",
+    "WithNested",
+    "Basic",
+    "Friend",
+    "UserWithFriends",
+    "ObjectWithArrayOfRef",
+    "Root",
+  ],
+  topologicalSortRefs: [
+    "Basic",
+    "Friend",
+    "DeepNested",
+    "WithNested",
+    "UserWithFriends",
+    "ObjectWithArrayOfRef",
+    "Root",
+  ],
+}
+`;

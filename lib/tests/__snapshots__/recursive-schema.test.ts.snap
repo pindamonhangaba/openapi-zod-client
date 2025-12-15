@@ -292,7 +292,7 @@ snapshot[`recursive-schema > indirect single recursive 4`] = `
 `;
 
 snapshot[`recursive-schema > indirect single recursive 5`] = `
-'import { makeApi, Zodios, type ZodiosOptions } from "@franklin-ai/zodios";
+'import { makeApi, Zodios, type ZodiosOptions } from "@zodios/core";
 import { z } from "zod";
 
 type User = Partial<{
@@ -2282,7 +2282,7 @@ snapshot[`recursive-schema > multiple recursive in one root schema 4`] = `
 `;
 
 snapshot[`recursive-schema > multiple recursive in one root schema 5`] = `
-'import { makeApi, Zodios, type ZodiosOptions } from "@franklin-ai/zodios";
+'import { makeApi, Zodios, type ZodiosOptions } from "@zodios/core";
 import { z } from "zod";
 
 type User = Partial<{
@@ -3211,7 +3211,7 @@ snapshot[`recursive-schema > recursive schema with \$ref to another simple schem
 `;
 
 snapshot[`recursive-schema > recursive schema with \$ref to another simple schema should still generate and output that simple schema and its dependencies 3`] = `
-'import { makeApi, Zodios, type ZodiosOptions } from "@franklin-ai/zodios";
+'import { makeApi, Zodios, type ZodiosOptions } from "@zodios/core";
 import { z } from "zod";
 
 type Playlist = Partial<{

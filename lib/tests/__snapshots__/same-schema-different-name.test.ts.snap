@@ -55,7 +55,7 @@ snapshot[`same-schema-different-name 1`] = `
 `;
 
 snapshot[`same-schema-different-name 2`] = `
-'import { makeApi, Zodios, type ZodiosOptions } from "@franklin-ai/zodios";
+'import { makeApi, Zodios, type ZodiosOptions } from "@zodios/core";
 import { z } from "zod";
 
 const sameSchemaDifferentName = z.enum(["aaa", "bbb", "ccc"]).optional();

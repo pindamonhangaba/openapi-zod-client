@@ -2,7 +2,7 @@ export const snapshot = {};
 
 snapshot[`array-body-with-chains-tag-group-strategy 1`] = `
 {
-  Test: 'import { makeApi, Zodios, type ZodiosOptions } from "@franklin-ai/zodios";
+  Test: 'import { makeApi, Zodios, type ZodiosOptions } from "@zodios/core";
 import { z } from "zod";
 
 const putTest_Body = z.array(z.object({ testItem: z.string() }).partial());

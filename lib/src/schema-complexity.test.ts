@@ -1,53 +1,44 @@
-
-
 import type { SchemaObject } from "openapi3-ts";
+import { test } from "jsr:@std/testing/bdd";
+import { expect } from "jsr:@std/expect";
+import { assertSnapshot } from "jsr:@std/testing/snapshot";
+
 import { getSchemaComplexity } from "./schema-complexity.ts";
 
 const getComplexity = (schema: SchemaObject) => getSchemaComplexity({ schema: schema, current: 0 });
 
-test("getSchemaComplexity", async () => {
-    expect(getComplexity({ type: "null" })).toMatchInlineSnapshot("1");
-    expect(getComplexity({ type: "boolean" })).toMatchInlineSnapshot("1");
-    expect(getComplexity({ type: "string" })).toMatchInlineSnapshot("1");
-    expect(getComplexity({ type: "number" })).toMatchInlineSnapshot("1");
-    expect(getComplexity({ type: "integer" })).toMatchInlineSnapshot("1");
-
-    expect(getComplexity({ type: "array", items: { type: "string" } })).toMatchInlineSnapshot("2");
-    expect(getComplexity({ type: "array" })).toMatchInlineSnapshot("1");
-
-    expect(getComplexity({ type: "object" })).toMatchInlineSnapshot("1");
-
-    expect(getComplexity({ type: "object", additionalProperties: true })).toMatchInlineSnapshot("1");
-    expect(getComplexity({ type: "object", additionalProperties: { type: "string" } })).toMatchInlineSnapshot("2");
-
-    expect(
-        getComplexity({
+test("getSchemaComplexity", async (t) => {
+    const results = {
+        null: getComplexity({ type: "null" }),
+        boolean: getComplexity({ type: "boolean" }),
+        string: getComplexity({ type: "string" }),
+        number: getComplexity({ type: "number" }),
+        integer: getComplexity({ type: "integer" }),
+        arrayWithStringItems: getComplexity({ type: "array", items: { type: "string" } }),
+        arrayWithoutItems: getComplexity({ type: "array" }),
+        objectEmpty: getComplexity({ type: "object" }),
+        objectWithAdditionalPropertiesTrue: getComplexity({ type: "object", additionalProperties: true }),
+        objectWithAdditionalPropertiesString: getComplexity({ type: "object", additionalProperties: { type: "string" } }),
+        objectWithComplexAdditionalProperties: getComplexity({
             type: "object",
             additionalProperties: { type: "object", properties: { str: { type: "string" } } },
-        })
-    ).toMatchInlineSnapshot("4");
-    expect(
-        getComplexity({
+        }),
+        objectWithMoreComplexAdditionalProperties: getComplexity({
             type: "object",
             additionalProperties: { type: "object", properties: { str: { type: "string" }, nb: { type: "number" } } },
-        })
-    ).toMatchInlineSnapshot("5");
-
-    expect(getComplexity({ type: "object", properties: { str: { type: "string" } } })).toMatchInlineSnapshot("3");
-    expect(
-        getComplexity({ type: "object", properties: { reference: { $ref: "#/components/schemas/Basic" } } })
-    ).toMatchInlineSnapshot("4");
-    expect(
-        getComplexity({
+        }),
+        objectWithStringProperty: getComplexity({ type: "object", properties: { str: { type: "string" } } }),
+        objectWithRefProperty: getComplexity({ type: "object", properties: { reference: { $ref: "#/components/schemas/Basic" } } }),
+        objectWithRefArrayProperty: getComplexity({
             type: "object",
             properties: { refArray: { type: "array", items: { $ref: "#/components/schemas/Basic" } } },
-        })
-    ).toMatchInlineSnapshot("5");
-    expect(
-        getComplexity({ type: "object", properties: { str: { type: "string" }, nb: { type: "number" } } })
-    ).toMatchInlineSnapshot("4");
+        }),
+        objectWithTwoProperties: getComplexity({ type: "object", properties: { str: { type: "string" }, nb: { type: "number" } } }),
+    };
+    
+    await assertSnapshot(t, results);
 
-    expect(
+    await assertSnapshot(t, 
         getComplexity({
             type: "object",
             properties: {
@@ -61,9 +52,9 @@ test("getSchemaComplexity", async () => {
                 },
             },
         })
-    ).toMatchInlineSnapshot("7");
+    );
 
-    expect(
+    await assertSnapshot(t, 
         getComplexity({
             type: "array",
             items: {
@@ -73,9 +64,9 @@ test("getSchemaComplexity", async () => {
                 },
             },
         })
-    ).toMatchInlineSnapshot("4");
+    );
 
-    expect(
+    await assertSnapshot(t, 
         getComplexity({
             type: "array",
             items: {
@@ -85,59 +76,59 @@ test("getSchemaComplexity", async () => {
                 },
             },
         })
-    ).toMatchInlineSnapshot("3");
+    );
 
-    expect(
+    await assertSnapshot(t, 
         getComplexity({
             type: "object",
             properties: {
                 union: { oneOf: [{ type: "string" }] },
             },
         })
-    ).toMatchInlineSnapshot("5");
-    expect(
+    );
+    await assertSnapshot(t, 
         getComplexity({
             type: "object",
             properties: {
                 union: { oneOf: [{ type: "string" }, { type: "number" }] },
             },
         })
-    ).toMatchInlineSnapshot("6");
+    );
 
-    expect(
+    await assertSnapshot(t, 
         getComplexity({
             type: "object",
             properties: {
                 unionOrArrayOfUnion: { anyOf: [{ type: "string" }] },
             },
         })
-    ).toMatchInlineSnapshot("6");
-    expect(
+    );
+    await assertSnapshot(t, 
         getComplexity({
             type: "object",
             properties: {
                 unionOrArrayOfUnion: { anyOf: [{ type: "string" }, { type: "number" }] },
             },
         })
-    ).toMatchInlineSnapshot("7");
+    );
 
-    expect(
+    await assertSnapshot(t, 
         getComplexity({
             type: "object",
             properties: {
                 intersection: { allOf: [{ type: "string" }] },
             },
         })
-    ).toMatchInlineSnapshot("5");
-    expect(
+    );
+    await assertSnapshot(t, 
         getComplexity({
             type: "object",
             properties: {
                 intersection: { allOf: [{ type: "string" }, { type: "number" }] },
             },
         })
-    ).toMatchInlineSnapshot("6");
-    expect(
+    );
+    await assertSnapshot(t, 
         getComplexity({
             type: "object",
             properties: {
@@ -146,8 +137,8 @@ test("getSchemaComplexity", async () => {
                 },
             },
         })
-    ).toMatchInlineSnapshot("7");
-    expect(
+    );
+    await assertSnapshot(t, 
         getComplexity({
             type: "object",
             properties: {
@@ -156,8 +147,8 @@ test("getSchemaComplexity", async () => {
                 },
             },
         })
-    ).toMatchInlineSnapshot("8");
-    expect(
+    );
+    await assertSnapshot(t, 
         getComplexity({
             type: "object",
             properties: {
@@ -172,8 +163,8 @@ test("getSchemaComplexity", async () => {
                 },
             },
         })
-    ).toMatchInlineSnapshot("9");
-    expect(
+    );
+    await assertSnapshot(t, 
         getComplexity({
             type: "object",
             properties: {
@@ -189,8 +180,8 @@ test("getSchemaComplexity", async () => {
                 },
             },
         })
-    ).toMatchInlineSnapshot("10");
-    expect(
+    );
+    await assertSnapshot(t, 
         getComplexity({
             type: "object",
             properties: {
@@ -207,8 +198,8 @@ test("getSchemaComplexity", async () => {
                 },
             },
         })
-    ).toMatchInlineSnapshot("11");
-    expect(
+    );
+    await assertSnapshot(t, 
         getComplexity({
             type: "object",
             properties: {
@@ -230,8 +221,8 @@ test("getSchemaComplexity", async () => {
                 },
             },
         })
-    ).toMatchInlineSnapshot("13");
-    expect(
+    );
+    await assertSnapshot(t, 
         getComplexity({
             type: "object",
             properties: {
@@ -254,8 +245,8 @@ test("getSchemaComplexity", async () => {
                 },
             },
         })
-    ).toMatchInlineSnapshot('14');
+    );
 
-    expect(getComplexity({ type: "string", enum: ["aaa", "bbb", "ccc"] })).toMatchInlineSnapshot("2");
-    expect(getComplexity({ type: "number", enum: [1, 2, 3, null] })).toMatchInlineSnapshot("2");
+    await assertSnapshot(t, getComplexity({ type: "string", enum: ["aaa", "bbb", "ccc"] }));
+    await assertSnapshot(t, getComplexity({ type: "number", enum: [1, 2, 3, null] }));
 });

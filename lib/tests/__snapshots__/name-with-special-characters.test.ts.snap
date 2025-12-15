@@ -15,7 +15,7 @@ snapshot[`name-with-special-characters 1`] = `
 `;
 
 snapshot[`name-with-special-characters 2`] = `
-'import { makeApi, Zodios, type ZodiosOptions } from "@franklin-ai/zodios";
+'import { makeApi, Zodios, type ZodiosOptions } from "@zodios/core";
 import { z } from "zod";
 
 const _1Name_With_Special_Characters = z.string();

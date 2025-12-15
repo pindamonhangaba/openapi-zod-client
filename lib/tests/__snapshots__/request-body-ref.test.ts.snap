@@ -1,7 +1,7 @@
 export const snapshot = {};
 
 snapshot[`request-body-ref 1`] = `
-'import { makeApi, Zodios, type ZodiosOptions } from "@franklin-ai/zodios";
+'import { makeApi, Zodios, type ZodiosOptions } from "@zodios/core";
 import { z } from "zod";
 
 const PostPetsRequest = z.object({ id: z.string() }).partial().passthrough();

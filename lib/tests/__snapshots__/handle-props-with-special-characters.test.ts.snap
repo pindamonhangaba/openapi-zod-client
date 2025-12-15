@@ -54,7 +54,7 @@ snapshot[`handle-props-with-special-characters 1`] = `
 `;
 
 snapshot[`handle-props-with-special-characters 2`] = `
-'import { makeApi, Zodios, type ZodiosOptions } from "@franklin-ai/zodios";
+'import { makeApi, Zodios, type ZodiosOptions } from "@zodios/core";
 import { z } from "zod";
 
 const endpoints = makeApi([
